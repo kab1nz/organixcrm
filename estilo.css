@@ -1,0 +1,253 @@
+.nav {
+    margin-top: 20px;
+}
+
+.container2 {
+    width: 80%;
+    margin: 0 auto;
+    background: #f5f5f0;
+}
+
+.container3 {
+    width: 100%;
+    margin: 0;
+}
+
+.img50 {
+    width: 50px;
+    height: 50px;
+}
+
+.mb40 {
+    padding-bottom: 20px;
+}
+
+.btnrojo {
+    background-color: #f04b2f;
+    border: 1px solid #f04b2f;
+    color: white;
+}
+
+.container1 {
+    width: 100%;
+    display: block;
+    background-image: url("banner.jpg");
+    max-width: 100%;
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: 70px 0px;
+    color: #fff;
+    margin: 0 auto;
+}
+
+.fuente {
+    font-weight: 200;
+}
+
+.fuente1 {
+    margin-top: -14px;
+    font-size: 20px;
+    color: #393939;
+    font-family: Open Sans, helvetica, Arial, sans-serif;
+}
+
+.column-block {
+    width: 55%;
+    float: left;
+}
+
+.btnfinal {
+    margin-top: 20px;
+    width: 50%;
+}
+
+.w20 {
+    width: 20%;
+}
+
+.sg {
+    background: none repeat scroll 0 0 rgba(255, 255, 255, 0);
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    color: #fff;
+    display: block;
+    font-size: 14px;
+    margin-bottom: 7px;
+    padding: 12px 0 5px;
+    width: 50% !important;
+    transition: 0.7s ease;
+    -webkit-transition: 0.7s ease;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    outline: medium none;
+    position: relative;
+    z-index: 9;
+    box-shadow: none;
+}
+
+.banner-signup {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    background: transparent;
+}
+
+.column {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.column-block1 {
+    width: 42%;
+}
+
+.product-header {
+    max-width: 100%;
+    position: relative;
+    transition: 0.25s ease 0s;
+    -moz-transition: 0.25s ease 0s;
+    -ms-transition: 0.25s ease 0s;
+    -o-transition: 0.25s ease 0s;
+    -webkit-transition: 0.25s ease 0s;
+    margin: 0 auto;
+    overflow: hidden;
+    background: #f5f5f5 !important;
+}
+
+.head {
+    padding: 25px 0;
+    background: /*rgba(255,255,255,.95)*/
+    #fff;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    z-index: 200;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.mt {
+    margin-top: 50px;
+    border: #00acbf;
+}
+
+.mtxl {
+    margin-top: 150px;
+    border: #00acbf;
+}
+
+.menufoot {
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: calc(18px + .3vw);
+    letter-spacing: -.02em;
+}
+
+.menufoot a {
+    display: inline-block;
+    margin-right: 18px;
+    color: #00acbf;
+    text-decoration: none;
+    border-bottom: 1px dotted rgba(0, 0, 0, 0);
+}
+
+.estiloLetra {
+    font-size: calc(23px + .8vw);
+    margin-bottom: calc(20px + 2vw);
+    letter-spacing: -.03em;
+    text-align: center;
+    font-weight: 300;
+    color: #47525d;
+    line-height: 1.2em;
+}
+
+.estiloLetra1 {
+    font-size: calc(38px + 0.5vw);
+    margin-bottom: calc(13px + .5vw);
+    letter-spacing: -.03em;
+    text-align: center;
+    font-weight: 300;
+    color: #47525d;
+    line-height: 1.1em;
+}
+
+.estiloLetra2 {
+    font-size: calc(17px + .65vw);
+    line-height: 1.2em;
+    margin-bottom: 2%;
+    font-weight: 300;
+    letter-spacing: -.03em;
+    color: #47525d;
+}
+
+.estiloLetra3 {
+    font-size: calc(13px + .3vw);
+    line-height: 1.3em;
+    letter-spacing: -.02em;
+    font-weight: 300;
+}
+
+.btnblue {
+    height: auto;
+    margin-top: 40px;
+}
+
+.slider {
+    width: 95%;
+    margin: auto;
+    overflow: hidden;
+}
+
+.slider ul {
+    display: flex;
+    padding: 0;
+    width: 400%;
+    animation: cambio 20s infinite alternate linear;
+}
+
+.slider li {
+    width: 100%;
+    list-style: none;
+}
+
+.slider img {
+    width: 50%;
+}
+
+@keyframes cambio {
+    0% {
+        margin-left: 0;
+    }
+    20% {
+        margin-left: 0;
+    }
+    25% {
+        margin-left: -200%;
+    }
+    45% {
+        margin-left: -200%;
+    }
+    50% {
+        margin-left: -300%;
+    }
+    70% {
+        margin-left: -300%;
+    }
+    75% {
+        margin-left: -400%;
+    }
+    100% {
+        margin-left: -400%;
+    }
+}

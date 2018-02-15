@@ -1,0 +1,66 @@
+    .logo {
+        display: none;
+    }
+    
+    @media screen and (max-width:1000px) {
+        body {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            font-size: 100%;
+            font: inherit;
+            vertical-align: baseline;
+            outline: none;
+        }
+        .column-block {
+            display: flex;
+            width: 100%;
+        }
+        .column-block1 {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+        }
+        #acount {
+            margin-top: 20px;
+            font-size: 25px;
+        }
+        .btnfinal,
+        .sg {
+            width: 100% !important;
+        }
+        .menufoot a {
+            display: block;
+            margin-right: 18px;
+            color: #00acbf;
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(0, 0, 0, 0);
+        }
+        .mtxl {
+            margin-top: 50px;
+            border: #00acbf;
+        }
+    }
+    
+    @media screen and (max-width:600px) {
+        .column-block {
+            display: none;
+        }
+        .fuente {
+            display: none;
+        }
+        .column-block1 {
+            margin: 0 auto;
+            display: block;
+            width: 70% !important;
+        }
+        .col-2 {
+            max-width: 100%;
+        }
+        .logo {
+            display: block !important;
+        }
+        .menufoot {
+            display: block !important;
+        }
+    }
