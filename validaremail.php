@@ -6,26 +6,49 @@ function generarLinkTemporal($idusuario, $username){
  
    include 'bd/conexion.php';
    // Se inserta el registro en la tabla tblreseteopass
-   $sql = "INSERT INTO usuarios (username, creado, token) VALUES('$username',NOW(),'$token');";
-   $resultado = $conexion->query($sql);
+    
+    //sacamos el id del username
+    //$id='select GUID from usuarios where USERNAME="'.$username.'";';
+    //$resultado = $conexion->query($id);
+    
+    //actualizamos el campo lostpassword y datelost
+    $sql = 'update usuarios set LOSTPASSWORD="'.$token.'" , DATELOST=NOW() where GUID="'.$idusuario.'";';
+    $resultado = $conexion->query($sql);
+    
    if($resultado){
       // Se devuelve el link que se enviara al usuario
-      $enlace = $_SERVER["SERVER_NAME"].'/pass/restablecer.php?idusuario='.sha1($idusuario).'&token='.$token;
+      $enlace = $_SERVER["localhost:3306"].'/nrinformatica/organixcrm/restablecer.php?idusuario='.sha1($idusuario).'&token='.$token;
       return $enlace;
-   }
-   else
+   }else
       return FALSE;
 }
- 
-  $texto_mail="Esto es un ejemplo";
-  $destinatario = "ismaeliyoborrego@gmail.com";
-  $asunto="Importante";
-  $headers="MIME-Version: 1.0\r\n";
-  $headers.="Content-type: text/html; charset=iso-8859-1\r\n";
-  $headers.="From: Prueba Juan < kabinfor@gmail.com > \r\n";
-  $exito=mail($destinatario,$asunto,$texto_mail,$headers);
-  if($exito)
-echo "Mensaje enviado con exito";
-else
-echo "Mensaje no enviado";
+
+    function enviarEmail($email, $link){
+       $mensaje = '<html>
+     <head>
+        <title>Restablece tu contraseña</title>
+     </head>
+     <body>
+       <p>Hemos recibido una petición para restablecer la contraseña de tu cuenta.</p>
+       <p>Si hiciste esta petición, haz clic en el siguiente enlace, si no hiciste esta petición puedes ignorar este correo.</p>
+       <p>
+         <strong>Enlace para restablecer tu contraseña</strong><br>
+         <a href="'. $link .'"> Restablecer contraseña </a>
+       </p>
+     </body>
+    </html>';
+        
+        
+      
+        $asunto="Importante";
+        $headers="MIME-Version: 1.0\r\n";
+            $headers.="Content-type: text/html; charset=iso-8859-1\r\n";
+            $headers.="From: Prueba Juan < kabinfor@gmail.com > \r\n";
+            $exito=mail($email, $asunto, $mensaje,$headers);    
+        
+    }
+
+    $destinatario = "proyectodam.ruben@gmail.com";
+    enviarEmail($destinatario,generarLinkTemporal('2f39fb62-0ce5-11e8-bce8-d8cb8a962bce',"RUBEN"));
+
 ?>
