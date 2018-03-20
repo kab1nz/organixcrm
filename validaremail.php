@@ -16,8 +16,9 @@ function generarLinkTemporal($idusuario, $username){
     $resultado = $conexion->query($sql);
     
    if($resultado){
-      // Se devuelve el link que se enviara al usuario
-      $enlace = $_SERVER["localhost:3306"].'/nrinformatica/organixcrm/restablecer.php?idusuario='.sha1($idusuario).'&token='.$token;
+       
+      // Se devuelve el link que se enviara al usuario para restablecer la contraseña
+      $enlace = $_SERVER["localhost"].'/organixcrm/restablecer.php?idusuario='.sha1($idusuario).'&token='.$token;
       return $enlace;
    }else
       return FALSE;

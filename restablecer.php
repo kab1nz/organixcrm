@@ -18,7 +18,7 @@ $token = $_GET['token'];
 $idusuario = $_GET['guid'];
  
 include 'conexion.php'; 
-$sql = "SELECT * FROM usuarios WHERE token = '$token'";
+$sql = "SELECT * FROM usuarios WHERE LOSTPASSWORD = '$token'";
 $resultado = $conexion->query($sql);
  
 if( $resultado->num_rows > 0 ){
