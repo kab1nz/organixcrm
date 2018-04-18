@@ -1,3 +1,110 @@
+<?php
+include "bd/conexion.php";
+session_start();
+$bcontra=false;
+$bempresa=false;
+$bnombre=false;
+
+$existusuario=false;
+$existempresa=false;
+
+if(!isset($_SESSION['autentificado'])){
+    
+    if(isset($_REQUEST['email']) && isset($_REQUEST['empresa']) && isset($_REQUEST['contra']) && isset($_REQUEST['nombre'])){
+        
+        if($_REQUEST['nombre']==" "){
+            $bnombre=true;
+        }
+        
+        if($_REQUEST['empresa']==" "){
+            $bempresa=true;
+        }
+        
+        if($_REQUEST['contra']==" "){
+            $bcontra=true;
+        }
+        
+     
+        if($bnombre==false && $bempresa==false && $bcontra==false){
+            
+            include "bd/conexion.php";
+            $usuario=trim($_POST['email']);
+            $nombre=trim($_POST['nombre']);
+            $pass=trim($_POST['contra']);
+            $empresa=trim($_POST['empresa']);
+
+            $comprobacion = "select * from USUARIOS where USERNAME = '$usuario'";
+            $resultado=mysqli_query($conexion,$comprobacion);
+            $cont= mysqli_num_rows($resultado);
+
+            if($cont>=1){
+                $existusuario=true;
+            }else{
+                mysqli_free_result($resultado);    
+                $comprobacion2 = "select * from EMPRESAS where NOMBREFISCAL = '$empresa'";
+                $resultado=mysqli_query($conexion,$comprobacion2);
+                $cont2= mysqli_num_rows($resultado);
+                
+                if($cont2>=1){
+                    $existempresa=true;
+                }else{
+                     mysqli_free_result($resultado);
+
+                    //insercion del usuario
+                    $insertarUSU="call INSERT_USUARIO('$usuario','$nombre','$pass')";
+                    $resultado = mysqli_query($conexion, $insertarUSU);
+                    /*
+                    if(!$resultado){
+                        echo "Usuario no insertado<br>";
+                    }else{
+                        echo "Usuario insertado<br>";
+                    }
+                    */
+                    mysqli_free_result($resultado);    
+                    mysqli_close($conexion);
+
+
+
+                    //insercion de empresa
+                    include "bd/conexion.php";
+                    $insertarEMP="call INSERT_EMPRESAS('$empresa')";
+                    $resultado=mysqli_query($conexion, $insertarEMP);
+                    /*
+                    if(!$resultado){
+                        echo "Empresa no insertada<br>";
+                    }else{
+                        echo "Empresa insertada<br>";
+                    }
+                    */
+                    mysqli_close($conexion);
+
+
+                    //insercion relacion usuario empresa
+                    include "bd/conexion.php";
+                    $aux="INSERT INTO USU_EMPR VALUES((select GUID from USUARIOS where USERNAME='$usuario'),(select GUID from EMPRESAS where NOMBREFISCAL='$empresa'),3)"; 
+                    $resultado=mysqli_query($conexion, $aux);
+                    /*
+                    if(!$resultado){
+                        echo "Relacion fallida<br>";
+                    }else{
+                        echo "Relacion usuario-empresa creada<br>";
+                    }
+                    */
+                    mysqli_close($conexion);
+
+
+                }
+            }
+            
+        }
+        
+        
+    }
+    
+}
+
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -10,7 +117,8 @@
     <link rel="stylesheet" href="bootstrap.css">
     <link rel="stylesheet" href="Estilo/mediaIndex.css">
     <link rel="stylesheet" href="estilo.css">
-
+    
+ 
 
     <title>OrganixCRM</title>
 </head>
@@ -37,28 +145,51 @@
             </div>
             <div class="column-block1">
 
-                <form class="form banner-signup" method="POST" action="bd/insercionLogin.php">
+                <form class="form banner-signup" method="POST"  name="form">
                     <div class="col-12">
                         <p id="acount">Create account</p>
 
                     </div>
                     <div class="col-12">
-                        <input type="text" id="namefield" class="sg" name="nombre" placeholder="Full Name">
+                        <input type="text" id="namefield" class="sg" name="nombre" id="nombre" placeholder="Full Name" required>
+                        <?php
+                            if(isset($bnombre) && $bnombre==true){
+                                echo '<spam class="error">Introduce un nombre valido</spam>';                            
+                            }
+                        ?>
                     </div>
                     <div class="col-12">
-                        <input type="text" class="sg" name="email" name="email" placeholder="Email Address">
-
+                        <input type="email" class="sg" name="email" name="email" placeholder="Email Address" required>
+                        <?php
+                            if($existusuario==true){
+                                echo '<spam class="error">Este email ya esta registrado</spam>';                                
+                            }
+                        ?>
                     </div>
                     <div class="col-12">
-                        <input type="password" class="sg" name="contra" name="contra" placeholder="Contraseña">
-
+                        <input type="password" class="sg" name="contra" name="contra" placeholder="Password" required>
+                        <?php
+                            if(isset($bcontra) && $bcontra==true){
+                                echo '<spam class="error">Introduce una contraseña valida</spam>';                            
+                            }
+                        ?>
+                    </div>
+                    <div class="col-12">
+                        <input type="text" class="sg" name="empresa" placeholder="Name Business" required>
+                        <?php
+                            if(isset($bempresa) && $bempresa==true){
+                                echo '<spam class="error">Introduce un nombre de empresa valido</spam>';                            
+                            }elseif($existempresa==true){
+                                echo '<spam class="error">Esta empresa ya esta registrada</spam>';                                
+                            }else{}
+                        ?>
                     </div>
                     <div class="col-12">
                         <small class="small">By clicking 'Create account', you agree to the</small>
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="btn btn-danger btnfinal">GET STARTED FREE</button>
-                        <a href="login.html"><button type="button" class="btn btn-danger btnfinal">LOGIN</button></a>
+                        <button type="submit" class="btn btn-danger btnfinal" >GET STARTED FREE</button>
+                        <a href="login.php"><button type="button" class="btn btn-danger btnfinal">LOGIN</button></a>
 
                     </div>
                 </form>
@@ -134,9 +265,11 @@
                     </li>
                 </div>
 
-        </div>
+        
         </ul>
     </div>
+    </div>
+    
     <div class="container">
         <h4 class="h4 text-center mt">Cómo Funciona</h4>
         <h6 class="h6" style="margin-top:30px;">OrganixCRM utiliza la tecnología para organizar y sincronizar los procesos de negocio, tales como actividades de venta, de comercialización, servicio al cliente y soporte técnico.</h6>
@@ -164,14 +297,13 @@
             </div>
         </div>
 
-
+    
 
 
         <div class="col-12">
             <div class="mtxl"></div>
 
-            <div class="menufoot" style="display: flex;
-                justify-content: space-between;">
+            <div class="menufoot">
                 <a href="#" target="_top">Cómo funciona</a>
                 <a href="#" target="_top">Precios</a>
                 <a href="#" target="_top">Blog</a>
@@ -181,6 +313,8 @@
 
             </div>
         </div>
+    </div>
+        
         <div class="col-12">
 
             <footer>
@@ -201,7 +335,8 @@
                 </div>
             </footer>
         </div>
-    </div>
+        
+    
 
 
 
@@ -213,4 +348,4 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
 </body>
 
-</html
+</html>
