@@ -1,5 +1,5 @@
 <?php
-include "bd/conexion.php";
+require_once("bd/conexion.php");
 session_start();
 $bcontra=false;
 $bempresa=false;
@@ -27,7 +27,7 @@ if(!isset($_SESSION['autentificado'])){
      
         if($bnombre==false && $bempresa==false && $bcontra==false){
             
-            include "bd/conexion.php";
+            
             $usuario=trim($_POST['email']);
             $nombre=trim($_POST['nombre']);
             $pass=trim($_POST['contra']);
@@ -40,19 +40,21 @@ if(!isset($_SESSION['autentificado'])){
             if($cont>=1){
                 $existusuario=true;
             }else{
-                mysqli_free_result($resultado);    
+               // mysqli_free_result($resultado);    
+                
                 $comprobacion2 = "select * from EMPRESAS where NOMBREFISCAL = '$empresa'";
-                $resultado=mysqli_query($conexion,$comprobacion2);
-                $cont2= mysqli_num_rows($resultado);
+                $resultado2=mysqli_query($conexion,$comprobacion2);
+                $cont2= mysqli_num_rows($resultado2);
                 
                 if($cont2>=1){
                     $existempresa=true;
                 }else{
-                     mysqli_free_result($resultado);
+                   //  mysqli_free_result($resultado);
 
                     //insercion del usuario
                     $insertarUSU="call INSERT_USUARIO('$usuario','$nombre','$pass')";
-                    $resultado = mysqli_query($conexion, $insertarUSU);
+                    $resultado3 = mysqli_query($conexion, $insertarUSU);
+                    
                     /*
                     if(!$resultado){
                         echo "Usuario no insertado<br>";
@@ -60,31 +62,35 @@ if(!isset($_SESSION['autentificado'])){
                         echo "Usuario insertado<br>";
                     }
                     */
-                    mysqli_free_result($resultado);    
-                    mysqli_close($conexion);
+                    // mysqli_free_result($resultado);    
+                   // mysqli_close($conexion);
 
 
+                    
+                    
+                    mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
+                    mysqli_free_result($resultado3); //Libera la memoria asociada al resultado.
 
                     //insercion de empresa
-                    include "bd/conexion.php";
                     $insertarEMP="call INSERT_EMPRESAS('$empresa')";
-                    $resultado=mysqli_query($conexion, $insertarEMP);
+                    $resultado4=mysqli_query($conexion, $insertarEMP);
+                    
                     /*
-                    if(!$resultado){
-                        echo "Empresa no insertada<br>";
+                    if(!$resultado4){
+                        die('Fallo en la insercion de registro EMPRESA en la Base de Datos: ' . mysqli_error($conexion));
                     }else{
                         echo "Empresa insertada<br>";
                     }
                     */
-                    mysqli_close($conexion);
+
 
 
                     //insercion relacion usuario empresa
-                    include "bd/conexion.php";
                     $aux="INSERT INTO USU_EMPR VALUES((select GUID from USUARIOS where USERNAME='$usuario'),(select GUID from EMPRESAS where NOMBREFISCAL='$empresa'),3)"; 
-                    $resultado=mysqli_query($conexion, $aux);
+                    $resultado5=mysqli_query($conexion, $aux);
+                    
                     /*
-                    if(!$resultado){
+                    if(!$resultado5){
                         echo "Relacion fallida<br>";
                     }else{
                         echo "Relacion usuario-empresa creada<br>";
