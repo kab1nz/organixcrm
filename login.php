@@ -75,7 +75,6 @@
                     $resultado = mysqli_query($conexion, $sql);
                     $intent= mysqli_fetch_row($resultado);
                     $guidusu= $intent[0];
-                    echo "La guid del usuario es: ".$intent[0] ."<br>";
                    //  mysqli_free_result($resultado);
                     //mysqli_close($conexion);
 
@@ -87,49 +86,43 @@
                     $aux= mysqli_fetch_row($resultado1);
                     $pass= substr($aux[0],3,-3);
                     
-                    echo "La guid pass es: ".$pass."<br>";                    
+                        
                     if(md5($contra)==$pass){
-                        echo "contras SI coincidentes.";
+                        
+                        
+                            if(!$resultado){
+                                echo "fallo de conexion a la En el query";
+
+                            }else{
+                                $empresas='select NOMBREFISCAL,GUIDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
+                                $query = mysqli_query($conexion, $empresas);
+
+
+                                echo '<div class="form-group">';
+                                echo '<label for="empresa">Empresa:</label>';
+                                echo '<select class="form-control w20" id="empresa" name="empresa">';
+
+                                while( $fila = mysqli_fetch_array($query)){
+
+                                    $aux= 'select NOMBREFISCAL from EMPRESAS where GUID="'.$fila["GUIDEMPRESA"].'"';
+
+                                    $resultado =mysqli_query($conexion,$aux);
+                                    $intent= mysqli_fetch_row($resultado);
+
+                                     echo '<option>'.$intent[0].'</option>';
+                                }
+
+                                echo "</select></div>";
+
+
+                            }
+                             
+                        
                     }else{
-                        echo "contras NO coincidentes";
+                        echo '<spam class="error">Introduce una contraseña valida</spam>';                    
                     }
 
-
-
-                    
-                    
-                    
-                    
-                    
-                    
-                        
-                    if(!$resultado){
-                        echo "fallo de conexion a la En el query";
-                        
-                    }else{
-                        $empresas='select NOMBREFISCAL,GUIDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
-                        $query = mysqli_query($conexion, $empresas);
-                        
-                        
-                        echo '<div class="form-group">';
-                        echo '<label for="empresa">Empresa:</label>';
-                        echo '<select class="form-control w20" id="empresa" name="empresa">';
-                        
-                        while( $fila = mysqli_fetch_array($query)){
-                            
-                            $aux= 'select NOMBREFISCAL from EMPRESAS where GUID="'.$fila["GUIDEMPRESA"].'"';
-                            
-                            $resultado =mysqli_query($conexion,$aux);
-                            $intent= mysqli_fetch_row($resultado);
-                            
-                             echo '<option>'.$intent[0].'</option>';
-                        }
-                        
-                        echo "</select></div>";
-                        
-                        
-                    }
-                        
+       
                 }else{
                     echo '<spam class="error">Rellena los campos</spam>';        
                 }
