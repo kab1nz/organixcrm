@@ -1,0 +1,99 @@
+<section class="content">
+        <div class="contentperfil">
+            <div class="cabperfil">
+                <div class="col-lg-4">
+                    <i class="material-icons">ic_keyboard_backspace</i></a>
+                </div>
+                <div class="col-lg-4">Editar Perfil</div>
+                <div class="col-lg-4" style="display: flex;
+                justify-content: flex-end;">
+                    <i class="material-icons">ic_save</i><span>Save</span></a>
+                </div>
+            </div>
+            <div class="mgtoppeque"></div>
+            <div class="d-flex justify-content-center">
+                <span class="fondorojoblanco" style="margin-left: 15px;">MIS DATOS</span>
+            </div>
+            <div class="mgbtnpeque"></div>
+
+            <div class="contentdatos">
+                <div class="mgtoppeque"></div>
+
+                <div class="content1">
+                    <img src="images/david.jpg" class="imgperfil">
+                </div>
+                <div class="content2">
+                    <div class="col-lg-6 borde mb5">
+                        <label>NOMBRE</label>
+                        <input type="text" name="" id="" class="mgbtnpeque" style="margin-left:12%;">
+                        <label style="float: right;" class="colorrojo">*</label>
+                    </div>
+
+                    <div class="col-lg-6 borde">
+                        <label>APELLIDO</label>
+                        <input type="text" name="" id="" class="mgbtnpeque" style="margin-left:18%;">
+                        <label style="float: right;" class="colorrojo">*</label>
+
+                    </div>
+                    <div class="mgtoppeque"></div>
+
+                    <div class="col-lg-12 borde mb5">
+                        <label>EMAIL</label>
+                        <input type="text" name="" id="" class="mgbtnpeque" style="    margin-left: 7%;">
+                        <label class="colorrojo" style="margin-left:5%;">*</label>
+
+                    </div>
+                    <div class="col-lg-6 borde ">
+                        <label>CONTRASEÑA</label>
+                        <input type="text" name="" id="" class="mgbtnpeque" style="margin-left:6%;">
+                        <label style="float: right;" class="colorrojo">*</label>
+
+                    </div>
+                    <div class="col-lg-6 borde">
+                        <label>REPETIR CONTRASEÑA</label>
+                        <input type="text" name="" id="" class="mgbtnpeque" style="margin-left:4%;">
+                        <label style="float: right;" class="colorrojo">*</label>
+
+                    </div>
+                    <div class="col-lg-6 borde  mt5">
+                        <label style="display:block;">IDIOMA</label>
+                        <div class="row clearfix mb5">
+
+                            <div class="body" style="    WIDTH: 50%;
+                            margin-left: 15px;    margin-top: 15px;">
+                                <select class="form-control show-tick">
+                                                    <option value="">-- Please select --</option>
+                                                    <option value="10">Español</option>
+                                                    <option value="20">Inglés</option>
+                                                    <option value="30">Francia</option>
+                                                    <option value="40">Catalá</option>
+                                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 borde  mt5">
+                        <label style="display:block;">ZONA HORARIA</label>
+                        <div class="row clearfix">
+
+                            <div class="body" style="    WIDTH: 50%;
+                            margin-left: 15px;    margin-top: 15px;">
+                                <select class="form-control show-tick">
+                                                    <option value="">-- Please select --</option>
+                                                    <option value="10">10</option>
+                                                    <option value="20">20</option>
+                                                    <option value="30">30</option>
+                                                    <option value="40">40</option>
+                                                    <option value="50">50</option>
+                                                </select>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
