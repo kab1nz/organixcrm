@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="Estilo/medialogin.css">
     
 
-    <title>Document</title>
+    <title>Document</title>   
 
 </head>
 
@@ -45,7 +45,7 @@
             
             <div class="form-group">
                 <label for="pwd">Password:</label>
-                <input type="password" class="form-control w20" id="pwd" placeholder="Enter password" name="pwd">
+                <input type="password" class="form-control w20" id="pwd" placeholder="Enter password" name="pwd" value="<?php if(isset($_REQUEST["pwd"])){echo $_REQUEST["pwd"];} ?>">
             </div>
             
             
@@ -53,7 +53,41 @@
             
                 if(isset($_REQUEST['email']) && isset($_REQUEST['pwd']) && isset($_REQUEST['empresa'])){
                     
-                    header("location: backend/indexback.html");
+                    if($vacios==false){
+                    
+                    $_SESSION["usuario"]=$_REQUEST["email"];    
+                    $usuario=$_REQUEST['email'];
+                    $contra=$_REQUEST['pwd'];
+                    
+                    
+                                     
+                    //sacamos al usuario
+                    $sql= 'select GUID from Usuarios where username ="'.$_REQUEST['email'].'"';
+                    $resultado = mysqli_query($conexion, $sql);
+                    $intent= mysqli_fetch_row($resultado);
+                    $guidusu= $intent[0];
+
+                    
+                    //sacamos la password
+                    $sql2='select contra from contrasenas where GUID="'.$guidusu.'"';
+                    $resultado1 =  mysqli_query($conexion, $sql2);
+                    $aux= mysqli_fetch_row($resultado1);
+                    $pass= substr($aux[0],3,-3);
+                    
+                        
+                    if(md5($contra)==$pass){
+                        
+                         header("location: backend/index.html");
+                        
+                    }else{
+                        echo '<spam class="error">Introduce una contraseña valida</spam>';                    
+                    }
+
+       
+                }else{
+                    echo '<spam class="error">Rellena los campos</spam>';        
+                }
+                    
                 
                 }elseif(isset($_REQUEST['email']) && isset($_REQUEST['pwd'])){
                     
@@ -75,8 +109,7 @@
                     $resultado = mysqli_query($conexion, $sql);
                     $intent= mysqli_fetch_row($resultado);
                     $guidusu= $intent[0];
-                   //  mysqli_free_result($resultado);
-                    //mysqli_close($conexion);
+
 
 
                     
@@ -100,8 +133,8 @@
 
                                 echo '<div class="form-group">';
                                 echo '<label for="empresa">Empresa:</label>';
-                                echo '<select class="form-control w20" id="empresa" name="empresa">';
-
+                                echo '<select class="form-control w20" id="empresa" name="empresa" required>';
+                                echo '<option selected disabled>Seleccione una opción</option>';    
                                 while( $fila = mysqli_fetch_array($query)){
 
                                     $aux= 'select NOMBREFISCAL from EMPRESAS where GUID="'.$fila["GUIDEMPRESA"].'"';

@@ -1,5 +1,6 @@
 <?php
 require_once("bd/conexion.php");
+include("bd/ejecutadorProcedimientos.php");
 session_start();
 $bcontra=false;
 $bempresa=false;
@@ -55,6 +56,8 @@ if(!isset($_SESSION['autentificado'])){
                     $insertarUSU="call INSERT_USUARIO('$usuario','$nombre','$pass')";
                     $resultado3 = mysqli_query($conexion, $insertarUSU);
                     
+                   
+                    
                     /*
                     if(!$resultado){
                         echo "Usuario no insertado<br>";
@@ -72,7 +75,7 @@ if(!isset($_SESSION['autentificado'])){
                     mysqli_free_result($resultado3); //Libera la memoria asociada al resultado.
 
                     //insercion de empresa
-                    $insertarEMP="call INSERT_EMPRESAS('$empresa')";
+                    $insertarEMP="INSERT INTO EMPRESAS(NOMBREFISCAL, NOMBRECOMERCIAL, ALIASCRM, FECHADECREACION) VALUES ('$empresa','$empresa','$empresa',NOW());";
                     $resultado4=mysqli_query($conexion, $insertarEMP);
                     
                     /*
@@ -80,8 +83,54 @@ if(!isset($_SESSION['autentificado'])){
                         die('Fallo en la insercion de registro EMPRESA en la Base de Datos: ' . mysqli_error($conexion));
                     }else{
                         echo "Empresa insertada<br>";
+                        
                     }
                     */
+                    mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
+                    //mysqli_free_result($resultado4);
+                    
+                    //creacion BD emresa
+                    $resultadoaux=mysqli_query($conexion,"select BDEMPRESA from empresas where ALIASCRM='$empresa'");
+                    $intent= mysqli_fetch_row($resultadoaux);
+                    $numbd= $intent[0];
+                     
+                    if(!$resultadoaux){
+                        die('Fallo en la SELECCION de BDEMPRESA en la Base de Datos: ' . mysqli_error($conexion));
+                    }else{
+                        //echo "BD seleccionada<br>";
+                        
+                    }
+                    mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
+                    mysqli_free_result($resultadoaux);
+                    
+                     $crear="call crear_BDEMPRESA($numbd)";
+                     $resultadobd = mysqli_query($conexion, $crear);
+                    
+                    if(!$resultadobd){
+                        die('Fallo en la CREACION de BDEMPRESA en la Base de Datos: ' . mysqli_error($conexion));
+                    }else{
+                       // echo "BD CREADA<br>";
+                        
+                    }
+                    
+                    mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
+                    //mysqli_free_result($resultadobd);
+                    
+                    /*
+                    $copia="call copiar_fk($numbd)";
+                    $resultadofk = mysqli_query($conexion, $copia);
+                    
+                    if(!$resultadofk){
+                        die('Fallo en la COPIAFK de BDEMPRESA en la Base de Datos: ' . mysqli_error($conexion));
+                    }else{
+                        echo "FK COPIADAS<br>";
+                        
+                    }
+                         
+                    */
+                    
+                    addprocedures($numbd);
+                    
 
 
 
@@ -157,7 +206,7 @@ if(!isset($_SESSION['autentificado'])){
 
                     </div>
                     <div class="col-12">
-                        <input type="text" id="namefield" class="sg" name="nombre" id="nombre" placeholder="Full Name" required>
+                        <input type="text" id="namefield" class="sg" name="nombre" id="nombre" placeholder="Full Name" pattern="^[a-z[:space:]]*$" required>
                         <?php
                             if(isset($bnombre) && $bnombre==true){
                                 echo '<spam class="error">Introduce un nombre valido</spam>';                            

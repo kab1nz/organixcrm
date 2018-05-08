@@ -14,8 +14,8 @@
    
 </head>
 <?php
-$token = $_GET['token'];
-$idusuario = $_GET['guid'];
+    $token = $_GET['token'];
+    $idusuario = $_GET['guid'];
  
 include 'conexion.php'; 
 $sql = "SELECT * FROM usuarios WHERE LOSTPASSWORD = '$token'";
@@ -39,7 +39,7 @@ if( $resultado->num_rows > 0 ){
         <form  action="cambiarpassword.php" method="post">
             <label for="email">Email:</label>
             <input type="email" class="form-control w20" id="email" placeholder="Enter email" name="email">
-            </div>
+            
 
 
             <br>
@@ -75,6 +75,7 @@ if( $resultado->num_rows > 0 ){
   <script src="js/bootstrap.min.js"></script>
 </body>
 </html>
+
 <?php
    }
    else{

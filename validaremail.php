@@ -18,7 +18,7 @@ function generarLinkTemporal($idusuario, $username){
    if($resultado){
        
       // Se devuelve el link que se enviara al usuario para restablecer la contraseña
-      $enlace = $_SERVER["localhost"].'/organixcrm/restablecer.php?idusuario='.sha1($idusuario).'&token='.$token;
+      $enlace = $_SERVER["localhost"].'organixcrm/restablecer.php?idusuario='.sha1($idusuario).'&token='.$token;
       return $enlace;
    }else
       return FALSE;
@@ -41,7 +41,7 @@ function generarLinkTemporal($idusuario, $username){
         
         
       
-        $asunto="Importante";
+        $asunto="Recuperar Password";
         $headers="MIME-Version: 1.0\r\n";
             $headers.="Content-type: text/html; charset=iso-8859-1\r\n";
             $headers.="From: Prueba Juan < kabinfor@gmail.com > \r\n";
@@ -49,7 +49,30 @@ function generarLinkTemporal($idusuario, $username){
         
     }
 
-    $destinatario = "proyectodam.ruben@gmail.com";
-    enviarEmail($destinatario,generarLinkTemporal('2f39fb62-0ce5-11e8-bce8-d8cb8a962bce',"RUBEN"));
+
+    $email = $_POST['email'];
+    $respuesta = new stdClass();
+    if($email != ""){
+        include 'bd/conexion.php';
+        $sql= "select * from usuarios where username = '$email'";
+        $resultado = mysqli_query($conexion, $sql);
+        if($resultado->num_rows > 0){
+            $usuario = $resultado ->fetch_assoc();
+            $linkTemporal = generarLinkTemporal($usuario['GUID'],$usuario['USERNAME']);
+            
+            if($linkTemporal){
+                enviarEmail( $email, $linkTemporal );
+                echo '<div class="alert alert-info"> Un correo ha sido enviado a su cuenta de email con las instrucciones para restablecer la contraseña </div>';
+              }
+            
+        }else{
+            echo '<div class="alert alert-warning"> No existe una cuenta asociada a ese correo. </div>';
+        }
+
+    }else{
+        echo "Debes introducir el email de la cuenta";
+
+    }
+
 
 ?>
