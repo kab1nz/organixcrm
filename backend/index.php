@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+<?php
+session_start();
+require_once("bdbackend/conexionbackend.php");
+
+?>
+
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -217,7 +223,7 @@
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="index_contactos.html" class=" waves-effect waves-block">Contactos</a>
+                                    <a href="index_contactos.php" class=" waves-effect waves-block">Contactos</a>
                                 </li>
                                 <li>
                                     <a href="index_llamadas.html" class=" waves-effect waves-block">Llamadas telefónicas</a>

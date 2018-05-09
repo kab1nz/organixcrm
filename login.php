@@ -76,8 +76,9 @@
                     
                         
                     if(md5($contra)==$pass){
-                        
-                         header("location: backend/index.html");
+                        mysqli_close($conexion);
+                        $_SESSION["bd"]=$_REQUEST["empresa"];
+                         header("location: backend/index.php");
                         
                     }else{
                         echo '<spam class="error">Introduce una contraseña valida</spam>';                    
@@ -137,12 +138,12 @@
                                 echo '<option selected disabled>Seleccione una opción</option>';    
                                 while( $fila = mysqli_fetch_array($query)){
 
-                                    $aux= 'select NOMBREFISCAL from EMPRESAS where GUID="'.$fila["GUIDEMPRESA"].'"';
+                                    $aux= 'select NOMBREFISCAL, BDEMPRESA from EMPRESAS where GUID="'.$fila["GUIDEMPRESA"].'"';
 
                                     $resultado =mysqli_query($conexion,$aux);
                                     $intent= mysqli_fetch_row($resultado);
 
-                                     echo '<option>'.$intent[0].'</option>';
+                                     echo '<option value="'.$intent[1].'">'.$intent[0].'</option>';
                                 }
 
                                 echo "</select></div>";
