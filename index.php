@@ -87,7 +87,7 @@ if(!isset($_SESSION['autentificado'])){
                     $resultado5=mysqli_query($conexion, $aux);
                     mysqli_close($conexion);
 
-
+                    header("location: login.php");
                 }
             }
             
