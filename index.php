@@ -75,6 +75,12 @@ if(!isset($_SESSION['autentificado'])){
                      $crear="call crear_BDEMPRESA($numbd)";
                      $resultadobd = mysqli_query($conexion, $crear);
                     
+                     //mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
+                     
+                     //$fk="call copiar_fk($numbd)";
+                    // $resultadofk = mysqli_query($conexion, $fk);                 
+                    
+                    
                     
                     mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada                   
                     addprocedures($numbd);

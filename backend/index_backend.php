@@ -1,9 +1,8 @@
-<?php
+﻿<?php
+    //require_once("bd/conexion.php");
 session_start();
-require_once("bdbackend/conexionbackend.php");
-
+$usu=$_SESSION["usuario"];
 ?>
-
 <!DOCTYPE html>
 <html>
 
@@ -34,6 +33,7 @@ require_once("bdbackend/conexionbackend.php");
     <!-- Custom Css -->
     <link href="css/style.css" rel="stylesheet">
     <link href="scss/estilo.css" rel="stylesheet">
+   
 
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
@@ -92,25 +92,30 @@ require_once("bdbackend/conexionbackend.php");
                             <li class="body">
                                 <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;">
                                     <ul class="menu" style="overflow: hidden; width: auto; height: 254px;">
-                                        <li>
-                                            <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                        
+                                        <?php
+                                        $sql= 'select GUID_USU from Usuarios where username ="'.$_SESSION["email"].'"';
+                                        $resultado = mysqli_query($conexion, $sql);
+                                        $intent= mysqli_fetch_row($resultado);
+                                        $guidusu= $intent[0];
+                                        //echo "El GUID ES: ".$guidusu;
+                                       $empresas='select NOMBREFISCAL from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
+                                $query = mysqli_query($conexion, $empresas);
+                              $cont=0;
+                                while( $fila = mysqli_fetch_array($query)){
+                                    echo '<li>';                                
+                                    echo '<a href="javascript:void(0);" class=" waves-effect waves-block">';
+                                    echo '<div class="menu-info">';
+                                    echo '<h4>'.$fila[0].'</h4>';
+                                    echo '</div>';  
+                                    echo '</a>';
+                                     $cont++;
+                                     echo "</li>";
 
-                                                <div class="menu-info">
-                                                    <h4>EMPRESA 1</h4>
-                                                </div>
-                                            </a>
-                                        </li>
+                                }
+                                ?>
                                         <li>
-                                            <a href="javascript:void(0);" class=" waves-effect waves-block">
-
-                                                <div class="menu-info">
-                                                    <h4>EMPRESA 2</h4>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button type="button" class="btn bg-red btn-block btn-sm waves-effect">Gestionar</button>
-
+                                            <button type="button" id="btngestionar" class="btn bg-red btn-block btn-sm waves-effect"onclick="openGestionar();">Gestionar</button>
                                         </li>
                                     </ul>
                                     <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div>
@@ -171,18 +176,14 @@ require_once("bdbackend/conexionbackend.php");
                     <img src="images/david.jpg" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">José David Navarro Rubio</div>
-                    <div class="email">john.doe@example.com</div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $usu; ?></div>
+                    <div class="email"><?php echo $_SESSION["email"]; ?></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="index_home_perfil.html" class=" waves-effect waves-block"><i class="material-icons">person</i>Profile</a></li>
-                            <li role="seperator" class="divider"></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block"><i class="material-icons">group</i>Followers</a></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block"><i class="material-icons">favorite</i>Likes</a></li>
-                            <li role="seperator" class="divider"></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
+                            <li><a href="index_home_perfil.html" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
+                          
+                            <li><a href="logout.php" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -223,7 +224,7 @@ require_once("bdbackend/conexionbackend.php");
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="index_contactos.php" class=" waves-effect waves-block">Contactos</a>
+                                    <a href="index_contactos.html" class=" waves-effect waves-block">Contactos</a>
                                 </li>
                                 <li>
                                     <a href="index_llamadas.html" class=" waves-effect waves-block">Llamadas telefónicas</a>
@@ -406,6 +407,8 @@ require_once("bdbackend/conexionbackend.php");
     <!-- Slimscroll Plugin Js -->
     <script src="plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
 
+    <!-- My Script -->
+    <script src="myscript.js"></script>
     <!-- Waves Effect Plugin Js -->
     <script src="plugins/node-waves/waves.js"></script>
 

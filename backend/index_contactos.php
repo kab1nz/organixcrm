@@ -79,7 +79,7 @@
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars" style="display: none;"></a>
-                <a class="navbar-brand" href="index.html">Organix Crm</a>
+                <a class="navbar-brand" href="index_backend.php">Organix Crm</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-left" style="    margin-left: 143px;">
@@ -155,12 +155,15 @@
                                     <ul class="menu tasks" style="overflow: hidden; width: auto; height: 254px;">
 
                                     </ul>
+                                </div>
                             </li>
                             <!-- #END# Tasks -->
                             <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
                         </ul>
-                        </div>
+                    </li>
+                </ul>
             </div>
+        </div>
     </nav>
     <!-- #Top Bar -->
     <section>
@@ -195,7 +198,7 @@
                     <ul class="list" style="overflow: hidden; width: auto; height: 517px;">
                         <li class="header">MAIN NAVIGATION</li>
                         <li class="active">
-                            <a href="index.html" class="toggled waves-effect waves-block">
+                            <a href="index_backend.php" class="toggled waves-effect waves-block">
                                 <i class="material-icons">home</i>
                                 <span>Inicio</span>
                             </a>
@@ -371,12 +374,12 @@
     </section>
     <section class="content">
         <div class="princicontent">
-            <div class="col-lg-2 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
+            <div class="col-lg-2 flexstart"> <i class="material-icons">ic_keyboard_backspace</i>
             </div>
             <div class="col-lg-6 flexcenter">Contactos</div>
-            <div class="col-lg-2 flexstart "> <i class="material-icons">ic_save</i><span>Nuevo Calendario</span></a>
+            <div class="col-lg-2 flexstart "> <i class="material-icons">ic_save</i><span>Nuevo Calendario</span>
             </div>
-            <div class="col-lg-2 flexend "> <i class="material-icons">delete</i><span> Eliminar</span></a>
+            <div class="col-lg-2 flexend "> <i class="material-icons">delete</i><span> Eliminar</span>
             </div>
             <div class="tablaperfil">
                 <div class="col-md-12 form-group form-group-default input-group" style="overflow: visible"><label>Búsqueda</label><input class="form-control" type="text" placeholder="Búsqueda" id="_oq4nsw"><span class="input-group-addon" title="Búsqueda avanzada"><i class="material-icons">sync</i></span><span class="input-group-addon" title="Refrescar"><img src="images/filter.svg" style="width: 15px;">
@@ -537,153 +540,7 @@
             </div>
 
         </div>
-        <!--
-            <div id="quickview" class="quickview-wrapper open" data-pages="quickview">
-                <ul class="nav nav-tabs">
-                    <li><a href="#quickview-notes" data-toggle="tab">Notas</a></li>
-                    <li class="active"><a href="#quickview-alerts" data-toggle="tab">Alertas</a></li>
-                </ul><a class="btn-link quickview-toggle" data-toggle-element="#quickview" data-toggle="quickview"><i class="pg-close pg-medium white pntr"></i></a>
-                <div class="tab-content">
-                    <div class="tab-pane fade no-padding" id="quickview-notes">
-                        <div class="view-port clearfix quickview-notes" id="note-views">
-                            <div class="view list" id="quick-note-list">
-                                <div class="toolbar clearfix">
-                                    <ul class="pull-right">
-                                        <li><a href="#" class="delete-note-link"><i class="pg-delete pg-medium"></i></a></li>
-                                        <li><a href="#" class="new-note-link" data-navigate="view" data-view-port="#note-views" data-view-animation="push"><i class="pg-plusmath pg-medium"></i></a></li>
-                                    </ul>
-                                </div>
-                                <ul id="lstnt">
-                                    <li data-noteid="3">
-                                        <div class="left full-width">
-                                            <div class="checkbox check-warning no-margin"><input id="qncheckbox3" value="1" type="checkbox"><label for="qncheckbox3"></label></div>
-                                            <div class="pull-left">
-                                                <p class="note-preview">COLOR AZUL NRINFORMATICA</p><br>
-                                                <p class="cntnote">RGB (3,137,248)
-                                                    <div>HEX (0389F8)</div>
-                                                </p>
-                                            </div>
-                                            <div class="right pull-right"><span class="date">26/08/2016 11:11</span></div>
-                                        </div>
-                                    </li>
-                                    <li data-noteid="7">
-                                        <div class="left full-width">
-                                            <div class="checkbox check-warning no-margin"><input id="qncheckbox7" value="1" type="checkbox"><label for="qncheckbox7"></label></div>
-                                            <div class="pull-left">
-                                                <p class="note-preview">Landing Page de OrganixCRM</p><br>
-                                                <p class="cntnote">https://www.organixcrm.com/Frontend/CRM/LandingPage</p>
-                                            </div>
-                                            <div class="right pull-right"><span class="date">14/02/2017 17:36</span></div>
-                                        </div>
-                                    </li>
-                                </ul><button class="btn-remove-notes btn btn-xs btn-block hide"><i class="pg-delete"></i> Borrar</button></div>
-                            <div class="view note" id="quick-note">
-                                <div>
-                                    <ul class="toolbar">
-                                        <li><a href="#" class="close-note-link"><i class="pg-back pg-gicon"></i></a></li>
-                                        <li><a href="#" data-action="Bold"><i class="pg-bold pg-gicon"></i></a></li>
-                                        <li><a href="#" data-action="Italic"><i class="pg-italic pg-gicon"></i></a></li>
-                                        <li><a href="#" class="save-note"><i class="pg-save pg-gicon"></i></a></li>
-                                    </ul>
-                                    <div class="body">
-                                        <div>
-                                            <div class="top"><span id="hrnt"></span></div>
-                                            <div class="content">
-                                                <div class="quick-note-editor full-width js-input bold" contenteditable="true" id="ttlnt"></div>
-                                                <div class="quick-note-editor full-width full-height js-input p-t-10" contenteditable="true" id="cntnt"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade in active no-padding" id="quickview-alerts">
-                        <div id="scroll-alerts" class="dx-scrollable dx-scrollview dx-scrollable-customizable-scrollbars dx-scrollable-vertical dx-scrollable-simulated dx-visibility-change-handler">
-                            <div class="dx-scrollable-wrapper">
-                                <div class="dx-scrollable-container" tabindex="0">
-                                    <div class="dx-scrollable-content" style="left: 0px; top: 0px; transform: none;">
-                                        <div class="dx-scrollview-top-pocket">
-                                            <div class="dx-scrollview-pull-down" style="display: none;">
-                                                <div class="dx-scrollview-pull-down-image"></div>
-                                                <div class="dx-scrollview-pull-down-indicator">
-                                                    <div class="dx-loadindicator dx-widget">
-                                                        <div class="dx-loadindicator-wrapper">
-                                                            <div class="dx-loadindicator-content">
-                                                                <div class="dx-loadindicator-icon">
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment7"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment6"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment5"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment4"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment3"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment2"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment1"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment0"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="dx-scrollview-pull-down-text">
-                                                    <div style="opacity: 1;">Pull down to refresh...</div>
-                                                    <div style="opacity: 0;">Release to refresh...</div>
-                                                    <div style="opacity: 0;">Refreshing...</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="dx-scrollview-content">
-                                            <div class="view bg-white">
-                                                <div class="list-view boreded no-top-border">
-                                                    <div class="list-view-group-container">
-                                                        <h2 class="list-view-fake-header">Llamadas telefónicas</h2><button class="btn btn-success btn-block" style="display: none;">Marcar todos como leídos</button>
-                                                        <ul id="listcalls"></ul>
-                                                        <h2 class="list-view-fake-header">Tareas</h2><button class="btn btn-success btn-block" style="display: none;">Marcar todos como leídos</button>
-                                                        <ul id="listtasks"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="dx-scrollview-bottom-pocket">
-                                            <div class="dx-scrollview-scrollbottom" style="display: none;">
-                                                <div class="dx-scrollview-scrollbottom-indicator">
-                                                    <div class="dx-loadindicator dx-widget">
-                                                        <div class="dx-loadindicator-wrapper">
-                                                            <div class="dx-loadindicator-content">
-                                                                <div class="dx-loadindicator-icon">
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment7"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment6"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment5"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment4"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment3"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment2"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment1"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment0"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="dx-scrollview-scrollbottom-text">Loading...</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="dx-scrollable-scrollbar dx-widget dx-scrollbar-vertical dx-scrollbar-hoverable" style="display: none;">
-                                        <div class="dx-scrollable-scroll dx-state-invisible" style="height: 499px; transform: translate(0px, 0px);">
-                                            <div class="dx-scrollable-scroll-content"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="dx-scrollview-loadpanel dx-overlay dx-widget dx-visibility-change-handler dx-state-invisible dx-loadpanel">
-                                <div class="dx-overlay-content dx-state-invisible" aria-hidden="true" style="width: 222px; height: 90px;"></div>
-                            </div>
-                        </div>
-                        
-        </div>
-        </div>
-        </div>
-        -->
-        </div>
+
     </section>
 
 

@@ -78,7 +78,8 @@
                     if(md5($contra)==$pass){
                         mysqli_close($conexion);
                         $_SESSION["bd"]=$_REQUEST["empresa"];
-                         header("location: backend/index.php");
+                        $_SESSION["email"]=$_REQUEST["email"];
+                        header("location: backend/index_backend.php");
                         
                     }else{
                         echo '<spam class="error">Introduce una contraseña valida</spam>';                    
