@@ -1,6 +1,6 @@
 <?php
-    require_once("bd/conexion.php");
-    include("bd/ejecutadorProcedimientos.php");
+    require_once("../bd/conexion.php");
+    include("../bd/ejecutadorProcedimientos.php");
 
 session_start();
 $usu=$_SESSION["usuario"];

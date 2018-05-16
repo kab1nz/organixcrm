@@ -1,5 +1,5 @@
 ﻿<?php
-    //require_once("bd/conexion.php");
+require_once("../bd/conexion.php");
 session_start();
 $usu=$_SESSION["usuario"];
 ?>
@@ -102,6 +102,7 @@ $usu=$_SESSION["usuario"];
                                        $empresas='select NOMBREFISCAL from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
                                 $query = mysqli_query($conexion, $empresas);
                               $cont=0;
+                              $filaa;
                                 while( $fila = mysqli_fetch_array($query)){
                                     echo '<li>';                                
                                     echo '<a href="javascript:void(0);" class=" waves-effect waves-block">';
@@ -113,6 +114,7 @@ $usu=$_SESSION["usuario"];
                                      echo "</li>";
 
                                 }
+                                echo $fila[0]
                                 ?>
                                         <li>
                                             <button type="button" id="btngestionar" class="btn bg-red btn-block btn-sm waves-effect"onclick="openGestionar();">Gestionar</button>

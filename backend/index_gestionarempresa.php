@@ -1,5 +1,4 @@
 <?php
-    require_once("bd/conexion.php");
 session_start();
 $usu=$_SESSION["usuario"];
 ?>

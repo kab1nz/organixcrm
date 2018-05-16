@@ -62,14 +62,14 @@
                     
                                      
                     //sacamos al usuario
-                    $sql= 'select GUID from Usuarios where username ="'.$_REQUEST['email'].'"';
+                    $sql= 'select GUID_USU from Usuarios where username ="'.$_REQUEST['email'].'"';
                     $resultado = mysqli_query($conexion, $sql);
                     $intent= mysqli_fetch_row($resultado);
                     $guidusu= $intent[0];
 
                     
                     //sacamos la password
-                    $sql2='select contra from contrasenas where GUID="'.$guidusu.'"';
+                    $sql2='select contra from contrasenas where GUID_PASS="'.$guidusu.'"';
                     $resultado1 =  mysqli_query($conexion, $sql2);
                     $aux= mysqli_fetch_row($resultado1);
                     $pass= substr($aux[0],3,-3);
@@ -107,7 +107,7 @@
                     
                                      
                     //sacamos al usuario
-                    $sql= 'select GUID from Usuarios where username ="'.$_REQUEST['email'].'"';
+                    $sql= 'select GUID_USU from Usuarios where username ="'.$_REQUEST['email'].'"';
                     $resultado = mysqli_query($conexion, $sql);
                     $intent= mysqli_fetch_row($resultado);
                     $guidusu= $intent[0];
@@ -116,7 +116,7 @@
 
                     
                     //sacamos la password
-                    $sql2='select contra from contrasenas where GUID="'.$guidusu.'"';
+                    $sql2='select contra from contrasenas where GUID_PASS="'.$guidusu.'"';
                     $resultado1 =  mysqli_query($conexion, $sql2);
                     $aux= mysqli_fetch_row($resultado1);
                     $pass= substr($aux[0],3,-3);
@@ -154,12 +154,12 @@
                              
                         
                     }else{
-                        echo '<spam class="error">Introduce una contraseña valida</spam>';                    
+                        echo '<span class="error">Introduce una contraseña valida</span>';                    
                     }
 
        
                 }else{
-                    echo '<spam class="error">Rellena los campos</spam>';        
+                    echo '<span class="error">Rellena los campos</span>';        
                 }
                     
             }
