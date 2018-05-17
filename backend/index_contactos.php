@@ -227,7 +227,7 @@
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="pages/widgets/cards/basic.html" class=" waves-effect waves-block">Contactos</a>
+                                    <a href="index_contactos.php" class=" waves-effect waves-block">Contactos</a>
                                 </li>
                                 <li>
                                     <a href="pages/widgets/cards/colored.html" class=" waves-effect waves-block">Llamadas telefónicas</a>
@@ -392,151 +392,45 @@
                                 <div class="pg-sortup pg-small"></div>Datos de contacto</button><button type="button" class="btn btn-default" data-fld="nbus"><div class="pg-sortup pg-small"></div>Contacto de</button></div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="panel">
-                        <div class="media contact2">
-                            <div class="media-left">
-                                <div class="dv-image">
-                                    <img src="images/avatar.png" alt="">
-                                </div>
-                            </div>
-                            <div class="media-body">
-                                <div class="dv-data contanct2-title">
-                                    <div class="dv-data-name">
-                                        <span>Ismael</span>
-                                    </div>
-                                    <div class="dv-data-title">
-                                        <span>Contacto de</span> &nbsp;
-                                        <a href="#/CRM/Contacts/Edit?op=E&amp;id=222">JUELPHARMA S.L.</a>
-                                    </div>
-                                    <div class="dataview-info"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="panel">
-                        <div class="media contact2">
-                            <div class="media-left">
-                                <div class="dv-image">
-                                    <img src="images/avatar.png" alt="">
-                                </div>
-                            </div>
-                            <div class="media-body">
-                                <div class="dv-data contanct2-title">
-                                    <div class="dv-data-name">
-                                        <span>Ismael</span>
-                                    </div>
-                                    <div class="dv-data-title">
-                                        <span>Contacto de</span> &nbsp;
-                                        <a href="#/CRM/Contacts/Edit?op=E&amp;id=222">JUELPHARMA S.L.</a>
-                                    </div>
-                                    <div class="dataview-info"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="panel">
-                        <div class="media contact2">
-                            <div class="media-left">
-                                <div class="dv-image">
-                                    <img src="images/avatar.png" alt="">
-                                </div>
-                            </div>
-                            <div class="media-body">
-                                <div class="dv-data contanct2-title">
-                                    <div class="dv-data-name">
-                                        <span>Ismael</span>
-                                    </div>
-                                    <div class="dv-data-title">
-                                        <span>Contacto de</span> &nbsp;
-                                        <a href="#/CRM/Contacts/Edit?op=E&amp;id=222">JUELPHARMA S.L.</a>
-                                    </div>
-                                    <div class="dataview-info"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="panel">
-                        <div class="media contact2">
-                            <div class="media-left">
-                                <div class="dv-image">
-                                    <img src="images/avatar.png" alt="">
-                                </div>
-                            </div>
-                            <div class="media-body">
-                                <div class="dv-data contanct2-title">
-                                    <div class="dv-data-name">
-                                        <span>Ismael</span>
-                                    </div>
-                                    <div class="dv-data-title">
-                                        <span>Contacto de</span> &nbsp;
-                                        <a href="#/CRM/Contacts/Edit?op=E&amp;id=222">JUELPHARMA S.L.</a>
-                                    </div>
-                                    <div class="dataview-info"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="panel">
-                        <div class="media contact2">
-                            <div class="media-left">
-                                <div class="dv-image">
-                                    <img src="images/avatar.png" alt="">
-                                </div>
-                            </div>
-                            <div class="media-body">
-                                <div class="dv-data contanct2-title">
-                                    <div class="dv-data-name">
-                                        <span>Ismael</span>
-                                    </div>
-                                    <div class="dv-data-title">
-                                        <span>Contacto de</span> &nbsp;
-                                        <a href="#/CRM/Contacts/Edit?op=E&amp;id=222">JUELPHARMA S.L.</a>
-                                    </div>
-                                    <div class="dataview-info"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="panel">
-                        <div class="media contact2">
-                            <div class="media-left">
-                                <div class="dv-image">
-                                    <img src="images/avatar.png" alt="">
-                                </div>
-                            </div>
-                            <div class="media-body">
-                                <div class="dv-data contanct2-title">
-                                    <div class="dv-data-name">
-                                        <span>Ismael</span>
-                                    </div>
-                                    <div class="dv-data-title">
-                                        <span>Contacto de</span> &nbsp;
-                                        <a href="#/CRM/Contacts/Edit?op=E&amp;id=222">JUELPHARMA S.L.</a>
-                                    </div>
-                                    <div class="dataview-info"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
-
-
-
-
-
+                
+                
+                
+                <?php
+              
+                for($i=0;$i<=4;$i++){
+                echo'<div class="col-md-4">';
+                    echo'<div class="panel">';
+                        echo'<div class="media contact2">';
+                    
+                            echo'<div class="media-left">';
+                                echo'<div class="dv-image">';
+                                    echo'<img src="images/avatar.png" alt="">';
+                                echo'</div>';
+                            echo'</div>';
+                    
+                        echo'<div class="media-body">';
+                            echo'<div class="dv-data contanct2-title">';
+                                echo'<div class="dv-data-name">';
+                                    echo'<span>Ismael</span>';
+                                echo'</div>';
+                    
+                        echo'<div class="dv-data-title">';
+                            echo'<span>Contacto de</span> &nbsp;';
+                            echo'<a href="#/CRM/Contacts/Edit?op=E&amp;id=222">JUELPHARMA S.L.</a>';
+                        echo'</div>';
+                    
+                       echo'<br>';
+                       echo'<div class="dataview-info"></div>';
+                    
+                            echo'</div>';
+                            echo'</div>';
+                    
+                      echo'</div>';
+                    echo'</div>';
+                 echo'</div>';
+                }
+                        
+                ?>
             </div>
 
         </div>
