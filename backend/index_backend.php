@@ -108,7 +108,13 @@ $usu=$_SESSION["usuario"];
                                     echo '<h4>'.$fila[0].'</h4>';
                                     echo '</div>';  
                                     echo '</a>';
+<<<<<<< HEAD
                                     echo "</li>";
+=======
+                                     $cont++;
+                                     echo "</li>";
+
+>>>>>>> 9beb71bf5dfd0f7c8626216cfa0943cb8af4cc34
                                 }
                                 ?>
                                         <li>
