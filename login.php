@@ -138,7 +138,7 @@
                                 echo '<select class="form-control w20" id="empresa" name="empresa" required>';
                                 echo '<option selected disabled>Seleccione una opción</option>';    
                                 while( $fila = mysqli_fetch_array($query)){
-
+                                    
                                     $aux= 'select NOMBREFISCAL, BDEMPRESA from EMPRESAS where GUID="'.$fila["GUIDEMPRESA"].'"';
 
                                     $resultado =mysqli_query($conexion,$aux);

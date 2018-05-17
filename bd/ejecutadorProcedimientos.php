@@ -8,7 +8,7 @@ function addprocedures($numbd){
     //conecto con la base de datos del usuario
     $conx = mysqli_connect("localhost", "root", "root", $BD) or die('Error al conectar');
     //llamo a la ruta del fichero de los procedimientos
-    $fichero = '../bd/librerias/esqueleto.sql';
+    $fichero = 'librerias/esqueleto.sql';
     //escribo el contenido del fichero en una variable String
     $contents = file_get_contents($fichero);
     //troceo la variable String usando un delimitador y rellenando un array

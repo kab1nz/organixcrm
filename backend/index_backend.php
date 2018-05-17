@@ -112,7 +112,6 @@ $usu=$_SESSION["usuario"];
                                     echo '</a>';
                                      $cont++;
                                      echo "</li>";
-
                                 }
                                 echo $fila[0]
                                 ?>
