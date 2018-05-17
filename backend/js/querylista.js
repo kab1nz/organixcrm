@@ -1,12 +1,14 @@
-$("#menu li").click(function() {
+$(".menu li").click(function() {
     var use = "<?php use" + this.id + "; ?>";
     alert('Clicked list. ' + this.id);
 });
-$("#liEmpresa").hover(
+$(".dropdown").hover(
     function() {
-        $(this).append($("<span>" + "</span>"));
+        var use = "<?php use" + "empresa" + this.id + "; ?>";
+
+        $(this).append($("<span>" + use + "</span>"));
     },
     function() {
-        $(this).find("span:last").remove();
+        //   $(this).find("span:last").remove();
     }
 );
