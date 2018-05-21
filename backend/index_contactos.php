@@ -21,6 +21,7 @@
 
     <!-- Animation Css -->
     <link href="plugins/animate-css/animate.css" rel="stylesheet" />
+    <script src="js/querylista.js"></script>
 
     <!-- Bootstrap Material Datetime Picker Css -->
     <link href="plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
@@ -175,22 +176,18 @@
                     <img src="images/david.jpg" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">José David Navarro Rubio</div>
-                    <div class="email">john.doe@example.com</div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $usu; ?></div>
+                    <div class="email"><?php echo $_SESSION["email"]; ?></div>
                     <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float: right;">keyboard_arrow_down</i>
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="index_home_perfil.html" class=" waves-effect waves-block"><i class="material-icons">person</i>Profile</a></li>
-                            <li role="seperator" class="divider"></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block"><i class="material-icons">group</i>Followers</a></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block"><i class="material-icons">favorite</i>Likes</a></li>
-                            <li role="seperator" class="divider"></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
+                            <li><a href="index_home_perfil.html" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
+                          
+                            <li><a href="logout.php" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div>s
             <!-- #User Info -->
             <!-- Menu -->
             <div class="menu">

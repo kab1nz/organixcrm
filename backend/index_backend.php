@@ -78,7 +78,7 @@ $usu=$_SESSION["usuario"];
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars" style="display: none;"></a>
-                <a class="navbar-brand" href="index.html">Organix Crm</a>
+                <a class="navbar-brand" href="index_backend.phps">Organix Crm</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-left" style="    margin-left: 143px;">
@@ -108,13 +108,7 @@ $usu=$_SESSION["usuario"];
                                     echo '<h4>'.$fila[0].'</h4>';
                                     echo '</div>';  
                                     echo '</a>';
-<<<<<<< HEAD
-                                    echo "</li>";
-=======
-                                     $cont++;
                                      echo "</li>";
-
->>>>>>> 9beb71bf5dfd0f7c8626216cfa0943cb8af4cc34
                                 }
                                 ?>
                                         <li>

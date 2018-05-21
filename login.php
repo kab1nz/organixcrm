@@ -59,7 +59,8 @@
                     $usuario=$_REQUEST['email'];
                     $contra=$_REQUEST['pwd'];
                     
-                    
+                     //sacamos el nombre
+                   
                                      
                     //sacamos al usuario
                     $sql= 'select GUID_USU from Usuarios where username ="'.$_REQUEST['email'].'"';
@@ -79,6 +80,7 @@
                         mysqli_close($conexion);
                         $_SESSION["bd"]=$_REQUEST["empresa"];
                         $_SESSION["email"]=$_REQUEST["email"];
+                       
                         header("location: backend/index_backend.php");
                         
                     }else{
@@ -113,6 +115,7 @@
                     $guidusu= $intent[0];
 
 
+                   
 
                     
                     //sacamos la password
@@ -131,7 +134,11 @@
                             }else{
                                 $empresas='select NOMBREFISCAL,GUIDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
                                 $query = mysqli_query($conexion, $empresas);
-
+                                $sqlnombre = 'select nombre from Usuarios where username ="'.$_REQUEST['email'].'"';
+                                $resultado1 = mysqli_query($conexion, $sqlnombre);
+                                $intent1= mysqli_fetch_row($resultado1);
+                                $nombre= $intent1[0];
+                                $_SESSION['nombre']=$nombre;
 
                                 echo '<div class="form-group">';
                                 echo '<label for="empresa">Empresa:</label>';
