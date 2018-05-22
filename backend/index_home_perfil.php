@@ -177,8 +177,10 @@ $usu=$_SESSION["usuario"];
                     <img src="images/david.jpg" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?php echo $usu; ?>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >                       
+                        <label id="nombreUsu">
+                            <?php echo $usu; ?>
+                        </label>
                     </div>
                     <div class="email">
                         <?php echo $_SESSION["email"]; ?>
@@ -379,7 +381,11 @@ $usu=$_SESSION["usuario"];
             <div class="col-lg-4 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
             </div>
             <div class="col-lg-4 flexcenter">Editar perfíl</div>
-            <div class="col-lg-4 flexend"> <i class="material-icons" id="id_saveperfil">ic_save</i><span>Save</span></a>
+            <div class="col-lg-4 flexend">
+                <div id="id_saveperfil">
+                <i class="material-icons" >ic_save</i>
+                    <span>Save</span>
+                    </div>
             </div>
             <div class="col-lg-12">
                 <div class="col-lg-2 misdatos">Mis datos</div>
@@ -392,7 +398,7 @@ $usu=$_SESSION["usuario"];
                     <div class="flexcolumn">
                         <div class="row">
                             <div class="col-lg-5">Nombre
-                                <input type="text" class="form-control" id=" idnombre" placeholder="<?php echo $_SESSION['nombre']; ?>">
+                                <input type="text" class="form-control" id="idnombre" placeholder="<?php echo $_SESSION['nombre']; ?>">
                             </div>
                             <div class="col-lg-1">*</div>
 
@@ -472,6 +478,7 @@ $usu=$_SESSION["usuario"];
     <!-- Waves Effect Plugin Js -->
     <script src="plugins/node-waves/waves.js"></script>
     <script src="js/querylista.js"></script>
+    <script src="js/queryejemplo.js"></script>
 
     <!-- Autosize Plugin Js -->
     <script src="plugins/autosize/autosize.js"></script>
