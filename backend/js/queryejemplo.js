@@ -4,10 +4,11 @@ $("#id_saveperfil").click(function() {
     var nombreUsu = document.getElementById("nombreUsu").value;
 
     var usu = '<?php echo "Hola"; ?>';
-    document.write("Usuario-->" + usu);
 
     var save = "update usuarios set nombre='" + nombre + "' where username='blanes@gmail.com';";
-    var conex = "mysqli_query($conexion,$comprobacion)";
+    var conex = "mysqli_query($conexion," + "$" + save + ")";
+    document.write(conex);
+
     var cont = "mysqli_num_rows(" + conex + ")";
 
 });
