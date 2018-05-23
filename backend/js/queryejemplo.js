@@ -5,7 +5,7 @@ $("#id_saveperfil").click(function() {
 
     var usu = '<?php echo "Hola"; ?>';
 
-    var save = "update usuarios set nombre='" + nombre + "' where username='blanes@gmail.com';";
+    var save = "$updatePerfil=update usuarios set nombre='" + nombre + "' where username='blanes@gmail.com';";
     var conex = "mysqli_query($conexion," + "$" + save + ")";
     document.write(conex);
 

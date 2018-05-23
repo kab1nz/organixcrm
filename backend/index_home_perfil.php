@@ -2,6 +2,26 @@
 require_once("../bd/conexion.php");
 session_start();
 $usu=$_SESSION["usuario"];
+
+if(isset($_POST['submit'])) {
+    $nombre = $_POST['idnombre'];
+    $email = $_POST['idemail'];
+    $guidusu=$_SESSION['guidusu'];
+    $contraN=
+    echo $guidusu;
+    if(!empty($nombre)){
+    $updatePerfil = "update usuarios set nombre='$nombre' where username='$usu';";
+    $resultado4=mysqli_query($conexion, $updatePerfil);   
+}
+
+    if(!empty($email)){
+        $updateEmail = "update usuarios set username='$email' where guid_usu='$guidusu';";
+        $resultado5=mysqli_query($conexion, $updateEmail);   
+
+    }
+
+
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -377,15 +397,15 @@ $usu=$_SESSION["usuario"];
         <!-- #END# Right Sidebar -->
     </section>
     <section class="content">
+    <form action="index_home_perfil.php" method="post">
         <div class="princicontent">
             <div class="col-lg-4 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
             </div>
             <div class="col-lg-4 flexcenter">Editar perfíl</div>
             <div class="col-lg-4 flexend">
                 <div id="id_saveperfil">
-                <i class="material-icons" >ic_save</i>
-                    <span>Save</span>
-                    </div>
+                <input type="submit" name="submit" value="Submit" />
+                </div>
             </div>
             <div class="col-lg-12">
                 <div class="col-lg-2 misdatos">Mis datos</div>
@@ -398,7 +418,7 @@ $usu=$_SESSION["usuario"];
                     <div class="flexcolumn">
                         <div class="row">
                             <div class="col-lg-5">Nombre
-                                <input type="text" class="form-control" id="idnombre" placeholder="<?php echo $_SESSION['nombre']; ?>">
+                                <input type="text" class="form-control" name="idnombre" id="idnombre" placeholder="<?php echo $_SESSION['nombre']; ?>">
                             </div>
                             <div class="col-lg-1">*</div>
 
@@ -412,17 +432,18 @@ $usu=$_SESSION["usuario"];
                         <div class="row">
 
                             <div class="col-lg-3">Email
-                            <input type="text" class="form-control"placeholder="<?php echo $_SESSION['email']; ?>">
+                            <input type="text" class="form-control" name="idemail" id="idemail" placeholder="<?php echo $_SESSION['email']; ?>">
 
                             </div>
                             <div class="col-lg-1">*</div>
 
                             <div class="col-lg-4">Contraseña
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="idcontra" id="idemail">
+                        
 
                             </div>
                             <div class="col-lg-4">Repetir Contraseña
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="idrepecontra" id="idrepecontra">
 
                             </div>
                         </div>
@@ -460,6 +481,7 @@ $usu=$_SESSION["usuario"];
             </div>
             
         </div>
+        </form>
     </section>
 
 
@@ -477,9 +499,10 @@ $usu=$_SESSION["usuario"];
 
     <!-- Waves Effect Plugin Js -->
     <script src="plugins/node-waves/waves.js"></script>
+    <!--
     <script src="js/querylista.js"></script>
     <script src="js/queryejemplo.js"></script>
-
+-->
     <!-- Autosize Plugin Js -->
     <script src="plugins/autosize/autosize.js"></script>
 

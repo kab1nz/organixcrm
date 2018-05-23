@@ -139,7 +139,7 @@
                                 $intent1= mysqli_fetch_row($resultado1);
                                 $nombre= $intent1[0];
                                 $_SESSION['nombre']=$nombre;
-
+                                $_SESSION['guidusu']=$guidusu;
                                 echo '<div class="form-group">';
                                 echo '<label for="empresa">Empresa:</label>';
                                 echo '<select class="form-control w20" id="empresa" name="empresa" required>';
