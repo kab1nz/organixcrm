@@ -1,4 +1,29 @@
-﻿<!DOCTYPE html>
+﻿<?php
+require_once("../bd/conexion.php");
+session_start();
+$usu=$_SESSION["usuario"];
+
+if(isset($_POST['submit'])) {
+    $nombre = $_POST['idnombre'];
+    $email = $_POST['idemail'];
+    $guidusu=$_SESSION['guidusu'];
+    $contraN=
+    echo $guidusu;
+    if(!empty($nombre)){
+    $updatePerfil = "update usuarios set nombre='$nombre' where username='$usu';";
+    $resultado4=mysqli_query($conexion, $updatePerfil);   
+}
+
+    if(!empty($email)){
+        $updateEmail = "update usuarios set username='$email' where guid_usu='$guidusu';";
+        $resultado5=mysqli_query($conexion, $updateEmail);   
+
+    }
+
+
+}
+?>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -79,7 +104,7 @@
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars" style="display: none;"></a>
-                <a class="navbar-brand" href="index.html">Organix Crm</a>
+                <a class="navbar-brand" href="index_backend.php">Organix Crm</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-left" style="    margin-left: 143px;">
@@ -172,19 +197,20 @@
                     <img src="images/david.jpg" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">José David Navarro Rubio</div>
-                    <div class="email">john.doe@example.com</div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >                       
+                        <label id="nombreUsu">
+                            <?php echo $usu; ?>
+                        </label>
+                    </div>
+                    <div class="email">
+                        <?php echo $_SESSION["email"]; ?>
+                    </div>
                     <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="    float: right;
-                        ">keyboard_arrow_down</i>
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="index_home_perfil.html" class=" waves-effect waves-block"><i class="material-icons">person</i>Profile</a></li>
-                            <li role="seperator" class="divider"></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block"><i class="material-icons">group</i>Followers</a></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block"><i class="material-icons">shopping_cart</i>Sales</a></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block"><i class="material-icons">favorite</i>Likes</a></li>
-                            <li role="seperator" class="divider"></li>
-                            <li><a href="javascript:void(0);" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
+                            <li><a href="index_home_perfil.html" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
+
+                            <li><a href="logout.php" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>
                     </div>
                 </div>
@@ -196,7 +222,7 @@
                     <ul class="list" style="overflow: hidden; width: auto; height: 517px;">
                         <li class="header">MAIN NAVIGATION</li>
                         <li class="active">
-                            <a href="index.html" class="toggled waves-effect waves-block">
+                            <a href="index_backend.php" class="toggled waves-effect waves-block">
                                 <i class="material-icons">home</i>
                                 <span>Inicio</span>
                             </a>
@@ -371,11 +397,15 @@
         <!-- #END# Right Sidebar -->
     </section>
     <section class="content">
+    <form action="index_home_perfil.php" method="post">
         <div class="princicontent">
             <div class="col-lg-4 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
             </div>
             <div class="col-lg-4 flexcenter">Editar perfíl</div>
-            <div class="col-lg-4 flexend"> <i class="material-icons">ic_save</i><span>Save</span></a>
+            <div class="col-lg-4 flexend">
+                <div id="id_saveperfil">
+                <input type="submit" name="submit" value="Submit" />
+                </div>
             </div>
             <div class="col-lg-12">
                 <div class="col-lg-2 misdatos">Mis datos</div>
@@ -388,12 +418,12 @@
                     <div class="flexcolumn">
                         <div class="row">
                             <div class="col-lg-5">Nombre
-                                <label>Ismael</label>
+                                <input type="text" class="form-control" name="idnombre" id="idnombre" placeholder="<?php echo $_SESSION['nombre']; ?>">
                             </div>
                             <div class="col-lg-1">*</div>
 
                             <div class="col-lg-5">Apellidos
-                                <label>Ismael</label>
+                            <input type="text" class="form-control" id="idapellidos" placeholder="<?php echo $_SESSION['nombre']; ?>">
 
                             </div>
                             <div class="col-lg-1">*</div>
@@ -402,17 +432,18 @@
                         <div class="row">
 
                             <div class="col-lg-3">Email
-                                <label>ismaelborrego@gmail.com</label>
+                            <input type="text" class="form-control" name="idemail" id="idemail" placeholder="<?php echo $_SESSION['email']; ?>">
 
                             </div>
                             <div class="col-lg-1">*</div>
 
                             <div class="col-lg-4">Contraseña
-                                <label>Ismasdasdael</label>
+                            <input type="text" class="form-control" name="idcontra" id="idemail">
+                        
 
                             </div>
                             <div class="col-lg-4">Repetir Contraseña
-                                <label>Ismasdasdael</label>
+                            <input type="text" class="form-control" name="idrepecontra" id="idrepecontra">
 
                             </div>
                         </div>
@@ -448,153 +479,9 @@
                     </div>
                 </div>
             </div>
-            <!--
-            <div id="quickview" class="quickview-wrapper open" data-pages="quickview">
-                <ul class="nav nav-tabs">
-                    <li><a href="#quickview-notes" data-toggle="tab">Notas</a></li>
-                    <li class="active"><a href="#quickview-alerts" data-toggle="tab">Alertas</a></li>
-                </ul><a class="btn-link quickview-toggle" data-toggle-element="#quickview" data-toggle="quickview"><i class="pg-close pg-medium white pntr"></i></a>
-                <div class="tab-content">
-                    <div class="tab-pane fade no-padding" id="quickview-notes">
-                        <div class="view-port clearfix quickview-notes" id="note-views">
-                            <div class="view list" id="quick-note-list">
-                                <div class="toolbar clearfix">
-                                    <ul class="pull-right">
-                                        <li><a href="#" class="delete-note-link"><i class="pg-delete pg-medium"></i></a></li>
-                                        <li><a href="#" class="new-note-link" data-navigate="view" data-view-port="#note-views" data-view-animation="push"><i class="pg-plusmath pg-medium"></i></a></li>
-                                    </ul>
-                                </div>
-                                <ul id="lstnt">
-                                    <li data-noteid="3">
-                                        <div class="left full-width">
-                                            <div class="checkbox check-warning no-margin"><input id="qncheckbox3" value="1" type="checkbox"><label for="qncheckbox3"></label></div>
-                                            <div class="pull-left">
-                                                <p class="note-preview">COLOR AZUL NRINFORMATICA</p><br>
-                                                <p class="cntnote">RGB (3,137,248)
-                                                    <div>HEX (0389F8)</div>
-                                                </p>
-                                            </div>
-                                            <div class="right pull-right"><span class="date">26/08/2016 11:11</span></div>
-                                        </div>
-                                    </li>
-                                    <li data-noteid="7">
-                                        <div class="left full-width">
-                                            <div class="checkbox check-warning no-margin"><input id="qncheckbox7" value="1" type="checkbox"><label for="qncheckbox7"></label></div>
-                                            <div class="pull-left">
-                                                <p class="note-preview">Landing Page de OrganixCRM</p><br>
-                                                <p class="cntnote">https://www.organixcrm.com/Frontend/CRM/LandingPage</p>
-                                            </div>
-                                            <div class="right pull-right"><span class="date">14/02/2017 17:36</span></div>
-                                        </div>
-                                    </li>
-                                </ul><button class="btn-remove-notes btn btn-xs btn-block hide"><i class="pg-delete"></i> Borrar</button></div>
-                            <div class="view note" id="quick-note">
-                                <div>
-                                    <ul class="toolbar">
-                                        <li><a href="#" class="close-note-link"><i class="pg-back pg-gicon"></i></a></li>
-                                        <li><a href="#" data-action="Bold"><i class="pg-bold pg-gicon"></i></a></li>
-                                        <li><a href="#" data-action="Italic"><i class="pg-italic pg-gicon"></i></a></li>
-                                        <li><a href="#" class="save-note"><i class="pg-save pg-gicon"></i></a></li>
-                                    </ul>
-                                    <div class="body">
-                                        <div>
-                                            <div class="top"><span id="hrnt"></span></div>
-                                            <div class="content">
-                                                <div class="quick-note-editor full-width js-input bold" contenteditable="true" id="ttlnt"></div>
-                                                <div class="quick-note-editor full-width full-height js-input p-t-10" contenteditable="true" id="cntnt"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade in active no-padding" id="quickview-alerts">
-                        <div id="scroll-alerts" class="dx-scrollable dx-scrollview dx-scrollable-customizable-scrollbars dx-scrollable-vertical dx-scrollable-simulated dx-visibility-change-handler">
-                            <div class="dx-scrollable-wrapper">
-                                <div class="dx-scrollable-container" tabindex="0">
-                                    <div class="dx-scrollable-content" style="left: 0px; top: 0px; transform: none;">
-                                        <div class="dx-scrollview-top-pocket">
-                                            <div class="dx-scrollview-pull-down" style="display: none;">
-                                                <div class="dx-scrollview-pull-down-image"></div>
-                                                <div class="dx-scrollview-pull-down-indicator">
-                                                    <div class="dx-loadindicator dx-widget">
-                                                        <div class="dx-loadindicator-wrapper">
-                                                            <div class="dx-loadindicator-content">
-                                                                <div class="dx-loadindicator-icon">
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment7"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment6"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment5"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment4"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment3"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment2"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment1"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment0"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="dx-scrollview-pull-down-text">
-                                                    <div style="opacity: 1;">Pull down to refresh...</div>
-                                                    <div style="opacity: 0;">Release to refresh...</div>
-                                                    <div style="opacity: 0;">Refreshing...</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="dx-scrollview-content">
-                                            <div class="view bg-white">
-                                                <div class="list-view boreded no-top-border">
-                                                    <div class="list-view-group-container">
-                                                        <h2 class="list-view-fake-header">Llamadas telefónicas</h2><button class="btn btn-success btn-block" style="display: none;">Marcar todos como leídos</button>
-                                                        <ul id="listcalls"></ul>
-                                                        <h2 class="list-view-fake-header">Tareas</h2><button class="btn btn-success btn-block" style="display: none;">Marcar todos como leídos</button>
-                                                        <ul id="listtasks"></ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="dx-scrollview-bottom-pocket">
-                                            <div class="dx-scrollview-scrollbottom" style="display: none;">
-                                                <div class="dx-scrollview-scrollbottom-indicator">
-                                                    <div class="dx-loadindicator dx-widget">
-                                                        <div class="dx-loadindicator-wrapper">
-                                                            <div class="dx-loadindicator-content">
-                                                                <div class="dx-loadindicator-icon">
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment7"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment6"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment5"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment4"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment3"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment2"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment1"></div>
-                                                                    <div class="dx-loadindicator-segment dx-loadindicator-segment0"></div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="dx-scrollview-scrollbottom-text">Loading...</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="dx-scrollable-scrollbar dx-widget dx-scrollbar-vertical dx-scrollbar-hoverable" style="display: none;">
-                                        <div class="dx-scrollable-scroll dx-state-invisible" style="height: 499px; transform: translate(0px, 0px);">
-                                            <div class="dx-scrollable-scroll-content"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="dx-scrollview-loadpanel dx-overlay dx-widget dx-visibility-change-handler dx-state-invisible dx-loadpanel">
-                                <div class="dx-overlay-content dx-state-invisible" aria-hidden="true" style="width: 222px; height: 90px;"></div>
-                            </div>
-                        </div>
-                        
+            
         </div>
-        </div>
-        </div>
-        -->
-        </div>
+        </form>
     </section>
 
 
@@ -612,7 +499,10 @@
 
     <!-- Waves Effect Plugin Js -->
     <script src="plugins/node-waves/waves.js"></script>
-
+    <!--
+    <script src="js/querylista.js"></script>
+    <script src="js/queryejemplo.js"></script>
+-->
     <!-- Autosize Plugin Js -->
     <script src="plugins/autosize/autosize.js"></script>
 

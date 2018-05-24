@@ -78,7 +78,7 @@ $usu=$_SESSION["usuario"];
             <div class="navbar-header">
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars" style="display: none;"></a>
-                <a class="navbar-brand" href="index.html">Organix Crm</a>
+                <a class="navbar-brand" href="index_backend.phps">Organix Crm</a>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-left" style="    margin-left: 143px;">
@@ -99,22 +99,17 @@ $usu=$_SESSION["usuario"];
                                         $intent= mysqli_fetch_row($resultado);
                                         $guidusu= $intent[0];
                                         //echo "El GUID ES: ".$guidusu;
-                                       $empresas='select NOMBREFISCAL from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
+                                       $empresas='select NOMBREFISCAL,BDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
                                 $query = mysqli_query($conexion, $empresas);
-                              $cont=0;
-                              $filaa;
                                 while( $fila = mysqli_fetch_array($query)){
-                                    echo '<li>';                                
+                                    echo '<li id='.$fila[1].'>';                                
                                     echo '<a href="javascript:void(0);" class=" waves-effect waves-block">';
                                     echo '<div class="menu-info">';
                                     echo '<h4>'.$fila[0].'</h4>';
                                     echo '</div>';  
                                     echo '</a>';
-                                     $cont++;
                                      echo "</li>";
-
                                 }
-                                echo $fila[0]
                                 ?>
                                         <li>
                                             <button type="button" id="btngestionar" class="btn bg-red btn-block btn-sm waves-effect"onclick="openGestionar();">Gestionar</button>
@@ -140,16 +135,7 @@ $usu=$_SESSION["usuario"];
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Call Search -->
                     <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
-                    <!-- #END# Call Search -->
-                    <!-- Notifications -->
 
-
-
-
-
-
-                    <!-- #END# Notifications -->
-                    <!-- Tasks -->
                     <li class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
                             <i class="material-icons">flag</i>
@@ -411,6 +397,8 @@ $usu=$_SESSION["usuario"];
 
     <!-- My Script -->
     <script src="myscript.js"></script>
+    <script src="js/querylista.js"></script>
+
     <!-- Waves Effect Plugin Js -->
     <script src="plugins/node-waves/waves.js"></script>
 

@@ -12,6 +12,7 @@ $usu=$_SESSION["usuario"];
         <title>Welcome To | ORGANIXCRM</title>
         <!-- Favicon-->
         <link rel="icon" href="favicon.ico" type="image/x-icon">
+        <script src="js/querylista.js"></script>
 
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
