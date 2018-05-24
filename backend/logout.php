@@ -2,5 +2,5 @@
  session_start();
  $_SESSION = array();
  session_destroy();
- header("Location: http://localhost/organixcrm/bd/login.php");
+ header("Location: http://localhost/organixcrm/login.php");
 ?>
