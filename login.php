@@ -55,6 +55,7 @@
                     
                         if($vacios==false){
 
+<<<<<<< HEAD
                                 $_SESSION["usuario"]=$_REQUEST["email"];    
                                 $usuario=$_REQUEST['email'];
                                 $contra=$_REQUEST['pwd'];
@@ -89,6 +90,26 @@
                         }else{
                             echo '<spam class="error">Rellena los campos</spam>';        
                         }
+=======
+                    
+                    //sacamos la password
+                    $sql2='select contra from contrasenas where GUID_PASS="'.$guidusu.'"';
+                    $resultado1 =  mysqli_query($conexion, $sql2);
+                    $aux= mysqli_fetch_row($resultado1);
+                    $pass= substr($aux[0],3,-3);
+                    
+                        //comparamos 
+                    if(md5($contra)==$pass){
+                        mysqli_close($conexion);
+                        $_SESSION["bd"]=$_REQUEST["empresa"];
+                        $_SESSION["email"]=$_REQUEST["email"];
+                       
+                        header("location: backend/index_backend.php");
+                        
+                    }else{
+                        echo '<spam class="error">Introduce una contraseña valida</spam>';                    
+                    }
+>>>>>>> 6efb7397708f576f2ed9664592df3ec4f1b900f2
 
                 
                 }elseif(isset($_REQUEST['email']) && isset($_REQUEST['pwd'])){

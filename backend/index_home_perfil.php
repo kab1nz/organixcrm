@@ -7,7 +7,9 @@ if(isset($_POST['submit'])) {
     $nombre = $_POST['idnombre'];
     $email = $_POST['idemail'];
     $guidusu=$_SESSION['guidusu'];
-    $contraN=
+    $contraN=$_POST['idcontra'];
+    $repecontraN=$_POST['idrepecontra'];
+
     echo $guidusu;
     if(!empty($nombre)){
     $updatePerfil = "update usuarios set nombre='$nombre' where username='$usu';";
@@ -16,9 +18,16 @@ if(isset($_POST['submit'])) {
 
     if(!empty($email)){
         $updateEmail = "update usuarios set username='$email' where guid_usu='$guidusu';";
-        $resultado5=mysqli_query($conexion, $updateEmail);   
-
+        $resultado5=mysqli_query($conexion, $updateEmail);
     }
+    if(!empty($contraN) && !empty($repecontraN)){
+        if($contraN==$repecontraN){
+            $sem1=rand(3,3);
+            $sem2=rand(3,3);
+
+        }
+    }
+
 
 
 }
