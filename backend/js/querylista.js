@@ -1,9 +1,4 @@
-$(".menu li").click(function() {
-    var use = "<?php use" + this.id + "; ?>";
+$(".dropdown-menu .menu li").click(function() {
+    var use = "<?php use empresa" + this.id + "; ?>";
+    alert("esto es una prueba");
 });
-$(".dropdown").hover(
-    function() {
-        var use1 = "<?php use" + "empresa" + this.id + "; ?>";
-        $(this).append($("<span>" + use1 + "</span>"));
-    }
-);

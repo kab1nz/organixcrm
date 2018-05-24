@@ -22,9 +22,13 @@ if(isset($_POST['submit'])) {
     }
     if(!empty($contraN) && !empty($repecontraN)){
         if($contraN==$repecontraN){
-            $sem1=rand(3,3);
-            $sem2=rand(3,3);
-
+            $sem1=mt_rand(100,999);
+            $sem2=mt_rand(100,999);
+            $sem=$sem1.$sem2;
+            $contrCifra=md5($contraN);
+            $contrCiNueva=$sem1.$contrCifra.$sem2;
+            $actu="update contrasenas set contra='$contrCiNueva',semilla='$sem' where guid_pass='$guidusu'";
+            $resultado6=mysqli_query($conexion, $actu);
         }
     }
 
@@ -215,7 +219,7 @@ if(isset($_POST['submit'])) {
                         <?php echo $_SESSION["email"]; ?>
                     </div>
                     <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float:right;margin-bottom:5px;">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
                             <li><a href="index_home_perfil.html" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
 

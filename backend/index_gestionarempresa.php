@@ -1,6 +1,10 @@
 <?php
+require_once("../bd/conexion.php");
+
 session_start();
 $usu=$_SESSION["usuario"];
+$guidusu=$_SESSION['guidusu'];
+
 ?>
     <!DOCTYPE html>
     <html>
@@ -78,17 +82,24 @@ $usu=$_SESSION["usuario"];
                                             <th>País</th>
                                             <th>Activa</th>
                                         </tr>
+                                        <?php
+                                $empresas='select NOMBREFISCAL,GUIDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
+                                $mostrar = mysqli_query($conexion, $empresas);
+                                       while($mostrar=mysqli_fetch_array($result)){
+
+                                        ?>
                                         <tr>
+                                            <td><?php echo $mostrar['NOMBREFISCAL'] ?></td>
                                             <td></td>
-                                            <td>NAVADARK ENTERPRISES SL</td>
-                                            <td>PLaza</td>
-                                            <td>El Ejido</td>
-                                            <td>Almería</td>
-                                            <td>España</td>
-                                            <td>Si</td>
-
-
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
+                                        <?php
+                                       }
+                                        ?>
                                     </thead>
                                 </table>
                             </div>
