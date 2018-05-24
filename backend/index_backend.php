@@ -94,7 +94,7 @@ $usu=$_SESSION["usuario"];
                                     <ul class="menu" style="overflow: hidden; width: auto; height: 254px;">
                                         
                                         <?php
-                                        $sql= 'select GUID_USU from Usuarios where username ="'.$_SESSION["email"].'"';
+                                        $sql= 'select GUID from Usuarios where username ="'.$_SESSION["email"].'"';
                                         $resultado = mysqli_query($conexion, $sql);
                                         $intent= mysqli_fetch_row($resultado);
                                         $guidusu= $intent[0];
@@ -212,7 +212,7 @@ $usu=$_SESSION["usuario"];
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="index_contactos.html" class=" waves-effect waves-block">Contactos</a>
+                                    <a href="index_contactos.php" class=" waves-effect waves-block">Contactos</a>
                                 </li>
                                 <li>
                                     <a href="index_llamadas.html" class=" waves-effect waves-block">Llamadas telefónicas</a>
