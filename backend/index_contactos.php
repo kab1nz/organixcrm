@@ -1,3 +1,7 @@
+<?php
+$mysqli= new mysqli("localhost","root","root","empresa55");
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -377,9 +381,9 @@
             <div class="col-lg-2 flexstart"> <i class="material-icons">ic_keyboard_backspace</i>
             </div>
             <div class="col-lg-6 flexcenter">Contactos</div>
-            <div class="col-lg-2 flexstart "> <i class="material-icons">ic_save</i><span>Nuevo Calendario</span>
+            <div class="col-lg-2 flexstart "> <a href="form_contacto.php"><label><i class="material-icons">ic_save</i><span>Nuevo Contacto</span></label></a>
             </div>
-            <div class="col-lg-2 flexend "> <i class="material-icons">delete</i><span> Eliminar</span>
+            <div class="col-lg-2 flexend "> <label><i class="material-icons">delete</i><span> Eliminar</span></label>
             </div>
             <div class="tablaperfil">
                 <div class="col-md-12 form-group form-group-default input-group" style="overflow: visible"><label>Búsqueda</label><input class="form-control" type="text" placeholder="Búsqueda" id="_oq4nsw"><span class="input-group-addon" title="Búsqueda avanzada"><i class="material-icons">sync</i></span><span class="input-group-addon" title="Refrescar"><img src="images/filter.svg" style="width: 15px;">
@@ -396,39 +400,52 @@
                 
                 
                 <?php
-              
-                for($i=0;$i<=4;$i++){
-                echo'<div class="col-md-4">';
-                    echo'<div class="panel">';
-                        echo'<div class="media contact2">';
-                    
-                            echo'<div class="media-left">';
-                                echo'<div class="dv-image">';
-                                    echo'<img src="images/avatar.png" alt="">';
-                                echo'</div>';
-                            echo'</div>';
-                    
-                        echo'<div class="media-body">';
-                            echo'<div class="dv-data contanct2-title">';
-                                echo'<div class="dv-data-name">';
-                                    echo'<span>Ismael</span>';
-                                echo'</div>';
-                    
-                        echo'<div class="dv-data-title">';
-                            echo'<span>Contacto de</span> &nbsp;';
-                            echo'<a href="#/CRM/Contacts/Edit?op=E&amp;id=222">JUELPHARMA S.L.</a>';
-                        echo'</div>';
-                    
-                       echo'<br>';
-                       echo'<div class="dataview-info"></div>';
-                    
-                            echo'</div>';
-                            echo'</div>';
-                    
-                      echo'</div>';
-                    echo'</div>';
-                 echo'</div>';
+                
+                $sql="select nombre from contactos;";
+                if($mysqli->multi_query($sql)){
+                    do {
+                        
+                        if ($resultado = $mysqli->use_result()) {
+                            while ($fila = $resultado->fetch_row()) {
+                                
+                                echo'<div class="col-md-4">';
+                                    echo'<div class="panel">';
+                                        echo'<div class="media contact2">';
+
+                                            echo'<div class="media-left">';
+                                                echo'<div class="dv-image">';
+                                                    echo'<img src="images/avatar.png" alt="">';
+                                                echo'</div>';
+                                            echo'</div>';
+
+                                        echo'<div class="media-body">';
+                                            echo'<div class="dv-data contanct2-title">';
+                                                echo'<div class="dv-data-name">';
+                                                    echo'<span>'.$fila[0].'</span>';
+                                                echo'</div>';
+
+                                        echo'<div class="dv-data-title">';
+                                            echo'<span>Contacto de</span> &nbsp;';
+                                            echo'<a href="#/CRM/Contacts/Edit?op=E&amp;id=222">'.$fila[0].'</a>';
+                                        echo'</div>';
+
+                                       echo'<br>';
+                                       echo'<div class="dataview-info"></div>';
+
+                                            echo'</div>';
+                                            echo'</div>';
+
+                                      echo'</div>';
+                                    echo'</div>';
+                                 echo'</div>';
+                                
+                            }
+                            $resultado->close();
+                        }
+
+                    } while ($mysqli->next_result());
                 }
+                
                         
                 ?>
             </div>
