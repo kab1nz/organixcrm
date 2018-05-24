@@ -53,43 +53,43 @@
             
                 if(isset($_REQUEST['email']) && isset($_REQUEST['pwd']) && isset($_REQUEST['empresa'])){
                     
-                    if($vacios==false){
-                    
-                    $_SESSION["usuario"]=$_REQUEST["email"];    
-                    $usuario=$_REQUEST['email'];
-                    $contra=$_REQUEST['pwd'];
-                    
-                    
-                                     
-                    //sacamos al usuario
-                    $sql= 'select GUID from Usuarios where username ="'.$_REQUEST['email'].'"';
-                    $resultado = mysqli_query($conexion, $sql);
-                    $intent= mysqli_fetch_row($resultado);
-                    $guidusu= $intent[0];
+                        if($vacios==false){
 
-                    
-                    //sacamos la password
-                    $sql2='select contra from contrasenas where GUID="'.$guidusu.'"';
-                    $resultado1 =  mysqli_query($conexion, $sql2);
-                    $aux= mysqli_fetch_row($resultado1);
-                    $pass= substr($aux[0],3,-3);
-                    
-                        
-                    if(md5($contra)==$pass){
-                        mysqli_close($conexion);
-                        $_SESSION["bd"]=$_REQUEST["empresa"];
-                        $_SESSION["email"]=$_REQUEST["email"];
-                        header("location: backend/index_backend.php");
-                        
-                    }else{
-                        echo '<spam class="error">Introduce una contraseña valida</spam>';                    
-                    }
+                                $_SESSION["usuario"]=$_REQUEST["email"];    
+                                $usuario=$_REQUEST['email'];
+                                $contra=$_REQUEST['pwd'];
 
-       
-                }else{
-                    echo '<spam class="error">Rellena los campos</spam>';        
-                }
-                    
+
+                                //sacamos al usuario
+                                $sql= 'select GUID from Usuarios where username ="'.$_REQUEST['email'].'"';
+                                $resultado = mysqli_query($conexion, $sql);
+                                $intent= mysqli_fetch_row($resultado);
+                                $guidusu= $intent[0];
+
+
+                                //sacamos la password
+                                $sql2='select contra from contrasenas where GUID="'.$guidusu.'"';
+                                $resultado1 =  mysqli_query($conexion, $sql2);
+                                $aux= mysqli_fetch_row($resultado1);
+                                $pass= substr($aux[0],3,-3);
+
+
+                                    if(md5($contra)==$pass){
+                                        mysqli_close($conexion);
+                                        $_SESSION["bd"]=$_REQUEST["empresa"];
+                                        $_SESSION["email"]=$_REQUEST["email"];
+
+                                        header("location: backend/index_backend.php");
+
+                                    }else{
+                                        echo '<spam class="error">Introduce una contraseña valida</spam>';                    
+                                    }
+
+
+                        }else{
+                            echo '<spam class="error">Rellena los campos</spam>';        
+                        }
+
                 
                 }elseif(isset($_REQUEST['email']) && isset($_REQUEST['pwd'])){
                     
@@ -99,80 +99,71 @@
                                         
                     
                     if($vacios==false){
-                    
-                    $_SESSION["usuario"]=$_REQUEST["email"];    
-                    $usuario=$_REQUEST['email'];
-                    $contra=$_REQUEST['pwd'];
-                    
-                    
-                                     
-                    //sacamos al usuario
-                    $sql= 'select GUID from Usuarios where username ="'.$_REQUEST['email'].'"';
-                    $resultado = mysqli_query($conexion, $sql);
-                    $cont= mysqli_num_rows($resultado);
-                    $intent= mysqli_fetch_row($resultado);           
-                    $guidusu= $intent[0];
-                        
-                        
-                    if($cont != 0){
-                        
-                            //sacamos la password
-                            $sql2='select contra from contrasenas where GUID="'.$guidusu.'"';
-                            $resultado1 =  mysqli_query($conexion, $sql2);
-                            $aux= mysqli_fetch_row($resultado1);
-                            $pass= substr($aux[0],3,-3);
+
+                            $_SESSION["usuario"]=$_REQUEST["email"];    
+                            $usuario=$_REQUEST['email'];
+                            $contra=$_REQUEST['pwd'];
 
 
-                            if(md5($contra)==$pass){
+
+                            //sacamos al usuario
+                            $sql= 'select GUID from Usuarios where username ="'.$_REQUEST['email'].'"';
+                            $resultado = mysqli_query($conexion, $sql);
+                            $cont= mysqli_num_rows($resultado);
+                            $intent= mysqli_fetch_row($resultado);           
+                            $guidusu= $intent[0];
 
 
-                                    if(!$resultado){
-                                        echo "fallo de conexion a la En el query";
 
-                                    }else{
+                            if($cont != 0){
+
+                                    //sacamos la password
+                                    $sql2='select contra from contrasenas where GUID="'.$guidusu.'"';
+                                    $resultado1 =  mysqli_query($conexion, $sql2);
+                                    $aux= mysqli_fetch_row($resultado1);
+                                    $pass= substr($aux[0],3,-3);
+
+
+                                    if(md5($contra)==$pass){
+
+
                                         $empresas='select NOMBREFISCAL,GUIDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
                                         $query = mysqli_query($conexion, $empresas);
-
-
+                                        $sqlnombre = 'select nombre from Usuarios where username ="'.$_REQUEST['email'].'"';
+                                        $resultado1 = mysqli_query($conexion, $sqlnombre);
+                                        $intent1= mysqli_fetch_row($resultado1);
+                                        $nombre= $intent1[0];
+                                        $_SESSION['nombre']=$nombre;
+                                        $_SESSION['guidusu']=$guidusu;
+                                        
                                         echo '<div class="form-group">';
                                         echo '<label for="empresa">Empresa:</label>';
                                         echo '<select class="form-control w20" id="empresa" name="empresa" required>';
                                         echo '<option selected disabled>Seleccione una opción</option>';    
+                                       
                                         while( $fila = mysqli_fetch_array($query)){
 
-                                            $aux= 'select NOMBREFISCAL, BDEMPRESA from EMPRESAS where GUID="'.$fila["GUIDEMPRESA"].'"';
+                                                    $aux= 'select NOMBREFISCAL, BDEMPRESA from EMPRESAS where GUID="'.$fila["GUIDEMPRESA"].'"';
+                                                    $resultado =mysqli_query($conexion,$aux);
+                                                    $intent= mysqli_fetch_row($resultado);
 
-                                            $resultado =mysqli_query($conexion,$aux);
-                                            $intent= mysqli_fetch_row($resultado);
-
-                                             echo '<option value="'.$intent[1].'">'.$intent[0].'</option>';
+                                                     echo '<option value="'.$intent[1].'">'.$intent[0].'</option>';
                                         }
 
                                         echo "</select></div>";
 
 
-                                    }
+                                            
 
 
-                            }else{
-                                echo '<span class="error">Introduce una contraseña valida</span>';                    
-                            }
-                    
-                    }else{
-                        echo '<span class="error">Introduce un usuario registrado</span>';
-                    }    
+                                    }else{ echo '<span class="error">Introduce una contraseña valida</span>';   }
 
+                            }else{ echo '<span class="error">Introduce un usuario registrado</span>'; }    
 
+                        }else{ echo '<span class="error">Rellena los campos</span>';  }
 
-                    
-                    
-
-       
-                }else{
-                    echo '<span class="error">Rellena los campos</span>';        
-                }
-                    
-            }
+                    }
+            
             
             ?>
             
