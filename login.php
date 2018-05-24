@@ -75,7 +75,7 @@
                     $aux= mysqli_fetch_row($resultado1);
                     $pass= substr($aux[0],3,-3);
                     
-                        
+                        //comparamos 
                     if(md5($contra)==$pass){
                         mysqli_close($conexion);
                         $_SESSION["bd"]=$_REQUEST["empresa"];
