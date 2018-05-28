@@ -1,9 +1,13 @@
 <?php
-    require_once("../bd/conexion.php");
-    include("../bd/ejecutadorProcedimientos.php");
+require_once("../bd/conexion.php");
+include_once("../bd/ejecutadorProcedimientos.php");
 
 session_start();
 $usu=$_SESSION["usuario"];
+
+
+if(isset($_REQUEST['nombreEmpresa']) && isset($_REQUEST['nifEmpresa']) && isset($_REQUEST['postalEmpresa']) && isset($_REQUEST['ciudadEmpresa']) && isset($_REQUEST['direccionEmpresa']) && isset($_REQUEST['provinciaEmpresa']) && isset($_REQUEST['paisEmpresa'])){
+
 
 $nombreEmpresa=$_POST['nombreEmpresa'];
 $nifEmpresa=$_POST['nifEmpresa'];
@@ -60,10 +64,10 @@ mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una
 addprocedures($numbd);
 
 
-mysqli_close($conexion);
 
 
 
+}
 ?>
     <!DOCTYPE html>
     <html>
@@ -135,8 +139,7 @@ mysqli_close($conexion);
                     <div class="col-md-4 mgtoppeque">
                         <div class="form-group">
                             <div class="form-line">
-                                <input class="form-control" type="text" name="ciudadEmpresa" placeholder="CIUDAD
-                                ">
+                                <input class="form-control" type="text" name="ciudadEmpresa" placeholder="CIUDAD">
                             </div>
                         </div>
                     </div>
@@ -175,20 +178,29 @@ mysqli_close($conexion);
                     <div class="col-md-4 mgtoppeque">
                         <div class="form-group">
                             <div class="form-line">
-                                <input class="form-control" name="paisEmpresa" type="text" placeholder="PAÍS">
+                                 <select class="form-control w20" id="pais" name="paisEmpresa" placeholder="PAIS" required>
+                                     <option selected disabled value="">Seleccione un País</option>
+                                        <?php
+                                            $pais='select CODIGOISO,NOMBRE from paises order by NOMBRE';
+                                            $query = mysqli_query($conexion, $pais);                                    
+                                    
+                                             while( $fila = mysqli_fetch_array($query)){
+                                                echo '<option value="'.$fila[0].'">'.$fila[1].'</option>';
+                                            }
+                                        ?>    
+                                </select>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-12">
                         <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit">Guardar</button>
                     </div>
+                </div>
                     </form>
 
                 </div>
             </div>
 
-
-        </div>
 
         <!-- Jquery Core Js -->
         <script async="" src="https://www.google-analytics.com/analytics.js"></script>
@@ -235,6 +247,9 @@ mysqli_close($conexion);
         <!-- Demo Js -->
         <script src="js/demo.js"></script>
 
+        <?php
+            mysqli_close($conexion);
+        ?>
 
     </body>
 

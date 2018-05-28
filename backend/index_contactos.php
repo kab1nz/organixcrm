@@ -1,5 +1,20 @@
 <?php
-$mysqli= new mysqli("localhost","root","root","empresa55");
+session_start();
+require_once("../bd/conexion.php");
+
+$mysqli= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
+
+
+$usu=$_SESSION["usuario"];
+
+
+if(isset($_GET['bim'])) {
+  $bim = (int) $_GET['bim'];
+  $_SESSION['bd']=$bim;
+  header("Location: http://localhost/organixcrm/backend/index_contactos.php");
+
+}
+   
 ?>
 
 <!DOCTYPE html>
@@ -98,24 +113,26 @@ $mysqli= new mysqli("localhost","root","root","empresa55");
                             <li class="body">
                                 <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;">
                                     <ul class="menu" style="overflow: hidden; width: auto; height: 254px;">
+                                        <?php
+                                            $sql= 'select GUID from Usuarios where username ="'.$_SESSION["email"].'"';
+                                            $resultado = mysqli_query($conexion, $sql);
+                                            $intent= mysqli_fetch_row($resultado);
+                                            $guidusu= $intent[0];
+                                            //echo "El GUID ES: ".$guidusu;
+                                           $empresas='select NOMBREFISCAL,BDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
+                                            $query = mysqli_query($conexion, $empresas);
+                                            while( $fila = mysqli_fetch_array($query)){
+                                                    echo '<li id='.$fila[1].'>'; 
+                                                    echo '<a href="javascript:void(0);" class=" waves-effect waves-block">';
+                                                    echo '<div class="menu-info" >';
+                                                    echo '<h4>'.$fila[0].'</h4>';
+                                                    echo '</div>';  
+                                                    echo '</a>';
+                                                     echo "</li>";
+                                                }
+                                        ?>
                                         <li>
-                                            <a href="javascript:void(0);" class=" waves-effect waves-block">
-
-                                                <div class="menu-info">
-                                                    <h4>EMPRESA 1</h4>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class=" waves-effect waves-block">
-
-                                                <div class="menu-info">
-                                                    <h4>EMPRESA 2</h4>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button type="button" class="btn bg-red btn-block btn-sm waves-effect">Gestionar</button>
+                                            <button type="button" id="btngestionar" class="btn bg-red btn-block btn-sm waves-effect"onclick="openGestionar();">Gestionar</button>
 
                                         </li>
                                     </ul>
@@ -181,7 +198,7 @@ $mysqli= new mysqli("localhost","root","root","empresa55");
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $usu; ?></div>
-                    <div class="email"><?php echo $_SESSION["email"]; ?></div>
+                    <br>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
@@ -378,6 +395,7 @@ $mysqli= new mysqli("localhost","root","root","empresa55");
             <div class="col-lg-2 flexstart"> <i class="material-icons">ic_keyboard_backspace</i>
             </div>
             <div class="col-lg-6 flexcenter">Contactos</div>
+            <?php echo $_SESSION['bd']?>
             <div class="col-lg-2 flexstart "> <a href="form_contacto.php"><label><i class="material-icons">ic_save</i><span>Nuevo Contacto</span></label></a>
             </div>
             <div class="col-lg-2 flexend "> <label><i class="material-icons">delete</i><span> Eliminar</span></label>
@@ -453,7 +471,14 @@ $mysqli= new mysqli("localhost","root","root","empresa55");
 
 
     <!-- Jquery Core Js -->
+    <script async="" src="https://www.google-analytics.com/analytics.js"></script>
     <script src="plugins/jquery/jquery.min.js"></script>
+    
+    
+    <!-- My Script -->
+    <script type="text/javascript" src="myscript.js"></script>
+    <script src="js/querylista.js"></script>
+
 
     <!-- Bootstrap Core Js -->
     <script src="plugins/bootstrap/js/bootstrap.js"></script>

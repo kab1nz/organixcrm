@@ -94,23 +94,23 @@ $usu=$_SESSION["usuario"];
                                     <ul class="menu" style="overflow: hidden; width: auto; height: 254px;">
                                         
                                         <?php
-                                        $sql= 'select GUID from Usuarios where username ="'.$_SESSION["email"].'"';
-                                        $resultado = mysqli_query($conexion, $sql);
-                                        $intent= mysqli_fetch_row($resultado);
-                                        $guidusu= $intent[0];
-                                        //echo "El GUID ES: ".$guidusu;
-                                       $empresas='select NOMBREFISCAL,BDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
-                                $query = mysqli_query($conexion, $empresas);
-                                while( $fila = mysqli_fetch_array($query)){
-                                    echo '<li id='.$fila[1].'>';                                
-                                    echo '<a href="javascript:void(0);" class=" waves-effect waves-block">';
-                                    echo '<div class="menu-info">';
-                                    echo '<h4>'.$fila[0].'</h4>';
-                                    echo '</div>';  
-                                    echo '</a>';
-                                     echo "</li>";
-                                }
-                                ?>
+                                            $sql= 'select GUID from Usuarios where username ="'.$_SESSION["email"].'"';
+                                            $resultado = mysqli_query($conexion, $sql);
+                                            $intent= mysqli_fetch_row($resultado);
+                                            $guidusu= $intent[0];
+                                            //echo "El GUID ES: ".$guidusu;
+                                           $empresas='select NOMBREFISCAL,BDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
+                                            $query = mysqli_query($conexion, $empresas);
+                                            while( $fila = mysqli_fetch_array($query)){
+                                                    echo '<li id='.$fila[1].'>';                                
+                                                    echo '<a href="javascript:void(0);" class=" waves-effect waves-block">';
+                                                    echo '<div class="menu-info">';
+                                                    echo '<h4>'.$fila[0].'</h4>';
+                                                    echo '</div>';  
+                                                    echo '</a>';
+                                                     echo "</li>";
+                                                }
+                                        ?>
                                         <li>
                                             <button type="button" id="btngestionar" class="btn bg-red btn-block btn-sm waves-effect"onclick="openGestionar();">Gestionar</button>
                                         </li>

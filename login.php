@@ -78,10 +78,12 @@
 
 
                                         if(md5($contra)==$pass){
+                                            
+                                            
+                                            
                                             mysqli_close($conexion);
                                             $_SESSION["bd"]=$_REQUEST["empresa"];
                                             $_SESSION["email"]=$_REQUEST["email"];
-
                                             header("location: backend/index_backend.php");
 
                                         }else{

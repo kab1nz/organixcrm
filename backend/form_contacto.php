@@ -2,8 +2,8 @@
 session_start();
 $usu=$_SESSION["usuario"];
 
-$country=mysqli_connect('localhost','root','root','comun') or die(mysqli_error());
-$bd=mysqli_connect('localhost','root','root','empresa55') or die(mysqli_error());
+require_once("../bd/conexion.php");
+$bd= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
 
 
 if(isset($_REQUEST['nombreContacto']) && isset($_REQUEST['nifContacto']) && isset($_REQUEST['postalContacto']) && isset($_REQUEST['ciudadContacto']) && isset($_REQUEST['direccionContacto']) && isset($_REQUEST['provinciaContacto']) && isset($_REQUEST['pais']) && isset($_REQUEST['telefonoContacto'])){
@@ -184,7 +184,7 @@ if(isset($_POST['volver'])){
                                      <option selected disabled value="">Seleccione un País</option>
                                         <?php
                                             $pais='select CODIGOISO,NOMBRE from paises order by NOMBRE';
-                                            $query = mysqli_query($country, $pais);                                    
+                                            $query = mysqli_query($conexion, $pais);                                    
                                     
                                              while( $fila = mysqli_fetch_array($query)){
                                                 echo '<option value="'.$fila[0].'">'.$fila[1].'</option>';
@@ -253,6 +253,11 @@ if(isset($_POST['volver'])){
         <!-- Demo Js -->
         <script src="js/demo.js"></script>
 
+                <?php
+            mysqli_close($conexion);
+        ?>
+
+        
 
     </body>
 
