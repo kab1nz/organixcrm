@@ -2,6 +2,13 @@
 require_once("../bd/conexion.php");
 session_start();
 $usu=$_SESSION["usuario"];
+
+if(isset($_GET['bim'])) {
+  $bim = (int) $_GET['bim'];
+  $_SESSION['bd']=$bim;
+  header("Location:http://localhost/organixcrm/backend/index_backend.php");
+
+}
 ?>
 <!DOCTYPE html>
 <html>
@@ -397,7 +404,7 @@ $usu=$_SESSION["usuario"];
 
     <!-- My Script -->
     <script src="myscript.js"></script>
-    <script src="js/querylista.js"></script>
+    <script src="js/JSquerylista/querylistaBackend.js"></script>
 
     <!-- Waves Effect Plugin Js -->
     <script src="plugins/node-waves/waves.js"></script>

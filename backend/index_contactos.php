@@ -40,7 +40,7 @@ if(isset($_GET['bim'])) {
 
     <!-- Animation Css -->
     <link href="plugins/animate-css/animate.css" rel="stylesheet" />
-    <script src="js/querylista.js"></script>
+
 
     <!-- Bootstrap Material Datetime Picker Css -->
     <link href="plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
@@ -477,7 +477,7 @@ if(isset($_GET['bim'])) {
     
     <!-- My Script -->
     <script type="text/javascript" src="myscript.js"></script>
-    <script src="js/querylista.js"></script>
+    <script src="js/JSquerylista/querylistaContactos.js"></script>
 
 
     <!-- Bootstrap Core Js -->
