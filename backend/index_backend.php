@@ -169,7 +169,7 @@ $usu=$_SESSION["usuario"];
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="index_home_perfil.html" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
+                            <li><a href="index_home_perfil.php" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
                           
                             <li><a href="logout.php" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>

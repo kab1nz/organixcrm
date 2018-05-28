@@ -1,6 +1,10 @@
 <?php
+require_once("../bd/conexion.php");
+
 session_start();
 $usu=$_SESSION["usuario"];
+$guidusu=$_SESSION['guidusu'];
+
 ?>
     <!DOCTYPE html>
     <html>
@@ -12,7 +16,6 @@ $usu=$_SESSION["usuario"];
         <title>Welcome To | ORGANIXCRM</title>
         <!-- Favicon-->
         <link rel="icon" href="favicon.ico" type="image/x-icon">
-        <script src="js/querylista.js"></script>
 
         <!-- Google Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
@@ -78,19 +81,30 @@ $usu=$_SESSION["usuario"];
                                             <th>País</th>
                                             <th>Activa</th>
                                         </tr>
+                                        <?php
+                                $empresas='select NOMBREFISCAL,GUIDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
+                                $result = mysqli_query($conexion, $empresas);
+                                       while($mostrar=mysqli_fetch_array($result)){
+
+                                        ?>
                                         <tr>
+                                        <td>
+                                             <input type="checkbox" id="<?php echo $mostrar['NOMBREFISCAL'] ?>" name="checkEmpresa[]" value="checked" />
+                                             <label for="checkbox">Accept</label>
+                                        </td>
+                                            <td><?php echo $mostrar['NOMBREFISCAL'] ?></td>
                                             <td></td>
-                                            <td>NAVADARK ENTERPRISES SL</td>
-                                            <td>PLaza</td>
-                                            <td>El Ejido</td>
-                                            <td>Almería</td>
-                                            <td>España</td>
-                                            <td>Si</td>
-
-
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                         </tr>
+                                        <?php
+                                       }
+                                        ?>
                                     </thead>
                                 </table>
+
                             </div>
                         </div>
                     </div>
@@ -108,7 +122,6 @@ $usu=$_SESSION["usuario"];
         <!-- Jquery Core Js -->
         <script async="" src="https://www.google-analytics.com/analytics.js"></script>
         <script src="plugins/jquery/jquery.min.js"></script>
-        <script src="myscript.js"></script>
 
         <!-- Bootstrap Core Js -->
         <script src="plugins/bootstrap/js/bootstrap.js"></script>
@@ -148,6 +161,8 @@ $usu=$_SESSION["usuario"];
 
         <!-- Demo Js -->
         <script src="js/demo.js"></script>
+        <script src="myscript.js"></script>
+        <script src="js/querylista.js"></script>
 
 
     </body>
