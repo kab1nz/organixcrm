@@ -118,16 +118,14 @@ if(isset($_GET['bim'])) {
                                                      echo "</li>";
                                                 }
                                         ?>
-                                        <li>
-                                            <button type="button" id="btngestionar" class="btn bg-red btn-block btn-sm waves-effect"onclick="openGestionar();">Gestionar</button>
-                                        </li>
+
                                     </ul>
                                     <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div>
                                     <div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
                                 </div>
                             </li>
                             <li class="footer">
-                                <a href="javascript:void(0);" class=" waves-effect waves-block">View All Notifications</a>
+                                <button type="button" id="btngestionar" class="btn bg-red btn-block btn-sm waves-effect"onclick="openGestionar();">Gestionar</button>
                             </li>
                         </ul>
                     </li>
@@ -190,7 +188,7 @@ if(isset($_GET['bim'])) {
                     <ul class="list" style="overflow: hidden; width: auto; height: 517px;">
                         <li class="header">MAIN NAVIGATION</li>
                         <li class="active">
-                            <a href="index.html" class="toggled waves-effect waves-block">
+                            <a href="index_backend.php" class="toggled waves-effect waves-block">
                                 <i class="material-icons">home</i>
                                 <span>Inicio</span>
                             </a>
