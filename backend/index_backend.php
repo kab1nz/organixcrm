@@ -215,7 +215,7 @@ $usu=$_SESSION["usuario"];
                                     <a href="index_contactos.php" class=" waves-effect waves-block">Contactos</a>
                                 </li>
                                 <li>
-                                    <a href="index_llamadas.html" class=" waves-effect waves-block">Llamadas telefónicas</a>
+                                    <a href="index_proyectos.php" class=" waves-effect waves-block">Proyectos</a>
                                 </li>
                                 <li>
                                     <a href="index_casos.html" class=" waves-effect waves-block">Casos</a>
