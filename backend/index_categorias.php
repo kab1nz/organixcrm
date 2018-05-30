@@ -1,35 +1,14 @@
 <?php
+require_once("../bd/conexion.php");
+
 session_start();
 $usu=$_SESSION["usuario"];
-
-require_once("../bd/conexion.php");
-$bd= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
-
-
-if(isset($_REQUEST['nombreProyecto'])){
-    
-//Recogida Datos
-$nombre=$_REQUEST['nombreProyecto'];
-
-    
-   
-
-
-       
-}
-if(isset($_POST['guardarProyecto'])){
-    $insertarPRO="call INSERT_PROYECTOS('$nombre','1');";
-    $resultado=mysqli_query($bd, $insertarPRO);
-    mysqli_next_result($conexion);
-
-    $insertarPermi="call INSERT_PERMISOS(1,1,)";
-
-
-}
+$guidusu=$_SESSION['guidusu'];
 
 ?>
     <!DOCTYPE html>
     <html>
+
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -61,40 +40,32 @@ if(isset($_POST['guardarProyecto'])){
 
         <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
         <link href="css/themes/all-themes.css" rel="stylesheet" />
-        <script type="text/javascript" src="js/funciones.js"></script>
-     
     </head>
 
     <body class="theme-red" style="background: white;">
         <!-- Page Loader -->
         <div class="container">
-            <div class="row">
-            <form action="index_crearproyecto.php" method="post" name="form">
-            <?php echo "GUID: ". $_SESSION['bd']?>
 
-                <div class="col-md-12">
-                    <div class="col-md-11 mgtopgrande">Nuevo Proyecto</div>
-                    <div class="col-md-1"></div>
-                    <div class="col-md-8 mgtoppeque">
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input class="form-control" type="text" name="nombreProyecto" placeholder="NOMBRE">
-                            </div>
-                        </div>
-                    </div>
-  
-                    <div class="col-md-12">
-                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" name="guardarProyecto" type="submit" onclick="valida_envia()">Guardar</button>
-                        <br>
-                         <button class="btn btn-block btn-lg bg-red waves-effect cblanco"  name="volver">Volver</button>
-                    </div>
-                </div>
-                    </form>
-
-                </div>
+            <div>
+                <label class="mgtopgrande">Categorias</label>
             </div>
+            <div class="mgbtngrande">
+                <div class="btn btn-danger btn-cons" onclick="openCrearCategoria();">Nueva Categoria</div>
+                <div class="btn btn-danger btn-cons">Eliminar Categoria</div>
+            </div>
+           
+           
+</span></div>
 
-        
+
+
+
+
+
+
+
+            </div>
+        </div>
 
         <!-- Jquery Core Js -->
         <script async="" src="https://www.google-analytics.com/analytics.js"></script>
@@ -119,8 +90,6 @@ if(isset($_POST['guardarProyecto'])){
         <script src="plugins/raphael/raphael.min.js"></script>
         <script src="plugins/morrisjs/morris.js"></script>
 
-        <script src="myscript.js"></script>
-
         <!-- ChartJs -->
         <script src="plugins/chartjs/Chart.bundle.js"></script>
 
@@ -137,16 +106,12 @@ if(isset($_POST['guardarProyecto'])){
         <!-- Custom Js -->
         <script src="js/admin.js"></script>
         <script src="js/pages/index.js"></script>
-        
 
         <!-- Demo Js -->
         <script src="js/demo.js"></script>
+        <script src="myscript.js"></script>
+        <script src="js/querylista.js"></script>
 
-                <?php
-            mysqli_close($conexion);
-        ?>
-
-        
 
     </body>
 

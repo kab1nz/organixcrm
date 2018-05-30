@@ -6,10 +6,10 @@ require_once("../bd/conexion.php");
 $bd= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
 
 
-if(isset($_REQUEST['nombreProyecto'])){
+if(isset($_REQUEST['nombreCategoria'])){
     
 //Recogida Datos
-$nombre=$_REQUEST['nombreProyecto'];
+$nombre=$_REQUEST['nombreCategoria'];
 
     
    
@@ -17,14 +17,11 @@ $nombre=$_REQUEST['nombreProyecto'];
 
        
 }
+
 if(isset($_POST['guardarProyecto'])){
     $insertarPRO="call INSERT_PROYECTOS('$nombre','1');";
     $resultado=mysqli_query($bd, $insertarPRO);
     mysqli_next_result($conexion);
-
-    $insertarPermi="call INSERT_PERMISOS(1,1,)";
-
-
 }
 
 ?>
@@ -73,18 +70,33 @@ if(isset($_POST['guardarProyecto'])){
             <?php echo "GUID: ". $_SESSION['bd']?>
 
                 <div class="col-md-12">
-                    <div class="col-md-11 mgtopgrande">Nuevo Proyecto</div>
+                    <div class="col-md-11 mgtopgrande">Nueva Categoria</div>
                     <div class="col-md-1"></div>
                     <div class="col-md-8 mgtoppeque">
                         <div class="form-group">
                             <div class="form-line">
-                                <input class="form-control" type="text" name="nombreProyecto" placeholder="NOMBRE">
+                                <input class="form-control" type="text" name="nombreCategoria" placeholder="NOMBRE">
+                                <div class="form-group">
+                            <div class="form-line">
+                                 <select class="form-control w20" id="idproca" name="idproca" placeholder="Proyecto" required>
+                                     <option selected disabled value="">Seleccione un Proyecto</option>
+                                        <?php
+                                            $pais='select CODIGOISO,NOMBRE from paises order by NOMBRE';
+                                            $query = mysqli_query($conexion, $pais);                                    
+                                    
+                                             while( $fila = mysqli_fetch_array($query)){
+                                                echo '<option value="'.$fila[0].'">'.$fila[1].'</option>';
+                                            }
+                                        ?>    
+                                </select>
+                            </div>
+                        </div>
                             </div>
                         </div>
                     </div>
   
                     <div class="col-md-12">
-                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" name="guardarProyecto" type="submit" onclick="valida_envia()">Guardar</button>
+                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" name="guardarCategoria" type="submit" onclick="valida_envia()">Guardar</button>
                         <br>
                          <button class="btn btn-block btn-lg bg-red waves-effect cblanco"  name="volver">Volver</button>
                     </div>

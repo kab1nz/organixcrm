@@ -127,7 +127,7 @@ if(isset($_POST['volver'])){
                                 <input class="form-control" type="text" name="nifContacto" placeholder="NIF" onChange="javascript:while(''+this.value.charAt(0) ==' ')this.value=this.value.substring(1,this.value.length);">
                                 <?php
                                     if(isset($existcontacto) && $existcontacto==true){
-                                        echo '<spam class="error">Ya existe este NIF</spam>';                            
+                                        echo '<span class="error">Ya existe este NIF</span>';                            
                                     }
                                 ?>
                             </div>
@@ -182,13 +182,16 @@ if(isset($_POST['volver'])){
                             <div class="form-line">
                                 <select class="form-control w20" id="pais" name="pais" placeholder="PAIS" required>
                                      <option selected disabled value="">Seleccione un País</option>
+                                     <option value="España">España</option>
                                         <?php
+                                        /*
                                             $pais='select CODIGOISO,NOMBRE from paises order by NOMBRE';
                                             $query = mysqli_query($conexion, $pais);                                    
                                     
                                              while( $fila = mysqli_fetch_array($query)){
                                                 echo '<option value="'.$fila[0].'">'.$fila[1].'</option>';
                                             }
+                                            */
                                         ?>    
                                 </select>
                             </div>

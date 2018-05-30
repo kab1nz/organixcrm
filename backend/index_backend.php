@@ -223,7 +223,7 @@ if(isset($_GET['bim'])) {
                                     <a href="index_proyectos.php" class=" waves-effect waves-block">Proyectos</a>
                                 </li>
                                 <li>
-                                    <a href="index_casos.html" class=" waves-effect waves-block">Casos</a>
+                                    <a href="index_categorias.php" class=" waves-effect waves-block">Categorias</a>
                                 </li>
                                 <li>
                                     <a href="index_tareas.html" class=" waves-effect waves-block">Tareas</a>
