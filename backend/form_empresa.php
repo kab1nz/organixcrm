@@ -6,49 +6,76 @@ session_start();
 $usu=$_SESSION["usuario"];
 
 
-if(isset($_REQUEST['nombreEmpresa']) && isset($_REQUEST['nifEmpresa']) && isset($_REQUEST['postalEmpresa']) && isset($_REQUEST['ciudadEmpresa']) && isset($_REQUEST['direccionEmpresa']) && isset($_REQUEST['provinciaEmpresa']) && isset($_REQUEST['paisEmpresa'])){
+if(isset($_REQUEST['nombreEmpresa']) && isset($_REQUEST['nifEmpresa']) && isset($_REQUEST['postalEmpresa']) && isset($_REQUEST['ciudadEmpresa']) && isset($_REQUEST['direccionEmpresa']) && isset($_REQUEST['provinciaEmpresa']) && isset($_REQUEST['paisEmpresa']) && isset($_REQUEST['telefonoEmpresa'])){
 
-
+//Recogemos los datos 
 $nombreEmpresa=$_POST['nombreEmpresa'];
 $nifEmpresa=$_POST['nifEmpresa'];
-$postalEmpresav=$_POST['postalEmpresa'];
+$postalEmpresa=$_POST['postalEmpresa'];
 $ciudadEmpresa=$_POST['ciudadEmpresa'];
 $direccionEmpresa=$_POST['direccionEmpresa'];
 $provinciaEmpresa=$_POST['provinciaEmpresa'];
 $paisEmpresa=$_POST['paisEmpresa'];
+$telefonoEmpresa=$_POST['telefonoEmpresa'];
+    
 //Insercción de empresa
-$insertarEMP="call INSERT_EMPRESAS('$nombreEmpresa');";
-$resultado=mysqli_query($conexion, $insertarEMP);
-mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
-//consulta de la ultima empresa 
-/*
-$consultGuidEmpresa = "select guid from empresas order by guid desc limit 1 ;";
-$resultadoemp=mysqli_query($conexion, $consultGuidEmpresa);
-$intent= mysqli_fetch_row($resultadoemp);
-$guidempr= $intent[0];
-mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
-*/
+$insertarEMP="insert into EMPRESAS (NOMBREFISCAL, NOMBRECOMERCIAL, NIF,HABILITADO,ALIASCRM, FECHADECREACION) values('$nombreEmpresa','$nombreEmpresa','$nifEmpresa',1,'$nombreEmpresa', NOW());";
+$resultado0 = mysqli_query($conexion,$insertarEMP);
+    
+    if(!$resultado0){
+        echo "ERROR -> ". mysqli_error($conexion);
+        echo "<br>";
+    }else{
+        echo "Empresa insertada<br>";
+    }    
+mysqli_next_result($conexion);
+    
+    
 //consulta del guid del usuario
 $selectnombre = "select guid from empresas where NOMBREFISCAL='$nombreEmpresa'";
 $res=mysqli_query($conexion,$selectnombre);
 $intent = mysqli_fetch_row($res);
 $guidempresas = $intent[0];
-
-/*
-$consultaGuiUsu='select guid_usu from usuarios where username="'. $_SESSION['usuario'].'"';
-$intent2= mysqli_fetch_row($consultaGuiUsu);    
-$guidusu= $intent2[0];
-*/
-
+echo "El GUID ES -> ".$guidempresas."<br>";    
 mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
 
+/*    
 //insercción de relacion 
 $guidusu=$_SESSION['guidusu'];
-
 $insertarEMP_USU="insert into usu_empr values('$guidusu','$guidempresas',3)";
 $resultado1=mysqli_query($conexion, $insertarEMP_USU);
 mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
+*/
+    
+/*   
+//insercion de direccion de empresa    
+$insertdire = "call INSERT_DIRECCIONES('$guidempresas',2,'$nombreEmpresa','$direccionEmpresa','$postalEmpresa','$ciudadEmpresa','$provinciaEmpresa','$paisEmpresa');";
+$resultado2=mysqli_query($conexion,$insertdire);
 
+    if(!$resultado2){
+        echo "ERROR -> ". mysqli_error($conexion);
+    }else{
+        echo "Direcion insertada";
+    }
+    
+mysqli_next_result($conexion);
+*/    
+    
+    
+        //insertar telefono 78561219M
+        $insertTELEFONO="call INSERT_TELEFONO('$guidempresas','$nombreEmpresa','$telefonoEmpresa');";
+        $resultado5=mysqli_query($conexion, $insertTELEFONO);
+            
+            if(!$resultado5){
+                echo "<br>el telefono fallo = ". mysqli_error($conexion);
+            }else{
+                echo "<br>telefono insertado";
+            }
+    
+    
+    
+    
+    
 $resultadoaux=mysqli_query($conexion,"select BDEMPRESA from empresas where ALIASCRM='$nombreEmpresa'");
 $intent= mysqli_fetch_row($resultadoaux);
 $numbd= $intent[0];
@@ -56,17 +83,20 @@ $numbd= $intent[0];
 mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
 mysqli_free_result($resultadoaux);
 
- $crear="call crear_BDEMPRESA($numbd)";
- $resultadobd = mysqli_query($conexion, $crear);
+ //$crear="call crear_BDEMPRESA($numbd)";
+ //$resultadobd = mysqli_query($conexion, $crear);
 
 
-mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada                   
-addprocedures($numbd);
+//mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada                   
+//addprocedures($numbd);
 
 
 
 
+}
 
+if(isset($_POST['volver'])){
+    header("location: index_gestionarempresa.php");
 }
 ?>
     <!DOCTYPE html>
@@ -108,8 +138,7 @@ addprocedures($numbd);
         <!-- Page Loader -->
         <div class="container">
             <div class="row">
-            <form action="form_empresa.php" method="post">
-                <?php echo "GUID: ". $_SESSION['guidusu']?>
+            <form action="form_empresa.php" method="post" name="form">
                 <div class="col-md-12">
                     <div class="col-md-11 mgtopgrande">Nueva Empresa</div>
                     <div class="col-md-1"></div>
@@ -127,24 +156,7 @@ addprocedures($numbd);
                             </div>
                         </div>
                     </div>
-
-
-                    <div class="col-md-8 mgtoppeque">
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input class="form-control" type="text" name="postalEmpresa" placeholder="CÓDIGO POSTAL">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mgtoppeque">
-                        <div class="form-group">
-                            <div class="form-line">
-                                <input class="form-control" type="text" name="ciudadEmpresa" placeholder="CIUDAD">
-                            </div>
-                        </div>
-                    </div>
-
-
+                    
                     <div class="col-md-8 mgtoppeque">
                         <div class="form-group">
                             <div class="form-line">
@@ -152,18 +164,11 @@ addprocedures($numbd);
                             </div>
                         </div>
                     </div>
+                    
                     <div class="col-md-4 mgtoppeque">
-                        <div>
-                            ACTIVA
-                        </div>
                         <div class="form-group">
-                            <div class="form-group">
-                                <input type="radio" name="activo" name="contact" value="email">
-                                <label for="contactChoice1">SI</label>
-
-                                <input type="radio" name="noactivo" name="contact" value="phone">
-                                <label for="contactChoice2">NO</label>
-
+                            <div class="form-line">
+                                <input class="form-control" type="text" name="ciudadEmpresa" placeholder="CIUDAD">
                             </div>
                         </div>
                     </div>
@@ -175,10 +180,26 @@ addprocedures($numbd);
                             </div>
                         </div>
                     </div>
+                    
                     <div class="col-md-4 mgtoppeque">
                         <div class="form-group">
                             <div class="form-line">
-                                 <select class="form-control w20" id="pais" name="paisEmpresa" placeholder="PAIS" required>
+                                <input class="form-control" type="text" name="postalEmpresa" placeholder="CÓDIGO POSTAL" maxlength="5">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-8 mgtoppeque">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input class="form-control" type="number" name="telefonoEmpresa" placeholder="TELÉFONO">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mgtoppeque">
+                        <div class="form-group">
+                            <div class="form-line">
+                                 <select class="form-control w20" id="pais" name="paisEmpresa" placeholder="PAIS" >
                                      <option selected disabled value="">Seleccione un País</option>
                                         <?php
                                             $pais='select CODIGOISO,NOMBRE from paises order by NOMBRE';
@@ -193,7 +214,9 @@ addprocedures($numbd);
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit">Guardar</button>
+                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="button" onclick="valida_enviaEmpresas()">Guardar</button>
+                        <br>
+                         <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="volver">Volver</button>
                     </div>
                 </div>
                     </form>
@@ -243,6 +266,11 @@ addprocedures($numbd);
         <!-- Custom Js -->
         <script src="js/admin.js"></script>
         <script src="js/pages/index.js"></script>
+        
+        
+        <!-- My Js -->
+        <script type="text/javascript" src="js/funciones.js"></script>
+
 
         <!-- Demo Js -->
         <script src="js/demo.js"></script>
