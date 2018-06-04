@@ -18,10 +18,22 @@ $nombre=$_REQUEST['nombreCategoria'];
        
 }
 
-if(isset($_POST['guardarProyecto'])){
-    $insertarPRO="call INSERT_PROYECTOS('$nombre','1');";
+if(isset($_POST['guardarCategoria'])){
+    $proyecto = $_REQUEST['idproye'];
+    $guidpro = "select GUID from proyectos where NOMBRE='$proyecto'";
+    $resultado1 = mysqli_query($bd,$guidpro);
+    $guidresult=mysqli_fetch_row($resultado1);
+    mysqli_next_result($bd);
+    $categoria = $_REQUEST['idproca'];
+    $guidpro = "select GUID from categoria where NOMBRE='$categoria'";
+    $resultado1 = mysqli_query($bd,$guidpro);
+    $guidresult1=mysqli_fetch_row($resultado1);
+    
+    if($categoria)
+    $insertarPRO="call INSERT_CATEGORIAS('$nombre','$guidresult[0]','$guidresult1[0]');";
+
     $resultado=mysqli_query($bd, $insertarPRO);
-    mysqli_next_result($conexion);
+
 }
 
 ?>
@@ -66,7 +78,7 @@ if(isset($_POST['guardarProyecto'])){
         <!-- Page Loader -->
         <div class="container">
             <div class="row">
-            <form action="index_crearproyecto.php" method="post" name="form">
+            <form action="index_crearCategoria.php" method="post" name="form">
             <?php echo "GUID: ". $_SESSION['bd']?>
 
                 <div class="col-md-12">
@@ -75,21 +87,33 @@ if(isset($_POST['guardarProyecto'])){
                     <div class="col-md-8 mgtoppeque">
                         <div class="form-group">
                             <div class="form-line">
-                                <input class="form-control" type="text" name="nombreCategoria" placeholder="NOMBRE">
-                                <div class="form-group">
-                            <div class="form-line">
-                                 <select class="form-control w20" id="idproca" name="idproca" placeholder="Proyecto" required>
+                            <select class="form-control w20" id="idproye" name="idproye" placeholder="Proyecto" required>
                                      <option selected disabled value="">Seleccione un Proyecto</option>
                                         <?php
-                                            $pais='select CODIGOISO,NOMBRE from paises order by NOMBRE';
-                                            $query = mysqli_query($conexion, $pais);                                    
+                                            
+                                            $PRO='select NOMBRE,GUID from proyectos order by NOMBRE';
+                                            $query = mysqli_query($bd, $PRO);                                    
                                     
                                              while( $fila = mysqli_fetch_array($query)){
-                                                echo '<option value="'.$fila[0].'">'.$fila[1].'</option>';
+                                                echo '<option value="'.$fila[0].'">'.$fila[0].'</option>';
                                             }
                                         ?>    
                                 </select>
-                            </div>
+                                <select class="form-control w20" id="idproca" name="idproca" placeholder="Proyecto" required>
+                                     <option selected disabled value="">Seleccione una Categoria</option>
+                                        <?php
+                                            
+                                            $CAT='select NOMBRE,GUID from categoria order by NOMBRE';
+                                            $query = mysqli_query($bd, $CAT);                                    
+                                    
+                                             while( $fila = mysqli_fetch_array($query)){
+                                                echo '<option value="'.$fila[0].'">'.$fila[0].'</option>';
+                                            }
+                                        ?>    
+                                </select>
+                                <input class="form-control" type="text" name="nombreCategoria" placeholder="NUEVA CATEGORIA">
+                                <div class="form-group">
+                           
                         </div>
                             </div>
                         </div>
