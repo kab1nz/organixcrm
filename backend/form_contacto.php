@@ -180,7 +180,7 @@ if(isset($_POST['volver'])){
                     <div class="col-md-4 mgtoppeque">
                         <div class="form-group">
                             <div class="form-line">
-                                <select class="form-control w20" id="pais" name="pais" placeholder="PAIS" required>
+                                <select class="form-control w20" id="pais" name="pais" placeholder="PAIS">
                                      <option selected disabled value="">Seleccione un País</option>
                                      <option value="España">España</option>
                                         <?php
@@ -198,7 +198,7 @@ if(isset($_POST['volver'])){
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="button" onclick="valida_envia()">Guardar</button>
+                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="button" onclick="valida_enviaContactos()">Guardar</button>
                         <br>
                          <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="volver">Volver</button>
                     </div>

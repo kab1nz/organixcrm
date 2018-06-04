@@ -59,7 +59,7 @@ $guidusu=$_SESSION['guidusu'];
            
 </span></div>
             <div class="col-md-10">
-                <span class="columnstilo">Arrastre una columna aquí para agrupar</span>
+                
             </div>
             <div class="col-md-2 ">
                 <img src="images/export-file.svg" class="fderequince " style="    margin-left: 10px;">
@@ -82,7 +82,7 @@ $guidusu=$_SESSION['guidusu'];
                                             <th>Activa</th>
                                         </tr>
                                         <?php
-                                $empresas='select NOMBREFISCAL,GUIDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
+                                $empresas='select NOMBREFISCAL,GUIDEMPRESA, DIRECCION, CIUDAD, PROVINCIA, PAIS from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
                                 $result = mysqli_query($conexion, $empresas);
                                        while($mostrar=mysqli_fetch_array($result)){
 

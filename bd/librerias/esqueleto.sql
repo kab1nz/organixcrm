@@ -5,6 +5,15 @@ CREATE TABLE `lord_of_the_table` (
   PRIMARY KEY (`GUID`)
 );
 
+-- DELIMITADOR
+
+CREATE TRIGGER `lord_GUID` BEFORE INSERT ON `lord_of_the_table` FOR EACH ROW
+BEGIN
+  IF new.GUID IS NULL THEN
+    SET new.GUID = uuid();
+  END IF;
+END;
+
 -- DELIMITADOR 
 
 CREATE TABLE `contactos` (
@@ -13,9 +22,7 @@ CREATE TABLE `contactos` (
   `FOTO` varchar(45) DEFAULT NULL,
   `TIPO` char(36) NOT NULL,
   `CIF` varchar(80) DEFAULT NULL,
-  PRIMARY KEY (`GUID`),
-  KEY `contactos_lott_idx` (`TIPO`),
-  CONSTRAINT `contactos_lott` FOREIGN KEY (`TIPO`) REFERENCES `lord_of_the_table` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`GUID`)
 );
 
 -- DELIMITADOR 
@@ -33,15 +40,13 @@ CREATE TABLE `proyectos` (
   `GUID` char(36) NOT NULL,
   `NOMBRE` varchar(45) NOT NULL,
   `TIPO` char(36) NOT NULL,
-  PRIMARY KEY (`GUID`),
-  KEY `proyectos_lord_idx` (`TIPO`),
-  CONSTRAINT `proyectos_lord` FOREIGN KEY (`TIPO`) REFERENCES `lord_of_the_table` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`GUID`)
 );
 
 -- DELIMITADOR
 
 
-CREATE TRIGGER `proyectos_BEFORE_INSERT` BEFORE INSERT ON `proyectos` FOR EACH ROW
+CREATE TRIGGER `proyectos_GUID` BEFORE INSERT ON `proyectos` FOR EACH ROW
 BEGIN
   IF new.GUID IS NULL THEN
     SET new.GUID = uuid();
@@ -55,16 +60,12 @@ CREATE TABLE `categoria` (
   `NOMBRE` varchar(50) NOT NULL,
   `IDPROYECTO` char(36) DEFAULT NULL,
   `IDPADRE` char(36) DEFAULT NULL,
-  PRIMARY KEY (`GUID`),
-  KEY `categoria_proyectos_idx` (`IDPROYECTO`),
-  KEY `categoria_categoria_idx` (`IDPADRE`),
-  CONSTRAINT `categoria_categoria` FOREIGN KEY (`IDPADRE`) REFERENCES `categoria` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `categoria_proyectos` FOREIGN KEY (`IDPROYECTO`) REFERENCES `proyectos` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`GUID`)
 ); 
 
 -- DELIMITADOR
 
-CREATE TRIGGER `categoria_BEFORE_INSERT` BEFORE INSERT ON `categoria` FOR EACH ROW
+CREATE TRIGGER `categoria_GUID` BEFORE INSERT ON `categoria` FOR EACH ROW
 BEGIN
   IF new.GUID IS NULL THEN
     SET new.GUID = uuid();
@@ -83,9 +84,7 @@ CREATE TABLE `contacto_usuario` (
   `DATELOST` datetime DEFAULT NULL,
   `ULTIMACONEXION` datetime DEFAULT NULL,
   `FOTO` varchar(40) DEFAULT NULL,
-  PRIMARY KEY (`GUID`),
-  KEY `contactos_usuario_contactos_idx` (`IDCONTACTO`),
-  CONSTRAINT `contactos_usuario_contactos` FOREIGN KEY (`IDCONTACTO`) REFERENCES `contactos` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`GUID`)
 );
 
 
@@ -104,8 +103,7 @@ CREATE TABLE `claves` (
   `GUID` char(36) NOT NULL,
   `PASSWORD` varchar(80) NOT NULL,
   `SEMILLA` varchar(15) DEFAULT NULL,
-  PRIMARY KEY (`GUID`),
-  CONSTRAINT `clave_contacto_usuario` FOREIGN KEY (`GUID`) REFERENCES `contacto_usuario` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`GUID`)
 );
 
 -- DELIMITADOR 
@@ -121,20 +119,14 @@ CREATE TABLE `direcciones` (
   `POBLACION` varchar(40) NOT NULL,
   `PROVINCIA` varchar(40) NOT NULL,
   `IDTIPO` char(36) DEFAULT NULL,
-  `IDPAIS` int(8) NOT NULL,
-  PRIMARY KEY (`GUID`),
-  KEY `direcciones_usuario` (`IDASOCIADO`),
-  KEY `direcciones_lord_idx` (`IDTIPO`),
-  KEY `direcciones_paises_idx` (`IDPAIS`),
-  CONSTRAINT `direcciones_contacto` FOREIGN KEY (`IDASOCIADO`) REFERENCES `contactos` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `direcciones_lord` FOREIGN KEY (`IDTIPO`) REFERENCES `lord_of_the_table` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `direcciones_paises` FOREIGN KEY (`IDPAIS`) REFERENCES `comun`.`paises` (`CODIGOISO`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  `IDPAIS` char(2) NOT NULL,
+  PRIMARY KEY (`GUID`)
 );
 
 -- DELIMITADOR 
 
 
-CREATE TRIGGER `direcciones_BEFORE_INSERT` BEFORE INSERT ON `direcciones` FOR EACH ROW
+CREATE TRIGGER `direcciones_GUID` BEFORE INSERT ON `direcciones` FOR EACH ROW
 BEGIN
   IF new.GUID IS NULL THEN
     SET new.GUID = uuid();
@@ -150,17 +142,13 @@ CREATE TABLE `documentos` (
   `IDPROYECTO` char(36) NOT NULL,
   `IDCATEGORIA` char(36) NOT NULL,
   `DATOS` varchar(10000) NOT NULL,
-  PRIMARY KEY (`GUID`),
-  KEY `PROYECTO_DOCUMENTO_idx` (`IDPROYECTO`),
-  KEY `proyecto_categoria_idx` (`IDCATEGORIA`),
-  CONSTRAINT `PROYECTO_DOCUMENTO` FOREIGN KEY (`IDPROYECTO`) REFERENCES `proyectos` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `proyecto_categoria` FOREIGN KEY (`IDCATEGORIA`) REFERENCES `categoria` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`GUID`)
 );
 
 -- DELIMITADOR
 
 
-CREATE  TRIGGER `documentos_BEFORE_INSERT` BEFORE INSERT ON `documentos` FOR EACH ROW
+CREATE  TRIGGER `documentos_GUID` BEFORE INSERT ON `documentos` FOR EACH ROW
 BEGIN
   IF new.GUID IS NULL THEN
     SET new.GUID = uuid();
@@ -174,9 +162,7 @@ CREATE TABLE `extendido` (
   `IDCONTACTO` char(36) NOT NULL,
   `NOMBRE` varchar(80) NOT NULL,
   `VALOR` varchar(80) DEFAULT NULL,
-  PRIMARY KEY (`GUID`),
-  KEY `EXTENDIDO_CONTACTOS_idx` (`IDCONTACTO`),
-  CONSTRAINT `EXTENDIDO_CONTACTOS` FOREIGN KEY (`IDCONTACTO`) REFERENCES `contactos` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`GUID`)
 );
 
 -- DELIMITADOR
@@ -191,18 +177,13 @@ END
 
 -- DELIMITADOR
 
-
-
-
 CREATE TABLE `notas` (
   `GUID` char(36) NOT NULL,
   `TIPO` int(11) NOT NULL,
   `IDASOCIADO` char(36) NOT NULL,
   `FECHA` datetime NOT NULL,
   `TEXTO` varchar(15000) DEFAULT NULL,
-  PRIMARY KEY (`GUID`),
-  KEY `notas_contactos_idx` (`IDASOCIADO`),
-  CONSTRAINT `notas_contactos` FOREIGN KEY (`IDASOCIADO`) REFERENCES `contactos` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`GUID`)
 ); 
 
 -- DELIMITADOR
@@ -223,16 +204,12 @@ CREATE TABLE `permisos` (
   `NIVEL` int(11) NOT NULL,
   `IDASOCIADO` char(36) DEFAULT NULL,
   `IDDOCUMENTO` char(36) DEFAULT NULL,
-  PRIMARY KEY (`GUID`),
-  KEY `ghhh_idx` (`IDASOCIADO`),
-  KEY `permisos_documentos_idx` (`IDDOCUMENTO`),
-  CONSTRAINT `contactos_permisos` FOREIGN KEY (`IDASOCIADO`) REFERENCES `contactos` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `permisos_documentos` FOREIGN KEY (`IDDOCUMENTO`) REFERENCES `documentos` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`GUID`)
 );
 
 -- DELIMITADOR
 
-CREATE TRIGGER `permisos_BEFORE_INSERT` BEFORE INSERT ON `permisos` FOR EACH ROW
+CREATE TRIGGER `permisos_GUID` BEFORE INSERT ON `permisos` FOR EACH ROW
 BEGIN
   IF new.GUID IS NULL THEN
     SET new.GUID = uuid();
@@ -248,11 +225,7 @@ CREATE TABLE `telefonos` (
   `NOMBRE` varchar(40) NOT NULL,
   `NUMERO` varchar(40) NOT NULL,
   `IDTIPO` char(36) DEFAULT NULL,
-  PRIMARY KEY (`GUID`),
-  KEY `telf_usuario_idx` (`IDASOCIADO`),
-  KEY `telefono_lord_idx` (`IDTIPO`),
-  CONSTRAINT `telefono_contacto` FOREIGN KEY (`IDASOCIADO`) REFERENCES `contactos` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `telefono_lord` FOREIGN KEY (`IDTIPO`) REFERENCES `lord_of_the_table` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`GUID`)
 );
 
 -- DELIMITADOR
@@ -273,18 +246,12 @@ CREATE TABLE `personal` (
   `NOMBRE` varchar(60) NOT NULL,
   `TIPO` char(36) DEFAULT NULL,
   `FOTO` varchar(80) DEFAULT NULL,
-  PRIMARY KEY (`GUID`),
-  KEY `personal_contactos_idx` (`IDCONTACTO`),
-  KEY `personal_lord_idx` (`TIPO`),
-  CONSTRAINT `personal_contactos` FOREIGN KEY (`IDCONTACTO`) REFERENCES `contactos` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `personal_diercciones` FOREIGN KEY (`IDCONTACTO`) REFERENCES `direcciones` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `personal_lord` FOREIGN KEY (`TIPO`) REFERENCES `lord_of_the_table` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  CONSTRAINT `personal_telefono` FOREIGN KEY (`IDCONTACTO`) REFERENCES `telefonos` (`GUID`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  PRIMARY KEY (`GUID`)
 );
 
 -- DELIMITADOR
 
-CREATE TRIGGER `personal_BEFORE_INSERT` BEFORE INSERT ON `personal` FOR EACH ROW
+CREATE TRIGGER `personal_GUID` BEFORE INSERT ON `personal` FOR EACH ROW
 BEGIN
   IF new.GUID IS NULL THEN
     SET new.GUID = uuid();
@@ -350,23 +317,16 @@ END;
 -- DELIMITADOR
 CREATE PROCEDURE `insert_categorias`(nombre varchar(50), idpro char(36), idpa char(36))
 BEGIN
-  declare guid char(36);
-    set guid=uuid();
-    if idpa.null then
-    insert into categoria (GUID, NOMBRE, IDPROYECTO) values(guid,nombre,idproyecto);
-    else
-    insert into categoria values(guid,nombre,idpro,idpa);
+    if (idpa = "") then
+		insert into categoria (NOMBRE, IDPROYECTO) values(nombre,idpro);
+    else 
+		insert into categoria (NOMBRE, IDPROYECTO, IDPADRE)values(nombre,idpro,idpa);
     END IF;
 END;
 -- DELIMITADOR
 CREATE PROCEDURE `insert_contacto`(nombre varchar(80), tipoC varchar(40))
 BEGIN
-  declare id char(36);
-    declare idtipo char(36);
-    set id= uuid();
-    
-  select GUID from lord_of_the_table where nombre=tipoC;
-  insert into contactos (GUID,NOMBRE,TIPO)values(id,nombre,( select GUID from lord_of_the_table where nombre=tipoC));   
+insert into contactos (NOMBRE,TIPO,CIF)values(nombre,"f06ccb7e-5ce2-11e8-94d5-f8a9638b2565",cif);   
 END;
 -- DELIMITADOR
 CREATE PROCEDURE `insert_contacto_usuario`(username varchar(100),asociado char(36), habilitado tinyint(4), permisos int(11))
@@ -388,70 +348,52 @@ BEGIN
 
 END;
 -- DELIMITADOR
-CREATE PROCEDURE `INSERT_DIRECCIONES`(id char(36), t int(8), nom varchar(40), dire varchar(40), cdp varchar(5), pobla varchar(40), prov varchar(40), pais int(8))
+CREATE PROCEDURE `INSERT_DIRECCIONES`(id char(36), nom varchar(40), dire varchar(40), cdp varchar(5), pobla varchar(40), prov varchar(40), pais char(2))
 BEGIN
-  declare guid char(36);
-    set guid=uuid();
     
-    INSERT INTO DIRECCIONES VALUES (guid,tipo,id,nom,dire,cdp,pobla,prov,pais);
+    INSERT INTO DIRECCIONES (TIPO,IDASOCIADO,NOMBRE,DIRECCION,CODPOS,POBLACION,PROVINCIA,IDTIPO,IDPAIS) VALUES (2,id,nom,dire,cdp,pobla,prov,'437fe7cb-5d94-11e8-94d5-f8a9638b2565',pais);
 END;
 -- DELIMITADOR
 CREATE PROCEDURE `insert_documentos`(nombre varchar(50), idpro char(36), idca char(36), datos varchar(10000))
 BEGIN
-  declare guid char(36);
-    set guid= uuid();
-    
-    insert into documentos values(guid,nombre,idpro,idca,datos);
+    insert into documentos values(nombre,idpro,idca,datos);
 END;
 -- DELIMITADOR
 CREATE PROCEDURE `insert_extendido`(asociado char(36), nombre varchar(80), valor varchar(80))
 BEGIN
-  declare guid char(36);
-    set guid=uuid();
-  insert into extendido(GUID, IDASOCIADO, NOMBRE) values(guid,asociado,nombre, valor);
+  insert into extendido(IDASOCIADO, NOMBRE) values(asociado,nombre, valor);
 END;
 -- DELIMITADOR
-CREATE PROCEDURE `insert_lord`(nombreBD int(11),tipo int(8), nombre varchar(40))
+CREATE PROCEDURE `insert_lord`(tipo int(8), nombre varchar(40))
 BEGIN
-  declare id char(36);
-    set id= uuid();
-        
-  insert into lord_of_the_table (GUID,TIPO,NOMBRE)values(id,tipo,nombre);     
+  insert into lord_of_the_table (TIPO,NOMBRE)values(tipo,nombre);         
 END;
 -- DELIMITADOR
 CREATE PROCEDURE `insert_notas`(tipo int(11), idasociado char(36), fecha datetime, texto varchar(15000))
 BEGIN
-  declare guid char(36);
-    set guid=uuid();
-    insert into notas values(guid,tipo,idasociado,fecha,texto);
+    insert into notas (TIPO,IDASOCIADO,FECHA,TEXTO) values(tipo,idasociado,fecha,texto);
 END;
 -- DELIMITADOR
 CREATE PROCEDURE `insert_permisos`(tipo int(11), nivel int(11), id char(36), iddocu char(36))
 BEGIN
-  declare guid char(36);
-    set guid= uuid();   
-    insert into permisos values(guid,tipo,nivel,id,iddocu);
+    insert into permisos(TIPO,NIVEL,IDASOCIADO,IDDOCUMENTO) values(tipo,nivel,id,iddocu);
 END;
 -- DELIMITADOR
 CREATE PROCEDURE `insert_personal`(id char(36), nombre varchar(60), tipo char(36))
 BEGIN
-  declare guid char(36);
-    set guid= uuid();
-    insert into personal(GUID, IDASOCIADO,NOMBRE, TIPO) values(guid,id,nombre,tipo);
+    insert into personal(IDASOCIADO,NOMBRE, TIPO) values(id,nombre,tipo);
+
 END;
 -- DELIMITADOR
 CREATE PROCEDURE `insert_proyectos`(nombre varchar(45), tipo char(36))
 BEGIN
-  declare guid char(36);
-    set guid= uuid();
-    insert into proyectos values(guid,nombre,tipo);
+    insert into proyectos values(nombre,tipo);
 END;
 -- DELIMITADOR
 CREATE  PROCEDURE `INSERT_TELEFONOS`(tipo int(8), asociado char(36), nom varchar(40), numero varchar(40), tid char(36))
 BEGIN
-  declare id char(36);
-    set id = uuid();   
-    INSERT INTO TELEFONOS VALUES (id, tipo, asociado,nom,numero,tid); 
+    INSERT INTO TELEFONOS(TIPO,IDASOCIADO ,NOMBRE,NUMERO,IDTIPO) VALUES (3, asociado,nom,numero,'7f3be94c-5d9a-11e8-94d5-f8a9638b2565'); 
+
 END;
 -- DELIMITADOR
 CREATE PROCEDURE `select_categoria`(id char(36))
@@ -627,73 +569,3 @@ BEGIN
     
 RETURN 1;
 END;
--- DELIMITADOR
-CREATE TRIGGER `contactos_GUID` BEFORE INSERT ON `contactos` FOR EACH ROW
-BEGIN
-  IF new.GUID IS NULL THEN
-    SET new.GUID = uuid();
-  END IF;
-END
--- DELIMITADOR
-CREATE TRIGGER `contacto_usuario_GUID` BEFORE INSERT ON `contacto_usuario` FOR EACH ROW
-BEGIN
-  IF new.GUID IS NULL THEN
-    SET new.GUID = uuid();
-  END IF;
-END
--- DELIMITADOR
-CREATE TRIGGER `direcciones_BEFORE_INSERT` BEFORE INSERT ON `direcciones` FOR EACH ROW
-BEGIN
-  IF new.GUID IS NULL THEN
-    SET new.GUID = uuid();
-  END IF;
-END
--- DELIMITADOR
-CREATE TRIGGER `documentos_BEFORE_INSERT` BEFORE INSERT ON `documentos` FOR EACH ROW
-BEGIN
-  IF new.GUID IS NULL THEN
-    SET new.GUID = uuid();
-  END IF;
-END
--- DELIMITADOR
-CREATE TRIGGER `extendido_GUID` BEFORE INSERT ON `extendido` FOR EACH ROW
-BEGIN
-  IF new.GUID IS NULL THEN
-    SET new.GUID = uuid();
-  END IF;
-END
--- DELIMITADOR
-CREATE TRIGGER `notas_GUID` BEFORE INSERT ON `notas` FOR EACH ROW
-BEGIN
-  IF new.GUID IS NULL THEN
-    SET new.GUID = uuid();
-  END IF;
-END
--- DELIMITADOR
-CREATE TRIGGER `permisos_BEFORE_INSERT` BEFORE INSERT ON `permisos` FOR EACH ROW
-BEGIN
-  IF new.GUID IS NULL THEN
-    SET new.GUID = uuid();
-  END IF;
-END
--- DELIMITADOR
-CREATE TRIGGER `personal_BEFORE_INSERT` BEFORE INSERT ON `personal` FOR EACH ROW
-BEGIN
-  IF new.GUID IS NULL THEN
-    SET new.GUID = uuid();
-  END IF;
-END
--- DELIMITADOR
-CREATE TRIGGER `proyectos_BEFORE_INSERT` BEFORE INSERT ON `proyectos` FOR EACH ROW
-BEGIN
-  IF new.GUID IS NULL THEN
-    SET new.GUID = uuid();
-  END IF;
-END
--- DELIMITADOR
-CREATE DEFINER = CURRENT_USER TRIGGER `telefonos_GUID` BEFORE INSERT ON `telefonos` FOR EACH ROW
-BEGIN
-  IF new.GUID IS NULL THEN
-    SET new.GUID = uuid();
-  END IF;
-END
