@@ -28,7 +28,6 @@ if(isset($_POST['guardarCategoria'])){
     $guidpro = "select GUID from categoria where NOMBRE='$categoria'";
     $resultado1 = mysqli_query($bd,$guidpro);
     $guidresult1=mysqli_fetch_row($resultado1);
-    
     if($categoria)
     $insertarPRO="call INSERT_CATEGORIAS('$nombre','$guidresult[0]','$guidresult1[0]');";
 

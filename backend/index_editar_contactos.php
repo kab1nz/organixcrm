@@ -1,22 +1,41 @@
 <?php
+    require_once("../bd/conexion.php");
 session_start();
-require_once("../bd/conexion.php");
-
-$mysqli= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
-
-
 $usu=$_SESSION["usuario"];
 
+if(isset($_POST['submit'])) {
+    $nombre = $_POST['idnombre'];
+    $email = $_POST['idemail'];
+    $guidusu=$_SESSION['guidusu'];
+    $contraN=$_POST['idcontra'];
+    $repecontraN=$_POST['idrepecontra'];
 
-if(isset($_GET['bim'])) {
-  $bim = (int) $_GET['bim'];
-  $_SESSION['bd']=$bim;
-  header("Location: http://localhost/organixcrm/backend/index_contactos.php");
+    echo $guidusu;
+    if(!empty($nombre)){
+    $updatePerfil = "update usuarios set nombre='$nombre' where username='$usu';";
+    $resultado4=mysqli_query($conexion, $updatePerfil);   
+}
+
+    if(!empty($email)){
+        $updateEmail = "update usuarios set username='$email' where guid_usu='$guidusu';";
+        $resultado5=mysqli_query($conexion, $updateEmail);
+    }
+    if(!empty($contraN) && !empty($repecontraN)){
+        if($contraN==$repecontraN){
+            $sem1=mt_rand(100,999);
+            $sem2=mt_rand(100,999);
+            $sem=$sem1.$sem2;
+            $contrCifra=md5($contraN);
+            $contrCiNueva=$sem1.$contrCifra.$sem2;
+            $actu="update contrasenas set contra='$contrCiNueva',semilla='$sem' where guid_pass='$guidusu'";
+            $resultado6=mysqli_query($conexion, $actu);
+        }
+    }
+
+
 
 }
-   
 ?>
-
 <!DOCTYPE html>
 <html>
 
@@ -40,7 +59,6 @@ if(isset($_GET['bim'])) {
 
     <!-- Animation Css -->
     <link href="plugins/animate-css/animate.css" rel="stylesheet" />
-
 
     <!-- Bootstrap Material Datetime Picker Css -->
     <link href="plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
@@ -113,32 +131,33 @@ if(isset($_GET['bim'])) {
                             <li class="body">
                                 <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;">
                                     <ul class="menu" style="overflow: hidden; width: auto; height: 254px;">
-                                        <?php
-                                            $sql= 'select GUID from Usuarios where username ="'.$_SESSION["email"].'"';
-                                            $resultado = mysqli_query($conexion, $sql);
-                                            $intent= mysqli_fetch_row($resultado);
-                                            $guidusu= $intent[0];
-                                            //echo "El GUID ES: ".$guidusu;
-                                           $empresas='select NOMBREFISCAL,BDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
-                                            $query = mysqli_query($conexion, $empresas);
-                                            while( $fila = mysqli_fetch_array($query)){
-                                                    echo '<li id='.$fila[1].'>'; 
-                                                    echo '<a href="javascript:void(0);" class=" waves-effect waves-block">';
-                                                    echo '<div class="menu-info" >';
-                                                    echo '<h4>'.$fila[0].'</h4>';
-                                                    echo '</div>';  
-                                                    echo '</a>';
-                                                     echo "</li>";
-                                                }
-                                        ?>
+                                        <li>
+                                            <a href="javascript:void(0);" class=" waves-effect waves-block">
 
+                                                <div class="menu-info">
+                                                    <h4>EMPRESA 1</h4>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);" class=" waves-effect waves-block">
+
+                                                <div class="menu-info">
+                                                    <h4>EMPRESA 2</h4>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="btn bg-red btn-block btn-sm waves-effect">Gestionar</button>
+
+                                        </li>
                                     </ul>
                                     <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div>
                                     <div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
                                 </div>
                             </li>
                             <li class="footer">
-                                <button type="button" id="btngestionar" class="btn bg-red btn-block btn-sm waves-effect"onclick="openGestionar();">Gestionar</button>
+                                <a href="javascript:void(0);" class=" waves-effect waves-block">View All Notifications</a>
                             </li>
                         </ul>
                     </li>
@@ -174,15 +193,12 @@ if(isset($_GET['bim'])) {
                                     <ul class="menu tasks" style="overflow: hidden; width: auto; height: 254px;">
 
                                     </ul>
-                                </div>
                             </li>
                             <!-- #END# Tasks -->
                             <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
                         </ul>
-                    </li>
-                </ul>
+                        </div>
             </div>
-        </div>
     </nav>
     <!-- #Top Bar -->
     <section>
@@ -194,13 +210,19 @@ if(isset($_GET['bim'])) {
                     <img src="images/david.jpg" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $usu; ?></div>
-                    <br>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >                       
+                        <label id="nombreUsu">
+                            <?php echo $usu; ?>
+                        </label>
+                    </div>
+                    <div class="email">
+                        <?php echo $_SESSION["email"]; ?>
+                    </div>
                     <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float:right;margin-bottom:5px;">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
                             <li><a href="index_home_perfil.html" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
-                          
+
                             <li><a href="logout.php" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>
                     </div>
@@ -225,13 +247,13 @@ if(isset($_GET['bim'])) {
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="pages/widgets/cards/basic.html" class=" waves-effect waves-block">Alertas</a>
+                                    <a href="index_home_perfil.html" class=" waves-effect waves-block">Alertas</a>
                                 </li>
                                 <li>
-                                    <a href="pages/widgets/cards/colored.html" class=" waves-effect waves-block">Notas</a>
+                                    <a href="index_home_perfil.html" class=" waves-effect waves-block">Notas</a>
                                 </li>
                                 <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Calendario</a>
+                                    <a href="index_home_calendario.html" class=" waves-effect waves-block">Calendario</a>
                                 </li>
                             </ul>
                         </li>
@@ -242,19 +264,19 @@ if(isset($_GET['bim'])) {
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="index_contactos.php" class=" waves-effect waves-block">Contactos</a>
+                                    <a href="index_contactos.html" class=" waves-effect waves-block">Contactos</a>
                                 </li>
                                 <li>
-                                    <a href="pages/widgets/cards/colored.html" class=" waves-effect waves-block">Llamadas telefónicas</a>
+                                    <a href="index_llamadas.html" class=" waves-effect waves-block">Llamadas telefónicas</a>
                                 </li>
                                 <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Casos</a>
+                                    <a href="index_casos.html" class=" waves-effect waves-block">Casos</a>
                                 </li>
                                 <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Tareas</a>
+                                    <a href="index_tareas.html" class=" waves-effect waves-block">Tareas</a>
                                 </li>
                                 <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Negociaciones</a>
+                                    <a href="index_negociaciones.html" class=" waves-effect waves-block">Negociaciones</a>
                                 </li>
                             </ul>
                         </li>
@@ -265,13 +287,13 @@ if(isset($_GET['bim'])) {
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="pages/widgets/cards/basic.html" class=" waves-effect waves-block">Usuarios</a>
+                                    <a href="index_usuarios.html" class=" waves-effect waves-block">Usuarios</a>
                                 </li>
                                 <li>
-                                    <a href="pages/widgets/cards/colored.html" class=" waves-effect waves-block">Grupos de usuarios</a>
+                                    <a href="index_grupo_usuario.html" class=" waves-effect waves-block">Grupos de usuarios</a>
                                 </li>
                                 <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Suscripciones y pagos</a>
+                                    <a href="index_suscripciones.html" class=" waves-effect waves-block">Suscripciones y pagos</a>
                                 </li>
                             </ul>
                         </li>
@@ -282,13 +304,13 @@ if(isset($_GET['bim'])) {
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="pages/ui/alerts.html" class=" waves-effect waves-block">Empresas</a>
+                                    <a href="index_empresas.html" class=" waves-effect waves-block">Empresas</a>
                                 </li>
                                 <li>
-                                    <a href="pages/ui/animations.html" class=" waves-effect waves-block">Tarifas</a>
+                                    <a href="index_tarifas.html" class=" waves-effect waves-block">Tarifas</a>
                                 </li>
                                 <li>
-                                    <a href="pages/ui/badges.html" class=" waves-effect waves-block">Pagos</a>
+                                    <a href="index_pagos.html" class=" waves-effect waves-block">Pagos</a>
                                 </li>
                                 <li>
                                     <a href="pages/ui/badges.html" class=" waves-effect waves-block">Informes</a>
@@ -388,98 +410,96 @@ if(isset($_GET['bim'])) {
         <!-- #END# Right Sidebar -->
     </section>
     <section class="content">
+    <form action="index_home_perfil.php" method="post">
         <div class="princicontent">
-            <div class="col-lg-2 flexstart"> <i class="material-icons">ic_keyboard_backspace</i>
+            <div class="col-lg-4 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
             </div>
-            <div class="col-lg-6 flexcenter">Contactos</div>
-            <?php echo $_SESSION['bd']?>
-            <div class="col-lg-2 flexstart "> <a href="form_contacto.php"><label><i class="material-icons">ic_save</i><span>Nuevo Contacto</span></label></a>
+            <div class="col-lg-4 flexcenter">Editar perfíl</div>
+            <div class="col-lg-4 flexend">
+                <div id="id_saveperfil">
+                <input type="submit" name="submit" value="Submit" />
+                </div>
             </div>
-            <div class="col-lg-2 flexend "> <label><i class="material-icons">delete</i><span> Eliminar</span></label>
+            <div class="col-lg-12">
+                <div class="col-lg-2 misdatos">Mis datos</div>
             </div>
             <div class="tablaperfil">
-                <div class="col-md-12 form-group form-group-default input-group" style="overflow: visible"><label>Búsqueda</label><input class="form-control" type="text" placeholder="Búsqueda" id="_oq4nsw"><span class="input-group-addon" title="Búsqueda avanzada"><i class="material-icons">sync</i></span><span class="input-group-addon" title="Refrescar"><img src="images/filter.svg" style="width: 15px;">
+                <div class="col-lg-2">
+                    <img src="images/david.jpg" width="160px" class="preview">
+                </div>
+                <div class="col-lg-10">
+                    <div class="flexcolumn">
+                        <div class="row">
+                            <div class="col-lg-5">Nombre
+                                <input type="text" class="form-control" name="idnombrecontacto" id="idnombrecontacto" placeholder="<?php echo $_SESSION['nombreContacto']; ?>">
+                            </div>
+                            <div class="col-lg-1">*</div>
 
-                </span></div>
-                <div class="col-md-12">
-                    <div class="btn-toolbar" id="_mw9805">
-                        <div class="btn-group"><button type="button" class="btn btn-default" data-fld="completename"><div class="pg-sortdown pg-small"></div>Nombre</button><button type="button" class="btn btn-default" data-fld="tag"><div class="pg-sortup pg-small"></div>Tipo</button>
-                            <button type="button" class="btn btn-default" data-fld="contact">
-                                <div class="pg-sortup pg-small"></div>Datos de contacto</button><button type="button" class="btn btn-default" data-fld="nbus"><div class="pg-sortup pg-small"></div>Contacto de</button></div>
+                            <div class="col-lg-5">Apellidos
+                            <input type="text" class="form-control" id="idapellidoscontacto">
+
+                            </div>
+                            <div class="col-lg-1">*</div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-3">Email
+                            <input type="text" class="form-control" name="idemail" id="idemail" placeholder="<?php echo $_SESSION['email']; ?>">
+
+                            </div>
+                            <div class="col-lg-1">*</div>
+
+                            <div class="col-lg-4">Contraseña
+                            <input type="text" class="form-control" name="idcontra" id="idemail">
+                        
+
+                            </div>
+                            <div class="col-lg-4">Repetir Contraseña
+                            <input type="text" class="form-control" name="idrepecontra" id="idrepecontra">
+
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-6">Idioma
+                                <select class="form-control show-tick" style="margin-top: 12px;">
+                                            <optgroup label="Idioma">
+                                                <option>Español</option>
+                                                <option>Catalá</option>
+                                                <option>Inglés</option>
+                                            </optgroup>
+                                            
+                                        </select>
+                            </div>
+                            <div class="col-lg-6">Zona Horaria
+
+                                <select class="form-control show-tick" style="margin-top: 12px;">
+                                            <optgroup label="Zona Horaria">
+                                                <option>Europa/Budapest (GMT+01:00)</option>
+                                                <option>Europa/Madrid (GMT+01:00)</option>
+                                                <option>Europa/Ámsterdam (GMT+01:00)</option>
+                                                <option>Pacífico/Midway (GMT-11:00)</option>
+                                                <option>US/Samoa (GMT-11:00)</option>
+                                                <option>US/Alaska (GMT-09:00)</option>
+
+                                            </optgroup>
+
+                                        </select>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                
-                
-                
-                <?php
-                
-                $sql="select nombre,guid from contactos;";
-                if($mysqli->multi_query($sql)){
-                    do {
-                        
-                        if ($resultado = $mysqli->use_result()) {
-                            while ($fila = $resultado->fetch_row()) {
-                                
-                                echo'<div class="col-md-4">'; 
-                                  $_SESSION["nombreContacto"]=$fila[0];
-
-                                    echo '<a href="index_editar_contactos.php">';
-                                    echo'<div class="panel">';
-                                        echo'<div class="media contact2">';
-
-                                            echo'<div class="media-left">';
-                                                echo'<div class="dv-image">';
-                                                    echo'<img src="images/avatar.png" alt="">';
-                                                echo'</div>';
-                                            echo'</div>';
-
-                                        echo'<div class="media-body">';
-                                            echo'<div class="dv-data contanct2-title">';
-                                                echo'<div class="dv-data-name">';
-                                                    echo'<span>'.$fila[0].'</span>';
-                                                echo'</div>';
-
-                                        echo'<div class="dv-data-title">';
-                                            echo'<span>Contacto de</span> &nbsp;';
-                                            echo'<a href="#/CRM/Contacts/Edit?op=E&amp;id=222">'.$fila[0].'</a>';
-                                        echo'</div>';
-
-                                       echo'<br>';
-                                       echo'<div class="dataview-info"></div>';
-
-                                            echo'</div>';
-                                            echo'</div>';
-
-                                      echo'</div>';
-                                    echo'</div>';
-                                    echo '</a>';
-                                 echo'</div>';
-                                
-                            }
-                            $resultado->close();
-                        }
-
-                    } while ($mysqli->next_result());
-                }
-                
-                        
-                ?>
             </div>
-
+            
         </div>
-
+        </form>
     </section>
 
 
     <!-- Jquery Core Js -->
-    <script async="" src="https://www.google-analytics.com/analytics.js"></script>
     <script src="plugins/jquery/jquery.min.js"></script>
-    
-    
-    <!-- My Script -->
-    <script type="text/javascript" src="myscript.js"></script>
-    <script src="js/JSquerylista/querylistaContactos.js"></script>
-
 
     <!-- Bootstrap Core Js -->
     <script src="plugins/bootstrap/js/bootstrap.js"></script>
@@ -492,7 +512,10 @@ if(isset($_GET['bim'])) {
 
     <!-- Waves Effect Plugin Js -->
     <script src="plugins/node-waves/waves.js"></script>
-
+    <!--
+    <script src="js/querylista.js"></script>
+    <script src="js/queryejemplo.js"></script>
+-->
     <!-- Autosize Plugin Js -->
     <script src="plugins/autosize/autosize.js"></script>
 
