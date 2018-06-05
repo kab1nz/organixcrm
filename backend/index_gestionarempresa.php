@@ -82,8 +82,12 @@ $guidusu=$_SESSION['guidusu'];
                                             <th>Activa</th>
                                         </tr>
                                         <?php
-                                $empresas='select NOMBREFISCAL,GUIDEMPRESA, DIRECCION, CIUDAD, PROVINCIA, PAIS from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
+                                $empresas='select NOMBREFISCAL,GUIDEMPRESA, DIRECCION, HABILITADO, POBLACION, PROVINCIA, IDPAIS from usu_empr, empresas, direcciones where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=empresas.GUID and GUIDEMPRESA=IDASOCIADO';
                                 $result = mysqli_query($conexion, $empresas);
+                                        if(!$result){
+                                            echo "ERROR -> " . mysqli_error($conexion);
+                                        }
+                                        
                                        while($mostrar=mysqli_fetch_array($result)){
 
                                         ?>
@@ -93,11 +97,11 @@ $guidusu=$_SESSION['guidusu'];
                                              <label for="checkbox">Accept</label>
                                         </td>
                                             <td><?php echo $mostrar['NOMBREFISCAL'] ?></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td><?php echo $mostrar['DIRECCION'] ?></td>
+                                            <td><?php echo $mostrar['POBLACION'] ?></td>
+                                            <td><?php echo $mostrar['PROVINCIA'] ?></td>
+                                            <td><?php echo $mostrar['IDPAIS'] ?></td>
+                                            <td> <?php if($mostrar['HABILITADO']==0){echo "SI";}else{echo "NO";} ?></td>
                                         </tr>
                                         <?php
                                        }
