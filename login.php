@@ -179,7 +179,7 @@
             
             <div class="checkbox">
                 <label><input type="checkbox" name="remember"> Remember me</label>
-                <a href="contraseña.html"><label style="margin-left:30px;">¿Olvidó la contraseña?</label></a>
+                <a href="bd/contraseña.html"><label style="margin-left:30px;">¿Olvidó la contraseña?</label></a>
             </div>
             <button type="submit" class="btn btn-default" onClick="verificar_campos()">Iniciar Sesión</button>
         </form>

@@ -22,12 +22,7 @@ $telefonoEmpresa=$_POST['telefonoEmpresa'];
 $insertarEMP="insert into EMPRESAS (NOMBREFISCAL, NOMBRECOMERCIAL, NIF,HABILITADO,ALIASCRM, FECHADECREACION) values('$nombreEmpresa','$nombreEmpresa','$nifEmpresa',1,'$nombreEmpresa', NOW());";
 $resultado0 = mysqli_query($conexion,$insertarEMP);
     
-    if(!$resultado0){
-        echo "ERROR -> ". mysqli_error($conexion);
-        echo "<br>";
-    }else{
-        echo "Empresa insertada<br>";
-    }    
+  
 mysqli_next_result($conexion);
     
     
@@ -39,38 +34,30 @@ $guidempresas = $intent[0];
 echo "El GUID ES -> ".$guidempresas."<br>";    
 mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
 
-/*    
+    
 //insercción de relacion 
 $guidusu=$_SESSION['guidusu'];
 $insertarEMP_USU="insert into usu_empr values('$guidusu','$guidempresas',3)";
 $resultado1=mysqli_query($conexion, $insertarEMP_USU);
 mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
-*/
+
     
-/*   
+  
 //insercion de direccion de empresa    
 $insertdire = "call INSERT_DIRECCIONES('$guidempresas',2,'$nombreEmpresa','$direccionEmpresa','$postalEmpresa','$ciudadEmpresa','$provinciaEmpresa','$paisEmpresa');";
 $resultado2=mysqli_query($conexion,$insertdire);
 
-    if(!$resultado2){
-        echo "ERROR -> ". mysqli_error($conexion);
-    }else{
-        echo "Direcion insertada";
-    }
+
     
 mysqli_next_result($conexion);
-*/    
+   
     
     
-        //insertar telefono 78561219M
-        $insertTELEFONO="call INSERT_TELEFONO('$guidempresas','$nombreEmpresa','$telefonoEmpresa');";
-        $resultado5=mysqli_query($conexion, $insertTELEFONO);
+//insertar telefono 78561219M
+$insertTELEFONO="call INSERT_TELEFONO('$guidempresas','$nombreEmpresa','$telefonoEmpresa');";
+$resultado5=mysqli_query($conexion, $insertTELEFONO);
             
-            if(!$resultado5){
-                echo "<br>el telefono fallo = ". mysqli_error($conexion);
-            }else{
-                echo "<br>telefono insertado";
-            }
+
     
     
     
@@ -83,12 +70,12 @@ $numbd= $intent[0];
 mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
 mysqli_free_result($resultadoaux);
 
- //$crear="call crear_BDEMPRESA($numbd)";
- //$resultadobd = mysqli_query($conexion, $crear);
+ $crear="call crear_BDEMPRESA($numbd)";
+ $resultadobd = mysqli_query($conexion, $crear);
 
 
-//mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada                   
-//addprocedures($numbd);
+mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada                   
+addprocedures($numbd);
 
 
 

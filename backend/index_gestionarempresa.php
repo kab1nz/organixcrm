@@ -5,6 +5,14 @@ session_start();
 $usu=$_SESSION["usuario"];
 $guidusu=$_SESSION['guidusu'];
 
+if(isset($_POST['deleteEmpresa'])){
+    $boton = $_POST['checkEmpresa'];
+    $num = array_keys( $boton );
+    $num = $num[0];
+    
+    $resultDelete=mysqli_query($conexion, "call ");
+}
+
 ?>
     <!DOCTYPE html>
     <html>
@@ -51,7 +59,7 @@ $guidusu=$_SESSION['guidusu'];
             </div>
             <div class="mgbtngrande">
                 <div class="btn btn-danger btn-cons" onclick="openCrearEmpresa();">Nueva empresa</div>
-                <div class="btn btn-danger btn-cons">Eliminar empresa</div>
+                <div class="btn btn-danger btn-cons" name="deleteEmpresa">Dar de baja</div>
             </div>
             <div class="col-md-12 form-group form-group-default input-group focused border" style="overflow: visible"><label>Búsqueda</label>
                 <input class="form-control" type="text" placeholder="Búsqueda" id="_oq4nsw">
@@ -79,31 +87,36 @@ $guidusu=$_SESSION['guidusu'];
                                             <th>Ciudad</th>
                                             <th>Provincia</th>
                                             <th>País</th>
-                                            <th>Activa</th>
                                         </tr>
                                         <?php
-                                $empresas='select NOMBREFISCAL,GUIDEMPRESA, DIRECCION, HABILITADO, POBLACION, PROVINCIA, IDPAIS from usu_empr, empresas, direcciones where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=empresas.GUID and GUIDEMPRESA=IDASOCIADO';
+                                        //and GUIDEMPRESA=IDASOCIADO
+                                $empresas='select NOMBREFISCAL,GUIDEMPRESA, DIRECCION, HABILITADO, POBLACION, PROVINCIA, IDPAIS from usu_empr, empresas, direcciones where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=empresas.GUID and GUIDEMPRESA=IDASOCIADO and HABILITADO="1"';
                                 $result = mysqli_query($conexion, $empresas);
                                         if(!$result){
                                             echo "ERROR -> " . mysqli_error($conexion);
                                         }
                                         
                                        while($mostrar=mysqli_fetch_array($result)){
+                                           
+                                           
+                                               
+                                           
 
                                         ?>
                                         <tr>
                                         <td>
-                                             <input type="checkbox" id="<?php echo $mostrar['NOMBREFISCAL'] ?>" name="checkEmpresa[]" value="checked" />
-                                             <label for="checkbox">Accept</label>
+                                             <input type="checkbox" id="<?php echo $mostrar['NOMBREFISCAL'] ?>" name="checkEmpresa[<?php echo $mostrar['GUIDEMPRESA'] ?>]" value="<?php echo $mostrar['GUIDEMPRESA'] ?>"/>
+                                             <label for="<?php echo $mostrar['NOMBREFISCAL'] ?>">Accept</label>
                                         </td>
                                             <td><?php echo $mostrar['NOMBREFISCAL'] ?></td>
                                             <td><?php echo $mostrar['DIRECCION'] ?></td>
                                             <td><?php echo $mostrar['POBLACION'] ?></td>
                                             <td><?php echo $mostrar['PROVINCIA'] ?></td>
                                             <td><?php echo $mostrar['IDPAIS'] ?></td>
-                                            <td> <?php if($mostrar['HABILITADO']==0){echo "SI";}else{echo "NO";} ?></td>
+                                            
                                         </tr>
                                         <?php
+                                               
                                        }
                                         ?>
                                     </thead>
