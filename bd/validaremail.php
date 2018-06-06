@@ -1,10 +1,14 @@
 <?php
+
 function generarLinkTemporal($idusuario, $username){
+        include "conexion.php";
+
+    
    // Se genera una cadena para validar el cambio de contraseña
    $cadena = $idusuario.$username.rand(1,9999999).date('Y-m-d');
    $token = sha1($cadena);
- 
-   include 'bd/conexion.php';
+    
+
    // Se inserta el registro en la tabla tblreseteopass
     
     //sacamos el id del username
@@ -18,7 +22,7 @@ function generarLinkTemporal($idusuario, $username){
    if($resultado){
        
       // Se devuelve el link que se enviara al usuario para restablecer la contraseña
-      $enlace = $_SERVER["localhost"].'organixcrm/restablecer.php?idusuario='.sha1($idusuario).'&token='.$token;
+      $enlace = $_SERVER["localhost"].'organixcrm/bd/restablecer.php?idusuario='.sha1($idusuario).'&token='.$token;
       return $enlace;
    }else
       return FALSE;
@@ -53,7 +57,8 @@ function generarLinkTemporal($idusuario, $username){
     $email = $_POST['email'];
     $respuesta = new stdClass();
     if($email != ""){
-        include 'bd/conexion.php';
+        include "conexion.php";
+
         $sql= "select * from usuarios where username = '$email'";
         $resultado = mysqli_query($conexion, $sql);
         if($resultado->num_rows > 0){
