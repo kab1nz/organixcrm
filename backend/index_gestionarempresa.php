@@ -117,13 +117,7 @@ if(isset($_POST['deleteEmpresa'])){
                                             <td><?php echo $mostrar['POBLACION'] ?></td>
                                             <td><?php echo $mostrar['PROVINCIA'] ?></td>
                                             <td><?php echo $mostrar['IDPAIS'] ?></td>
-<<<<<<< HEAD
-                                            <td> <?php if($mostrar['HABILITADO']==0){echo "SI";}else{echo "NO";} ?></td>
-                                           
-
-=======
                                             
->>>>>>> dd331f922515c2e72f66bd692f152fa9de0bff05
                                         </tr>
 
                                         <?php
