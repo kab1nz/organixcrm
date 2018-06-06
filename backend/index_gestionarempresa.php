@@ -112,7 +112,8 @@ if(isset($_POST['deleteEmpresa'])){
                                         </td>
                                         
 
-                                          <td><a href="index_editar_empresa.php?idempresa=<?php echo $mostrar['GUIDEMPRESA'] ?>"><?php echo $mostrar['NOMBREFISCAL'] ?> </a></td>
+                                          <td><a href="index_editar_empresa.php?id=<?php echo $mostrar['GUIDEMPRESA']; ?>">
+                                          <?php echo $mostrar['NOMBREFISCAL'] ?> </a></td>
                                             <td><?php echo $mostrar['DIRECCION'] ?></td>
                                             <td><?php echo $mostrar['POBLACION'] ?></td>
                                             <td><?php echo $mostrar['PROVINCIA'] ?></td>
