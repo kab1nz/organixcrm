@@ -419,9 +419,9 @@ if(isset($_GET['bim'])) {
                         
                         if ($resultado = $mysqli->use_result()) {
                             while ($fila = $resultado->fetch_row()) {
-                                
-                                echo'<div class="col-md-4">'; 
-                                  $_SESSION["nombreContacto"]=$fila[0];
+                                $id_contact=$fila[1];
+
+                                echo'<div class="col-md-4" id="'.$id_contact.'">'; 
 
                                     echo '<a href="index_editar_contactos.php">';
                                     echo'<div class="panel">';
@@ -508,6 +508,7 @@ if(isset($_GET['bim'])) {
 
     <!-- Demo Js -->
     <script src="js/demo.js"></script>
+    <script src="js/editarContact.js"></script>
 </body>
 
 </html>

@@ -1,7 +1,12 @@
 <?php
+
     require_once("../bd/conexion.php");
+    $mysqli= new mysqli("localhost","root","root",'empresa55');
+    $usu=$_GET["usuario"];
+    $consulta="SELECT * FROM contactos WHERE GUID='".$usu."'";
+    $result=mysqli_query($conexion,$consulta);
 session_start();
-$usu=$_SESSION["usuario"];
+
 
 if(isset($_POST['submit'])) {
     $nombre = $_POST['idnombre'];
@@ -72,7 +77,7 @@ if(isset($_POST['submit'])) {
     <!-- Custom Css -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/estilo.css" rel="stylesheet">
-
+  
 
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
@@ -431,7 +436,7 @@ if(isset($_POST['submit'])) {
                     <div class="flexcolumn">
                         <div class="row">
                             <div class="col-lg-5">Nombre
-                                <input type="text" class="form-control" name="idnombrecontacto" id="idnombrecontacto" placeholder="<?php echo $_SESSION['nombreContacto']; ?>">
+                                <input type="text" class="form-control" name="idnombrecontacto" id="idnombrecontacto" placeholder="<?php echo $usu; ?>">
                             </div>
                             <div class="col-lg-1">*</div>
 
@@ -531,6 +536,8 @@ if(isset($_POST['submit'])) {
 
     <!-- Demo Js -->
     <script src="js/demo.js"></script>
+    <script src="js/editarContact.js"></script>
+
 </body>
 
 </html>
