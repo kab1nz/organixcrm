@@ -422,8 +422,8 @@ if(isset($_GET['bim'])) {
                                 $id_contact=$fila[1];
 
                                 echo'<div class="col-md-4" id="'.$id_contact.'">'; 
-
-                                    echo '<a href="index_editar_contactos.php">';
+                                $_SESSION["contact"]=$id_contact;
+                                    echo "<a href=index_editar_contactos.php?id=$id_contact>";
                                     echo'<div class="panel">';
                                         echo'<div class="media contact2">';
 
@@ -508,7 +508,7 @@ if(isset($_GET['bim'])) {
 
     <!-- Demo Js -->
     <script src="js/demo.js"></script>
-    <script src="js/editarContact.js"></script>
+   <!-- <script src="js/editarContact.js"></script> -->
 </body>
 
 </html>

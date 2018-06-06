@@ -91,18 +91,25 @@ $guidusu=$_SESSION['guidusu'];
                                        while($mostrar=mysqli_fetch_array($result)){
 
                                         ?>
+
                                         <tr>
+
                                         <td>
                                              <input type="checkbox" id="<?php echo $mostrar['NOMBREFISCAL'] ?>" name="checkEmpresa[]" value="checked" />
                                              <label for="checkbox">Accept</label>
                                         </td>
-                                            <td><?php echo $mostrar['NOMBREFISCAL'] ?></td>
+                                        
+
+                                          <td><a href="index_editar_empresa.php?idempresa=<?php echo $mostrar['GUIDEMPRESA'] ?>"><?php echo $mostrar['NOMBREFISCAL'] ?> </a></td>
                                             <td><?php echo $mostrar['DIRECCION'] ?></td>
                                             <td><?php echo $mostrar['POBLACION'] ?></td>
                                             <td><?php echo $mostrar['PROVINCIA'] ?></td>
                                             <td><?php echo $mostrar['IDPAIS'] ?></td>
                                             <td> <?php if($mostrar['HABILITADO']==0){echo "SI";}else{echo "NO";} ?></td>
+                                           
+
                                         </tr>
+
                                         <?php
                                        }
                                         ?>

@@ -420,7 +420,7 @@ if(isset($_POST['submit1'])) {
         <!-- #END# Right Sidebar -->
     </section>
     <section class="content">
-    <form action="index_editar_contactos.php?id=<?php echo $_SESSION['contact'] ?>" method="post">
+    <form action="index_editar_contactos.php?id=<?php echo $_SESSION['contact']?>" method="post">
         <div class="princicontent">
             <div class="col-lg-4 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
             </div>
