@@ -5,12 +5,25 @@ session_start();
 $usu=$_SESSION["usuario"];
 $guidusu=$_SESSION['guidusu'];
 
-if(isset($_POST['deleteEmpresa'])){
-    $boton = $_POST['checkEmpresa'];
-    $num = array_keys( $boton );
-    $num = $num[0];
+if(isset($_GET['bim'])) {
+    $bim = $_GET['bim'];
+    echo $bim;
     
-    $resultDelete=mysqli_query($conexion, "call ");
+    $aux = explode(",",$bim);
+    
+    for($i=0;$i<count($aux);$i++){
+        $baja = "select empresa_baja('$aux[$i]');";
+            
+        $resultadoBaja = mysqli_query($conexion,$baja);
+        
+            if(!$resultadoBaja){
+                echo "<br>Fallo la baja de empresa = ". mysqli_error($conexion);
+            }else{
+                echo "<br>Empresa con GUID -> $aux[$i] dada de BAJA";
+            }
+    }    
+
+
 }
 
 ?>
@@ -59,7 +72,7 @@ if(isset($_POST['deleteEmpresa'])){
             </div>
             <div class="mgbtngrande">
                 <div class="btn btn-danger btn-cons" onclick="openCrearEmpresa();">Nueva empresa</div>
-                <div class="btn btn-danger btn-cons" name="deleteEmpresa">Dar de baja</div>
+                <div class="btn btn-danger btn-cons" name="bajaEmpresa" id="bajaEmpresa">Dar de baja</div>
             </div>
             <div class="col-md-12 form-group form-group-default input-group focused border" style="overflow: visible"><label>Búsqueda</label>
                 <input class="form-control" type="text" placeholder="Búsqueda" id="_oq4nsw">
@@ -95,7 +108,7 @@ if(isset($_POST['deleteEmpresa'])){
                                         if(!$result){
                                             echo "ERROR -> " . mysqli_error($conexion);
                                         }
-                                        
+                                        $cont=0;
                                        while($mostrar=mysqli_fetch_array($result)){
                                            
                                            
@@ -105,8 +118,8 @@ if(isset($_POST['deleteEmpresa'])){
                                         ?>
                                         <tr>
                                         <td>
-                                             <input type="checkbox" id="<?php echo $mostrar['NOMBREFISCAL'] ?>" name="checkEmpresa[<?php echo $mostrar['GUIDEMPRESA'] ?>]" value="<?php echo $mostrar['GUIDEMPRESA'] ?>"/>
-                                             <label for="<?php echo $mostrar['NOMBREFISCAL'] ?>">Accept</label>
+                                             <input type="checkbox" id="<?php echo $mostrar['GUIDEMPRESA']; ?>" name="checkEmpresa_<?php echo $cont;?>" value="<?php echo $mostrar['NOMBREFISCAL'] ?>"/>
+                                             <label for="<?php echo $mostrar['GUIDEMPRESA'] ?>">Accept</label>
                                         </td>
                                             <td><?php echo $mostrar['NOMBREFISCAL'] ?></td>
                                             <td><?php echo $mostrar['DIRECCION'] ?></td>
@@ -116,7 +129,7 @@ if(isset($_POST['deleteEmpresa'])){
                                             
                                         </tr>
                                         <?php
-                                               
+                                          $cont++;     
                                        }
                                         ?>
                                     </thead>
@@ -139,6 +152,9 @@ if(isset($_POST['deleteEmpresa'])){
         <!-- Jquery Core Js -->
         <script async="" src="https://www.google-analytics.com/analytics.js"></script>
         <script src="plugins/jquery/jquery.min.js"></script>
+        
+        <!-- My Script -->
+        <script src="js/JSfunciones.js"></script>
 
         <!-- Bootstrap Core Js -->
         <script src="plugins/bootstrap/js/bootstrap.js"></script>
