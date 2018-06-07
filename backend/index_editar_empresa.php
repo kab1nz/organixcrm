@@ -2,29 +2,32 @@
     require_once("../bd/conexion.php");
     session_start();
 
-    $mysqli= new mysqli("localhost","root","root",'empresa55');
+    
     $usu=$_GET["id"];
-    $_SESSION["contact"]=$usu;
-    $consulta='SELECT nombre FROM contactos WHERE GUID="'.$usu.'"';
-    $result=mysqli_query($mysqli,$consulta);
+    $_SESSION["EMPRE"]=$usu;
+  
+    $consulta='SELECT nombrefiscal, nombrecomercial FROM empresas WHERE GUID="'.$usu.'"';
+    $result=mysqli_query($conexion,$consulta);
     if(!$result){
-        echo "ERROR -> " . mysqli_error($mysqli);
+        echo "ERROR -> " . mysqli_error($conexion);
     }
     $row=mysqli_fetch_array($result);
-
+  
 
 if(isset($_POST['submit1'])) {
-    $nombre = $_POST['idnombrecontacto'];
-    echo "guidusuario".$_SESSION["contact"];
-    if(!empty($nombre)){
-    $updatePerfil = "update contactos set nombre='$nombre' where guid='$usu';";
-    $resultado4=mysqli_query($mysqli, $updatePerfil);  
+    $nombrefiscal = $_POST['idnombrefiscal'];
+    $nombrec=$_POST['idnombrecomer'];
+    if(!empty($nombrefiscal)){
+        echo "usuario -->". $_SESSION["EMPRE"];
+    $updatePerfil = "update empresas set nombrefiscal='$nombrefiscal',nombrecomercial='$nombrec' where guid='$usu';";
+    $resultado4=mysqli_query($conexion, $updatePerfil);  
     echo "El resultado es: ". $resultado4; 
     if(!$resultado4){
-        echo "ERROR -> " . mysqli_error($mysqli);
+        echo "ERROR -> " . mysqli_error($conexion);
     }
 }
-  /*
+  /* 
+  
     if(!empty($email)){
         $updateEmail = "update usuarios set username='$email' where guid_usu='$guidusu';";
         $resultado5=mysqli_query($conexion, $updateEmail);
@@ -420,7 +423,7 @@ if(isset($_POST['submit1'])) {
         <!-- #END# Right Sidebar -->
     </section>
     <section class="content">
-    <form action="index_editar_contactos.php?id=<?php echo $_SESSION['contact'] ?>" method="post">
+    <form action="index_editar_empresa.php?id=<?php echo $_SESSION['contact']?>" method="post">
         <div class="princicontent">
             <div class="col-lg-4 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
             </div>
@@ -435,69 +438,23 @@ if(isset($_POST['submit1'])) {
             </div>
             <div class="tablaperfil">
                 <div class="col-lg-2">
-                    <img src="images/david.jpg" width="160px" class="preview">
                 </div>
                 <div class="col-lg-10">
                     <div class="flexcolumn">
                         <div class="row">
-                            <div class="col-lg-5">Nombre
-                                <input type="text" class="form-control" name="idnombrecontacto" id="idnombrecontacto" placeholder="<?php echo  $row[0]; ?>">
+                            <div class="col-lg-5">Nombre Fiscal
+                                <input type="text" class="form-control" name="idnombrefiscal" id="idnombrefiscal" placeholder="<?php echo  $row[0]; ?>">
                             </div>
                             <div class="col-lg-1">*</div>
 
-                            <div class="col-lg-5">Apellidos
-                            <input type="text" class="form-control" id="idapellidoscontacto">
+                            <div class="col-lg-5">Nombre Comercial
+                            <input type="text" class="form-control" id="idnombrecomer" name="idnombrecomer" placeholder="<?php echo  $row[1]; ?>">
 
                             </div>
                             <div class="col-lg-1">*</div>
 
                         </div>
-                        <div class="row">
-
-                            <div class="col-lg-3">Email
-                            <input type="text" class="form-control" name="idemail" id="idemail" placeholder="<?php echo $_SESSION['email']; ?>">
-
-                            </div>
-                            <div class="col-lg-1">*</div>
-
-                            <div class="col-lg-4">Contraseña
-                            <input type="text" class="form-control" name="idcontra" id="idemail">
-                        
-
-                            </div>
-                            <div class="col-lg-4">Repetir Contraseña
-                            <input type="text" class="form-control" name="idrepecontra" id="idrepecontra">
-
-                            </div>
-                        </div>
-                        <div class="row">
-
-                            <div class="col-lg-6">Idioma
-                                <select class="form-control show-tick" style="margin-top: 12px;">
-                                            <optgroup label="Idioma">
-                                                <option>Español</option>
-                                                <option>Catalá</option>
-                                                <option>Inglés</option>
-                                            </optgroup>
-                                            
-                                        </select>
-                            </div>
-                            <div class="col-lg-6">Zona Horaria
-
-                                <select class="form-control show-tick" style="margin-top: 12px;">
-                                            <optgroup label="Zona Horaria">
-                                                <option>Europa/Budapest (GMT+01:00)</option>
-                                                <option>Europa/Madrid (GMT+01:00)</option>
-                                                <option>Europa/Ámsterdam (GMT+01:00)</option>
-                                                <option>Pacífico/Midway (GMT-11:00)</option>
-                                                <option>US/Samoa (GMT-11:00)</option>
-                                                <option>US/Alaska (GMT-09:00)</option>
-
-                                            </optgroup>
-
-                                        </select>
-                            </div>
-                        </div>
+                       
 
                     </div>
                 </div>

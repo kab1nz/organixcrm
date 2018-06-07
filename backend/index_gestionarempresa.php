@@ -116,18 +116,24 @@ if(isset($_GET['bim'])) {
                                            
 
                                         ?>
+
                                         <tr>
+
                                         <td>
                                              <input type="checkbox" id="<?php echo $mostrar['GUIDEMPRESA']; ?>" name="checkEmpresa_<?php echo $cont;?>" value="<?php echo $mostrar['NOMBREFISCAL'] ?>"/>
                                              <label for="<?php echo $mostrar['GUIDEMPRESA'] ?>">Accept</label>
                                         </td>
-                                            <td><?php echo $mostrar['NOMBREFISCAL'] ?></td>
+                                        
+
+                                          <td><a href="index_editar_empresa.php?id=<?php echo $mostrar['GUIDEMPRESA']; ?>">
+                                          <?php echo $mostrar['NOMBREFISCAL'] ?> </a></td>
                                             <td><?php echo $mostrar['DIRECCION'] ?></td>
                                             <td><?php echo $mostrar['POBLACION'] ?></td>
                                             <td><?php echo $mostrar['PROVINCIA'] ?></td>
                                             <td><?php echo $mostrar['IDPAIS'] ?></td>
                                             
                                         </tr>
+
                                         <?php
                                           $cont++;     
                                        }
