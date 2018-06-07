@@ -169,7 +169,7 @@ if(isset($_GET['bim'])) {
                     <img src="images/david.jpg" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $usu; ?></div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["email"]; ?></div>
                     <div class="email"><?php echo $_SESSION["email"]; ?></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
@@ -240,7 +240,7 @@ if(isset($_GET['bim'])) {
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="index_usuarios.html" class=" waves-effect waves-block">Usuarios</a>
+                                    <a href="index_usuarios.php" class=" waves-effect waves-block">Usuarios</a>
                                 </li>
                                 <li>
                                     <a href="index_grupo_usuario.html" class=" waves-effect waves-block">Grupos de usuarios</a>

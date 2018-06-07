@@ -1,3 +1,69 @@
+<?php
+    require_once("../bd/conexion.php");
+session_start();
+$usu=$_SESSION["usuario"];
+$usu=$_GET["idusuario"];
+$_SESSION["usuario"]=$usu;
+$consulta='SELECT nombre, username FROM usuarios WHERE GUID="'.$usu.'"';
+    $result=mysqli_query($conexion,$consulta);
+    if(!$result){
+        echo "ERROR -> " . mysqli_error($conexion);
+    }
+    $row=mysqli_fetch_array($result);
+if(isset($_POST['submit2'])) {
+    $nombre = $_POST['idnombreusuario'];
+    $email = $_POST['idusername'];
+    $contraN=$_POST['idcontrausuario'];
+    $repecontraN=$_POST['idrepecontrausuario'];
+
+    if(!empty($nombre)){
+    $updatePerfil = "update usuarios set nombre='$nombre' where guid='$usu';";
+    $resultado4=mysqli_query($conexion, $updatePerfil);   
+}
+
+    if(!empty($email)){
+        $updateEmail = "update usuarios set username='$email' where guid='$usu';";
+        $resultado5=mysqli_query($conexion, $updateEmail);
+    }
+    if(!empty($email) && !empty($nombre)){
+        echo "Actualización complentada";
+        $update = "update usuarios set username='$email' ,nombre='$nombre' where guid='$usu';";
+        $resultado5=mysqli_query($conexion, $update);
+    }
+    if(!empty($email) && !empty($nombre) && !empty($contraN) && !empty($repecontraN)){
+        $update = "update usuarios set username='$email' ,nombre='$nombre' where guid='$usu';";
+        $resultado5=mysqli_query($conexion, $update);
+
+        if($contraN==$repecontraN){
+            echo "Contraseña cambiada correctamente";
+
+            $sem1=mt_rand(100,999);
+            $sem2=mt_rand(100,999);
+            $sem=$sem1.$sem2;
+            $contrCifra=md5($contraN);
+            $contrCiNueva=$sem1.$contrCifra.$sem2;
+            $actu="update contrasenas set contra='$contrCiNueva',semilla='$sem' where guid='$usu'";
+            $resultado6=mysqli_query($conexion, $actu);
+        }
+
+    }
+    if(!empty($contraN) && !empty($repecontraN)){
+        if($contraN==$repecontraN){
+            echo "Contraseña cambiada correctamente";
+            $sem1=mt_rand(100,999);
+            $sem2=mt_rand(100,999);
+            $sem=$sem1.$sem2;
+            $contrCifra=md5($contraN);
+            $contrCiNueva=$sem1.$contrCifra.$sem2;
+            $actu="update contrasenas set contra='$contrCiNueva',semilla='$sem' where guid='$usu'";
+            $resultado6=mysqli_query($conexion, $actu);
+        }
+    }
+
+
+
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -12,7 +78,6 @@
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-    <script src="js/querylista.js"></script>
 
     <!-- Bootstrap Core Css -->
     <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -173,14 +238,16 @@
                     <img src="images/david.jpg" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?php echo $usu; ?>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >                       
+                        <label id="nombreUsu">
+                            <?php echo $usu; ?>
+                        </label>
                     </div>
                     <div class="email">
                         <?php echo $_SESSION["email"]; ?>
                     </div>
                     <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float:right;margin-bottom:5px;">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
                             <li><a href="index_home_perfil.html" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
 
@@ -371,64 +438,91 @@
         <!-- #END# Right Sidebar -->
     </section>
     <section class="content">
+    <form action="index_editar_usuarios.php?idusuario=<?php echo $_SESSION['usuario'] ?>" method="post">
         <div class="princicontent">
-            <div class="col-lg-2 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
+            <div class="col-lg-4 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
             </div>
-            <div class="col-lg-5 flexcenter">Contactos</div>
-            <div class="col-lg-5 flexend "> <i class="material-icons ">ic_save</i><span class="mr10">Nuevo Usuario</span></a>
-                <i class="material-icons">delete</i><span class="mr10"> Eliminar</span></a>
-                <i class="material-icons">perm_identity</i><span> Invitar usuario</span></a>
+            <div class="col-lg-4 flexcenter">Editar perfíl</div>
+            <div class="col-lg-4 flexend">
+                <div id="id_saveperfil">
+                <input type="submit" name="submit2" value="Submit" />
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="col-lg-2 misdatos">Mis datos</div>
             </div>
             <div class="tablaperfil">
-                <div class="col-md-12 form-group form-group-default input-group" style="overflow: visible"><label>Búsqueda</label><input class="form-control" type="text" placeholder="Búsqueda" id="_oq4nsw"><span class="input-group-addon" title="Búsqueda avanzada"><i class="material-icons">sync</i></span><span class="input-group-addon" title="Refrescar"><img src="images/filter.svg" style="width: 15px;">
+                <div class="col-lg-2">
+                    <img src="images/david.jpg" width="160px" class="preview">
+                </div>
+                <div class="col-lg-10">
+                    <div class="flexcolumn">
+                        <div class="row">
+                            <div class="col-lg-5">Nombre
+                                <input type="text" class="form-control" name="idnombreusuario" id="idnombreusuario" placeholder="<?php echo $row[0]; ?>">
+                            </div>
+                            <div class="col-lg-1">*</div>
 
-                </span></div>
-                <div class="col-md-12">
-                    <div class="btn-toolbar" id="_mw9805">
-                        <div class="btn-group"><button type="button" class="btn btn-default" data-fld="completename"><div class="pg-sortdown pg-small"></div>Nombre</button><button type="button" class="btn btn-default" data-fld="tag"><div class="pg-sortup pg-small"></div>Email</button>
-                            <button type="button" class="btn btn-default" data-fld="contact">
-                                
+                            <div class="col-lg-5">Apellidos
+                            <input type="text" class="form-control" id="idapellidos" placeholder="<?php echo $row[0]; ?>">
+
+                            </div>
+                            <div class="col-lg-1">*</div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-3">Username
+                            <input type="text" class="form-control" name="idusername" id="idusername" placeholder="<?php echo $row[1] ?>">
+
+                            </div>
+                            <div class="col-lg-1">*</div>
+
+                            <div class="col-lg-4">Contraseña
+                            <input type="text" class="form-control" name="idcontrausuario" id="idcontrausuario">
+                        
+
+                            </div>
+                            <div class="col-lg-4">Repetir Contraseña
+                            <input type="text" class="form-control" name="idrepecontrausuario" id="idrepecontrausuario">
+
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-6">Idioma
+                                <select class="form-control show-tick" style="margin-top: 12px;">
+                                            <optgroup label="Idioma">
+                                                <option>Español</option>
+                                                <option>Catalá</option>
+                                                <option>Inglés</option>
+                                            </optgroup>
+                                            
+                                        </select>
+                            </div>
+                            <div class="col-lg-6">Zona Horaria
+
+                                <select class="form-control show-tick" style="margin-top: 12px;">
+                                            <optgroup label="Zona Horaria">
+                                                <option>Europa/Budapest (GMT+01:00)</option>
+                                                <option>Europa/Madrid (GMT+01:00)</option>
+                                                <option>Europa/Ámsterdam (GMT+01:00)</option>
+                                                <option>Pacífico/Midway (GMT-11:00)</option>
+                                                <option>US/Samoa (GMT-11:00)</option>
+                                                <option>US/Alaska (GMT-09:00)</option>
+
+                                            </optgroup>
+
+                                        </select>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-                
-                <div class="col-md-3">
-                        <div class="panel-body">
-                           <img src="images/avatar.png" class="dv-image">
-                            <div class="dv-data"><div class="dv-data-name">
-                                <span>Alberto</span></div><div class="dv-data-title">Alberto</div>
-                            </div>
-                        </div>
-                </div>
-                <div class="col-md-3">
-                        <div class="panel-body">
-                           <img src="images/avatar.png" class="dv-image">
-                            <div class="dv-data"><div class="dv-data-name">
-                                <span>Alberto</span></div><div class="dv-data-title">Alberto</div>
-                            </div>
-                        </div>
-                </div>
-                <div class="col-md-3">
-                        <div class="panel-body">
-                           <img src="images/avatar.png" class="dv-image">
-                            <div class="dv-data"><div class="dv-data-name">
-                                <span>Alberto</span></div><div class="dv-data-title">Alberto</div>
-                            </div>
-                        </div>
-                </div>
-                <div class="col-md-3">
-                        <div class="panel-body">
-                           <img src="images/avatar.png" class="dv-image">
-                            <div class="dv-data"><div class="dv-data-name">
-                                <span>Alberto</span></div><div class="dv-data-title">Alberto</div>
-                            </div>
-                        </div>
-                </div>
-
             </div>
-
+            
         </div>
-
-        </div>
+        </form>
     </section>
 
 
@@ -446,7 +540,10 @@
 
     <!-- Waves Effect Plugin Js -->
     <script src="plugins/node-waves/waves.js"></script>
-
+    <!--
+    <script src="js/querylista.js"></script>
+    <script src="js/queryejemplo.js"></script>
+-->
     <!-- Autosize Plugin Js -->
     <script src="plugins/autosize/autosize.js"></script>
 
