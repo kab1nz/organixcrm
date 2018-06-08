@@ -1,3 +1,12 @@
+<?php
+require_once("../bd/conexion.php");
+
+
+session_start();
+$usu=$_SESSION["usuario"];
+$guidusu=$_SESSION['guidusu'];
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -370,7 +379,6 @@
         <!-- #END# Right Sidebar -->
     </section>
     <section class="content">
-        <div class="princicontent">
             <div class="col-lg-2 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
             </div>
             <div class="col-lg-5 flexcenter">Contactos</div>
@@ -388,6 +396,49 @@
                         <button type="button" class="btn btn-default" data-fld="verified">Verificado</button>
                     </div>
                 </div>
+</div>
+                <?php
+                     $sql="select GUID,NOMBRECOMERCIAL,FECHADECREACION,ALIASCRM from empresas,usu_empr where empresas.guid=usu_empr.guidempresa and usu_empr.guidusuario='".$guidusu."'";
+                     if($conexion->multi_query($sql)){
+                         do{
+                            if($resultado= $conexion->use_result()){
+                                while($fila = $resultado->fetch_row()){
+                                    $id_empresa=$fila[0];
+                                    echo'<div class="col-md-3" id="'.$id_empresa.'">'; 
+                                    $_SESSION["empresa"]=$id_empresa;
+                                    echo "<a href=index_editar_empresa.php?id=$id_empresa>";
+                                    echo'<div class="panel-body">';
+                                    echo'<img src="images/avatar.png" class="dv-image1">';
+                                    echo'<div class="data">';           
+                                    echo'<span class="bold">'.$fila[1].'</span>';
+                                    echo '<div class="dv-data-title">Informática</div>';
+                                    echo '<div>';
+                                    echo '<span class="bold">Creación</span>&nbsp;'.$fila[2];
+                                    echo '</div>';
+                                    echo '<div>';
+                                    echo '<span class="bold">Verificado</span>&nbsp;Sí';
+                                    echo '</div>';
+                                    echo '</div>';
+                                    echo '<div class="dataview-info">';
+                                    echo '<p><small>Alias</small><br>'.$fila[3].'</p></div>';
+                                    echo '</a>';
+                                    echo'</div>';
+                                    echo'</div>';
+                                    echo'</div>';
+
+
+                                }
+                                $resultado->close();
+
+                            }
+
+
+                         }while ($conexion->next_result());
+
+                     }
+                ?>
+
+
                 <div class="col-md-3">
                     <div class="panel-body">
                         <img src="images/avatar.png" class="dv-image1">
@@ -403,51 +454,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="panel-body">
-                        <img src="images/avatar.png" class="dv-image1">
-                        <div class="data">
-                            <span class="bold">SAIMA SL</span>
-                            <div class="dv-data-title">Informática</div>
-                            <div><span class="bold">Creacion</span>&nbsp;20/04/2017 12:19</div>
-                            <div><span class="bold">Ult. conexion</span>&nbsp;</div>
-                            <div><span class="bold">Verificado</span>&nbsp;Si</div>
-                        </div>
-                        <div class="dataview-info">
-                            <p><small>Alias</small><br>saimasl.organixcrm.com</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="panel-body">
-                        <img src="images/avatar.png" class="dv-image1">
-                        <div class="data">
-                            <span class="bold">SAIMA SL</span>
-                            <div class="dv-data-title">Informática</div>
-                            <div><span class="bold">Creacion</span>&nbsp;20/04/2017 12:19</div>
-                            <div><span class="bold">Ult. conexion</span>&nbsp;</div>
-                            <div><span class="bold">Verificado</span>&nbsp;Si</div>
-                        </div>
-                        <div class="dataview-info">
-                            <p><small>Alias</small><br>saimasl.organixcrm.com</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="panel-body">
-                        <img src="images/avatar.png" class="dv-image1">
-                        <div class="data">
-                            <span class="bold">SAIMA SL</span>
-                            <div class="dv-data-title">Informática</div>
-                            <div><span class="bold">Creacion</span>&nbsp;20/04/2017 12:19</div>
-                            <div><span class="bold">Ult. conexion</span>&nbsp;</div>
-                            <div><span class="bold">Verificado</span>&nbsp;Si</div>
-                        </div>
-                        <div class="dataview-info">
-                            <p><small>Alias</small><br>saimasl.organixcrm.com</p>
-                        </div>
-                    </div>
-                </div>
+             
             </div>
 
         </div>

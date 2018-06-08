@@ -257,7 +257,7 @@ if(isset($_GET['bim'])) {
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="index_empresas.html" class=" waves-effect waves-block">Empresas</a>
+                                    <a href="index_empresas.php" class=" waves-effect waves-block">Empresas</a>
                                 </li>
                                 <li>
                                     <a href="index_tarifas.html" class=" waves-effect waves-block">Tarifas</a>
