@@ -61,7 +61,7 @@ if(isset($_GET['bim'])) {
     <link href="css/themes/all-themes.css" rel="stylesheet" />
 </head>
 
-<body class="theme-red">
+<body class="theme-red" style="background: white;">
     <!-- Page Loader -->
     <div class="page-loader-wrapper" style="display: none;">
         <div class="loader">
@@ -83,15 +83,7 @@ if(isset($_GET['bim'])) {
     <div class="overlay"></div>
     <!-- #END# Overlay For Sidebars -->
     <!-- Search Bar -->
-    <div class="search-bar">
-        <div class="search-icon">
-            <i class="material-icons">search</i>
-        </div>
-        <input type="text" placeholder="EMPIEZA A ESCRIBIR...">
-        <div class="close-search">
-            <i class="material-icons">close</i>
-        </div>
-    </div>
+    
     <!-- #END# Search Bar -->
     <!-- Top Bar -->
     <nav class="navbar">
@@ -113,6 +105,7 @@ if(isset($_GET['bim'])) {
                             <li class="body">
                                 <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;">
                                     <ul class="menu" style="overflow: hidden; width: auto; height: 254px;">
+                                        
                                         <?php
                                             $sql= 'select GUID from Usuarios where username ="'.$_SESSION["email"].'"';
                                             $resultado = mysqli_query($conexion, $sql);
@@ -122,9 +115,9 @@ if(isset($_GET['bim'])) {
                                            $empresas='select NOMBREFISCAL,BDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
                                             $query = mysqli_query($conexion, $empresas);
                                             while( $fila = mysqli_fetch_array($query)){
-                                                    echo '<li id='.$fila[1].'>'; 
+                                                    echo '<li id='.$fila[1].'>';                                
                                                     echo '<a href="javascript:void(0);" class=" waves-effect waves-block">';
-                                                    echo '<div class="menu-info" >';
+                                                    echo '<div class="menu-info">';
                                                     echo '<h4>'.$fila[0].'</h4>';
                                                     echo '</div>';  
                                                     echo '</a>';
@@ -142,47 +135,12 @@ if(isset($_GET['bim'])) {
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <img src="images/ic_device_hub_white_24px.svg" alt="">
-                            <!--      <span class="label-count">8</span> -->
-                        </a>
-                    </li>
+                   
                 </ul>
 
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Call Search -->
-                    <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
-                    <!-- #END# Call Search -->
-                    <!-- Notifications -->
-
-
-
-
-
-
-                    <!-- #END# Notifications -->
-                    <!-- Tasks -->
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <i class="material-icons">flag</i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">TASKS</li>
-                            <li class="body">
-                                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;">
-                                    <ul class="menu tasks" style="overflow: hidden; width: auto; height: 254px;">
-
-                                    </ul>
-                                </div>
-                            </li>
-                            <!-- #END# Tasks -->
-                            <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
-                        </ul>
-                    </li>
-                </ul>
+               
+                        </div>
             </div>
-        </div>
     </nav>
     <!-- #Top Bar -->
     <section>
@@ -194,16 +152,78 @@ if(isset($_GET['bim'])) {
                     <img src="images/david.jpg" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $usu; ?></div>
-                    <br>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["email"]; ?></div>
+                    <div class="email"><?php echo $_SESSION["email"]; ?></div>
                     <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float : right;">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="index_home_perfil.html" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
+                            <li><a href="index_home_perfil.php" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
                           
                             <li><a href="logout.php" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>
                     </div>
+                </div>
+            </div>
+            <!-- #User Info -->
+            <!-- Menu -->
+            <div class="menu">
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 517px;">
+                    <ul class="list" style="overflow: hidden; width: auto; height: 517px;">
+                        <li class="header">MAIN NAVIGATION</li>
+                        <li class="active">
+                            <a href="index_backend.php" class="toggled waves-effect waves-block">
+                                <i class="material-icons">home</i>
+                                <span>Inicio</span>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
+                                <i class="material-icons">layers</i>
+                                <span>CRM</span>
+                            </a>
+                            <ul class="ml-menu">
+                                <li>
+                                    <a href="index_contactos.php" class=" waves-effect waves-block">Contactos</a>
+                                </li>
+                                <li>
+                                    <a href="index_proyectos.php" class=" waves-effect waves-block">Proyectos</a>
+                                </li>
+                                <li>
+                                    <a href="index_categorias.php" class=" waves-effect waves-block">Categorias</a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
+                                <i class="material-icons">widgets</i>
+                                <span>Configuración</span>
+                            </a>
+                            <ul class="ml-menu">
+                                <li>
+                                    <a href="index_usuarios.php" class=" waves-effect waves-block">Usuarios</a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
+                                <i class="material-icons">swap_calls</i>
+                                <span>Administración</span>
+                            </a>
+                            <ul class="ml-menu">
+                                <li>
+                                    <a href="index_empresas.php" class=" waves-effect waves-block">Empresas</a>
+                                </li>
+                                
+
+                            </ul>
+                        </li>
+
+                    </ul>
+                    <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 0px; z-index: 99; right: 1px; height: 517px;"></div>
+                    <div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
                 </div>
             </div>
             <!-- #User Info -->
@@ -391,23 +411,12 @@ if(isset($_GET['bim'])) {
         <div class="princicontent">
             <div class="col-lg-2 flexstart"> <i class="material-icons">ic_keyboard_backspace</i>
             </div>
-            <div class="col-lg-6 flexcenter">Contactos</div>
-            <?php echo $_SESSION['bd']?>
-            <div class="col-lg-2 flexstart "> <a href="form_contacto.php"><label><i class="material-icons">ic_save</i><span>Nuevo Contacto</span></label></a>
-            </div>
-            <div class="col-lg-2 flexend "> <label><i class="material-icons">delete</i><span> Eliminar</span></label>
+            <div class="col-lg-5 flexcenter">Contactos</div>
+            <div class="col-lg-4 flexend "> <a href="form_contacto.php"><label><i class="material-icons">ic_save</i><span>Nuevo Contacto</span></label></a>
             </div>
             <div class="tablaperfil">
-                <div class="col-md-12 form-group form-group-default input-group" style="overflow: visible"><label>Búsqueda</label><input class="form-control" type="text" placeholder="Búsqueda" id="_oq4nsw"><span class="input-group-addon" title="Búsqueda avanzada"><i class="material-icons">sync</i></span><span class="input-group-addon" title="Refrescar"><img src="images/filter.svg" style="width: 15px;">
-
-                </span></div>
-                <div class="col-md-12">
-                    <div class="btn-toolbar" id="_mw9805">
-                        <div class="btn-group"><button type="button" class="btn btn-default" data-fld="completename"><div class="pg-sortdown pg-small"></div>Nombre</button><button type="button" class="btn btn-default" data-fld="tag"><div class="pg-sortup pg-small"></div>Tipo</button>
-                            <button type="button" class="btn btn-default" data-fld="contact">
-                                <div class="pg-sortup pg-small"></div>Datos de contacto</button><button type="button" class="btn btn-default" data-fld="nbus"><div class="pg-sortup pg-small"></div>Contacto de</button></div>
-                    </div>
-                </div>
+                
+                
                 
                 
                 

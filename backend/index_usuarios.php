@@ -47,7 +47,7 @@ require_once("../bd/conexion.php");
     <link href="css/themes/all-themes.css" rel="stylesheet" />
 </head>
 
-<body class="theme-red">
+<body class="theme-red" style="background: white;">
     <!-- Page Loader -->
     <div class="page-loader-wrapper" style="display: none;">
         <div class="loader">
@@ -69,15 +69,7 @@ require_once("../bd/conexion.php");
     <div class="overlay"></div>
     <!-- #END# Overlay For Sidebars -->
     <!-- Search Bar -->
-    <div class="search-bar">
-        <div class="search-icon">
-            <i class="material-icons">search</i>
-        </div>
-        <input type="text" placeholder="EMPIEZA A ESCRIBIR...">
-        <div class="close-search">
-            <i class="material-icons">close</i>
-        </div>
-    </div>
+    
     <!-- #END# Search Bar -->
     <!-- Top Bar -->
     <nav class="navbar">
@@ -99,72 +91,40 @@ require_once("../bd/conexion.php");
                             <li class="body">
                                 <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;">
                                     <ul class="menu" style="overflow: hidden; width: auto; height: 254px;">
-                                        <li>
-                                            <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                        
+                                        <?php
+                                            $sql= 'select GUID from Usuarios where username ="'.$_SESSION["email"].'"';
+                                            $resultado = mysqli_query($conexion, $sql);
+                                            $intent= mysqli_fetch_row($resultado);
+                                            $guidusu= $intent[0];
+                                            //echo "El GUID ES: ".$guidusu;
+                                           $empresas='select NOMBREFISCAL,BDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
+                                            $query = mysqli_query($conexion, $empresas);
+                                            while( $fila = mysqli_fetch_array($query)){
+                                                    echo '<li id='.$fila[1].'>';                                
+                                                    echo '<a href="javascript:void(0);" class=" waves-effect waves-block">';
+                                                    echo '<div class="menu-info">';
+                                                    echo '<h4>'.$fila[0].'</h4>';
+                                                    echo '</div>';  
+                                                    echo '</a>';
+                                                     echo "</li>";
+                                                }
+                                        ?>
 
-                                                <div class="menu-info">
-                                                    <h4>EMPRESA 1</h4>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class=" waves-effect waves-block">
-
-                                                <div class="menu-info">
-                                                    <h4>EMPRESA 2</h4>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button type="button" class="btn bg-red btn-block btn-sm waves-effect">Gestionar</button>
-
-                                        </li>
                                     </ul>
                                     <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div>
                                     <div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
                                 </div>
                             </li>
                             <li class="footer">
-                                <a href="javascript:void(0);" class=" waves-effect waves-block">View All Notifications</a>
+                                <button type="button" id="btngestionar" class="btn bg-red btn-block btn-sm waves-effect"onclick="openGestionar();">Gestionar</button>
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <img src="images/ic_device_hub_white_24px.svg" alt="">
-                            <!--      <span class="label-count">8</span> -->
-                        </a>
-                    </li>
+                   
                 </ul>
 
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Call Search -->
-                    <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
-                    <!-- #END# Call Search -->
-                    <!-- Notifications -->
-
-
-
-
-
-
-                    <!-- #END# Notifications -->
-                    <!-- Tasks -->
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <i class="material-icons">flag</i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">TASKS</li>
-                            <li class="body">
-                                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;">
-                                    <ul class="menu tasks" style="overflow: hidden; width: auto; height: 254px;">
-
-                                    </ul>
-                            </li>
-                            <!-- #END# Tasks -->
-                            <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
-                        </ul>
+               
                         </div>
             </div>
     </nav>
@@ -178,17 +138,13 @@ require_once("../bd/conexion.php");
                     <img src="images/david.jpg" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?php echo $usu; ?>
-                    </div>
-                    <div class="email">
-                        <?php echo $_SESSION["email"]; ?>
-                    </div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["email"]; ?></div>
+                    <div class="email"><?php echo $_SESSION["email"]; ?></div>
                     <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float:right;">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="index_home_perfil.html" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
-
+                            <li><a href="index_home_perfil.php" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
+                          
                             <li><a href="logout.php" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>
                     </div>
@@ -206,23 +162,7 @@ require_once("../bd/conexion.php");
                                 <span>Inicio</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
-                                <i class="material-icons">event</i>
-                                <span>Mis Cosas</span>
-                            </a>
-                            <ul class="ml-menu">
-                                <li>
-                                    <a href="index_home_perfil.html" class=" waves-effect waves-block">Alertas</a>
-                                </li>
-                                <li>
-                                    <a href="index_home_perfil.html" class=" waves-effect waves-block">Notas</a>
-                                </li>
-                                <li>
-                                    <a href="index_home_calendario.html" class=" waves-effect waves-block">Calendario</a>
-                                </li>
-                            </ul>
-                        </li>
+                        
                         <li>
                             <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
                                 <i class="material-icons">layers</i>
@@ -230,20 +170,15 @@ require_once("../bd/conexion.php");
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="index_contactos.html" class=" waves-effect waves-block">Contactos</a>
+                                    <a href="index_contactos.php" class=" waves-effect waves-block">Contactos</a>
                                 </li>
                                 <li>
-                                    <a href="index_llamadas.html" class=" waves-effect waves-block">Llamadas telefónicas</a>
+                                    <a href="index_proyectos.php" class=" waves-effect waves-block">Proyectos</a>
                                 </li>
                                 <li>
-                                    <a href="index_casos.html" class=" waves-effect waves-block">Casos</a>
+                                    <a href="index_categorias.php" class=" waves-effect waves-block">Categorias</a>
                                 </li>
-                                <li>
-                                    <a href="index_tareas.html" class=" waves-effect waves-block">Tareas</a>
-                                </li>
-                                <li>
-                                    <a href="index_negociaciones.html" class=" waves-effect waves-block">Negociaciones</a>
-                                </li>
+                               
                             </ul>
                         </li>
                         <li>
@@ -253,14 +188,9 @@ require_once("../bd/conexion.php");
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="index_usuarios.html" class=" waves-effect waves-block">Usuarios</a>
+                                    <a href="index_usuarios.php" class=" waves-effect waves-block">Usuarios</a>
                                 </li>
-                                <li>
-                                    <a href="index_grupo_usuario.html" class=" waves-effect waves-block">Grupos de usuarios</a>
-                                </li>
-                                <li>
-                                    <a href="index_suscripciones.html" class=" waves-effect waves-block">Suscripciones y pagos</a>
-                                </li>
+                               
                             </ul>
                         </li>
                         <li>
@@ -270,17 +200,9 @@ require_once("../bd/conexion.php");
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="index_empresas.html" class=" waves-effect waves-block">Empresas</a>
+                                    <a href="index_empresas.php" class=" waves-effect waves-block">Empresas</a>
                                 </li>
-                                <li>
-                                    <a href="index_tarifas.html" class=" waves-effect waves-block">Tarifas</a>
-                                </li>
-                                <li>
-                                    <a href="index_pagos.html" class=" waves-effect waves-block">Pagos</a>
-                                </li>
-                                <li>
-                                    <a href="pages/ui/badges.html" class=" waves-effect waves-block">Informes</a>
-                                </li>
+                                
 
                             </ul>
                         </li>
@@ -304,75 +226,7 @@ require_once("../bd/conexion.php");
             <!-- #Footer -->
         </aside>
         <!-- #END# Left Sidebar -->
-        <!-- Right Sidebar -->
-        <aside id="rightsidebar" class="right-sidebar">
-            <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                <li role="presentation" class="active"><a href="#skins" data-toggle="tab">SKINS</a></li>
-                <li role="presentation"><a href="#settings" data-toggle="tab">SETTINGS</a></li>
-            </ul>
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active in active" id="skins">
-                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 256px;">
-
-                        <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 6px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px; height: 72.8178px;"></div>
-                        <div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="settings">
-                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 256px;">
-                        <div class="demo-settings" style="overflow: hidden; width: auto; height: 256px;">
-                            <p>GENERAL SETTINGS</p>
-                            <ul class="setting-list">
-                                <li>
-                                    <span>Report Panel Usage</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Email Redirect</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox"><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <p>SYSTEM SETTINGS</p>
-                            <ul class="setting-list">
-                                <li>
-                                    <span>Notifications</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Auto Updates</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <p>ACCOUNT SETTINGS</p>
-                            <ul class="setting-list">
-                                <li>
-                                    <span>Offline</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox"><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Location Permission</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 6px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div>
-                        <div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-                    </div>
-                </div>
-            </div>
-        </aside>
+        
         <!-- #END# Right Sidebar -->
     </section>
     <section class="content">
@@ -380,21 +234,11 @@ require_once("../bd/conexion.php");
             <div class="col-lg-2 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
             </div>
             <div class="col-lg-5 flexcenter">Contactos</div>
-            <div class="col-lg-5 flexend "> <i class="material-icons ">ic_save</i><span class="mr10">Nuevo Usuario</span></a>
+            <div class="col-lg-5 flexend " style="margin:botton"> <i class="material-icons ">ic_save</i><span class="mr10">Nuevo Usuario</span></a>
                 <i class="material-icons">delete</i><span class="mr10"> Eliminar</span></a>
-                <i class="material-icons">perm_identity</i><span> Invitar usuario</span></a>
             </div>
-            <div class="tablaperfil">
-                <div class="col-md-12 form-group form-group-default input-group" style="overflow: visible"><label>Búsqueda</label><input class="form-control" type="text" placeholder="Búsqueda" id="_oq4nsw"><span class="input-group-addon" title="Búsqueda avanzada"><i class="material-icons">sync</i></span><span class="input-group-addon" title="Refrescar"><img src="images/filter.svg" style="width: 15px;">
-
-                </span></div>
-                <div class="col-md-12">
-                    <div class="btn-toolbar" id="_mw9805">
-                        <div class="btn-group"><button type="button" class="btn btn-default" data-fld="completename"><div class="pg-sortdown pg-small"></div>Nombre</button><button type="button" class="btn btn-default" data-fld="tag"><div class="pg-sortup pg-small"></div>Email</button>
-                            <button type="button" class="btn btn-default" data-fld="contact">
-                                
-                    </div>
-                </div>
+            
+               
                 <?php
                     $sql="select GUID,USERNAME,NOMBRE from usuarios";
                     if($conexion->multi_query($sql)){
@@ -402,12 +246,13 @@ require_once("../bd/conexion.php");
                             if($resultado= $conexion->use_result()){
                                 while($fila = $resultado->fetch_row()){
                                     $id_usuario=$fila[0];
-                                    echo'<div class="col-md-3" id="'.$id_usuario.'">'; 
+                                    echo'<div class="col-md-4" id="'.$id_usuario.'" style="    margin-bottom: 15px;
+                                    margin-top: 15px;">'; 
                                     $_SESSION["usu"]=$id_usuario;
                                         echo "<a href=index_editar_usuarios.php?idusuario=$id_usuario>";
                                         echo'<div class="panel-body">';
     
-                                             echo'<img src="images/avatar.png" class="dv-image">';
+                                             echo'<img src="images/avatar.png" class="dv-image1">';
     
                                                 echo'<div class="dv-data">';
                                                     echo'<div class="dv-data-name">';
@@ -434,19 +279,7 @@ require_once("../bd/conexion.php");
               
               
               ?>
-                <div class="col-md-3">
-                        <div class="panel-body">
-                           <img src="images/avatar.png" class="dv-image">
-                            <div class="dv-data">
-                                <div class="dv-data-name">
-                                     <span>Alberto</span>
-                                </div>
-                                <div class="dv-data-title">Alberto
-
-                                </div>
-                            </div>
-                        </div>
-                </div>
+        
                 
             </div>
 

@@ -408,10 +408,11 @@ $guidusu=$_SESSION['guidusu'];
                                     $_SESSION["empresa"]=$id_empresa;
                                     echo "<a href=index_editar_empresa.php?id=$id_empresa>";
                                     echo'<div class="panel-body">';
-                                    echo'<img src="images/avatar.png" class="dv-image1">';
-                                    echo'<div class="data">';           
-                                    echo'<span class="bold">'.$fila[1].'</span>';
-                                    echo '<div class="dv-data-title">Informática</div>';
+                                        
+                                        echo'<img src="images/avatar.png" class="dv-image1">';
+                                        echo'<div class="data">';           
+                                            echo'<span class="bold">'.$fila[1].'</span>';
+                                         echo '<div class="dv-data-title">Informática</div>';
                                     echo '<div>';
                                     echo '<span class="bold">Creación</span>&nbsp;'.$fila[2];
                                     echo '</div>';
@@ -439,21 +440,7 @@ $guidusu=$_SESSION['guidusu'];
                 ?>
 
 
-                <div class="col-md-3">
-                    <div class="panel-body">
-                        <img src="images/avatar.png" class="dv-image1">
-                        <div class="data">
-                            <span class="bold">SAIMA SL</span>
-                            <div class="dv-data-title">Informática</div>
-                            <div><span class="bold">Creacion</span>&nbsp;20/04/2017 12:19</div>
-                            <div><span class="bold">Ult. conexion</span>&nbsp;</div>
-                            <div><span class="bold">Verificado</span>&nbsp;Si</div>
-                        </div>
-                        <div class="dataview-info">
-                            <p><small>Alias</small><br>saimasl.organixcrm.com</p>
-                        </div>
-                    </div>
-                </div>
+                
              
             </div>
 

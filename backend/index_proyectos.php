@@ -1,7 +1,8 @@
 <?php
-require_once("../bd/conexion.php");
+ require_once("../bd/conexion.php");
+ session_start();
 
-session_start();
+ $mysqli= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
 $usu=$_SESSION["usuario"];
 $guidusu=$_SESSION['guidusu'];
 
@@ -53,18 +54,9 @@ $guidusu=$_SESSION['guidusu'];
                 <div class="btn btn-danger btn-cons" onclick="openCrearProyecto();">Nuevo proyecto</div>
                 <div class="btn btn-danger btn-cons">Eliminar proyecto</div>
             </div>
-            <div class="col-md-12 form-group form-group-default input-group focused border" style="overflow: visible"><label>Búsqueda</label>
-                <input class="form-control" type="text" placeholder="Búsqueda" id="_oq4nsw">
-                <span class="input-group-addon" title="Búsqueda avanzada">
+            
            
-</span></div>
-            <div class="col-md-10">
-                <span class="columnstilo">Arrastre una columna aquí para agrupar</span>
-            </div>
-            <div class="col-md-2 ">
-                <img src="images/export-file.svg" class="fderequince " style="    margin-left: 10px;">
-                <img src="images/font-selection-editor.svg" class="fderequince ">
-            </div>
+           
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="header">
@@ -75,29 +67,21 @@ $guidusu=$_SESSION['guidusu'];
                                         <tr>
                                             <th></th>
                                             <th>Nombre</th>
-                                            <th>Dirección</th>
-                                            <th>Ciudad</th>
-                                            <th>Provincia</th>
-                                            <th>País</th>
-                                            <th>Activa</th>
+                                            
                                         </tr>
                                         <?php
-                                $empresas='select NOMBREFISCAL,GUIDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
-                                $result = mysqli_query($conexion, $empresas);
+                                $empresas='select NOMBRE from PROYECTOS';
+                                $result = mysqli_query($mysqli, $empresas);
                                        while($mostrar=mysqli_fetch_array($result)){
 
                                         ?>
                                         <tr>
                                         <td>
-                                             <input type="checkbox" id="<?php echo $mostrar['NOMBREFISCAL'] ?>" name="checkEmpresa[]" value="checked" />
+                                             <input type="checkbox" id="<?php echo $mostrar['NOMBRE'] ?>" name="checkProyecto[]" value="checked" />
                                              <label for="checkbox">Accept</label>
                                         </td>
-                                            <td><?php echo $mostrar['NOMBREFISCAL'] ?></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td><?php echo $mostrar['NOMBRE'] ?></td>
+                                            
                                         </tr>
                                         <?php
                                        }

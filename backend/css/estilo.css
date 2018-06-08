@@ -343,14 +343,12 @@ label {
 
 .dv-image {
     max-width: 40%;
-    border: 3px solid #FFF;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;
-    background-color: #fff;
     height: 100%;
     width: 100%;
-    margin-left: 71px;
+    margin-left: 103px;
     max-width: 128px;
 }
 
@@ -358,6 +356,7 @@ label {
     border-radius: 50%;
     width: 94px;
     margin-left: 5px;
+    float: left;
 }
 
 .panel-body {

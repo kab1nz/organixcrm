@@ -69,15 +69,7 @@ if(isset($_GET['bim'])) {
     <div class="overlay"></div>
     <!-- #END# Overlay For Sidebars -->
     <!-- Search Bar -->
-    <div class="search-bar">
-        <div class="search-icon">
-            <i class="material-icons">search</i>
-        </div>
-        <input type="text" placeholder="EMPIEZA A ESCRIBIR...">
-        <div class="close-search">
-            <i class="material-icons">close</i>
-        </div>
-    </div>
+    
     <!-- #END# Search Bar -->
     <!-- Top Bar -->
     <nav class="navbar">
@@ -129,33 +121,10 @@ if(isset($_GET['bim'])) {
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <img src="images/ic_device_hub_white_24px.svg" alt="">
-                            <!--      <span class="label-count">8</span> -->
-                        </a>
-                    </li>
+                   
                 </ul>
 
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Call Search -->
-                    <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
-
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <i class="material-icons">flag</i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">TASKS</li>
-                            <li class="body">
-                                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;">
-                                    <ul class="menu tasks" style="overflow: hidden; width: auto; height: 254px;">
-
-                                    </ul>
-                            </li>
-                            <!-- #END# Tasks -->
-                            <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
-                        </ul>
+               
                         </div>
             </div>
     </nav>
@@ -193,23 +162,7 @@ if(isset($_GET['bim'])) {
                                 <span>Inicio</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
-                                <i class="material-icons">event</i>
-                                <span>Mis Cosas</span>
-                            </a>
-                            <ul class="ml-menu">
-                                <li>
-                                    <a href="index_home_perfil.html" class=" waves-effect waves-block">Alertas</a>
-                                </li>
-                                <li>
-                                    <a href="index_home_perfil.html" class=" waves-effect waves-block">Notas</a>
-                                </li>
-                                <li>
-                                    <a href="index_home_calendario.html" class=" waves-effect waves-block">Calendario</a>
-                                </li>
-                            </ul>
-                        </li>
+                        
                         <li>
                             <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
                                 <i class="material-icons">layers</i>
@@ -225,12 +178,7 @@ if(isset($_GET['bim'])) {
                                 <li>
                                     <a href="index_categorias.php" class=" waves-effect waves-block">Categorias</a>
                                 </li>
-                                <li>
-                                    <a href="index_tareas.html" class=" waves-effect waves-block">Tareas</a>
-                                </li>
-                                <li>
-                                    <a href="index_negociaciones.html" class=" waves-effect waves-block">Negociaciones</a>
-                                </li>
+                               
                             </ul>
                         </li>
                         <li>
@@ -242,12 +190,7 @@ if(isset($_GET['bim'])) {
                                 <li>
                                     <a href="index_usuarios.php" class=" waves-effect waves-block">Usuarios</a>
                                 </li>
-                                <li>
-                                    <a href="index_grupo_usuario.html" class=" waves-effect waves-block">Grupos de usuarios</a>
-                                </li>
-                                <li>
-                                    <a href="index_suscripciones.html" class=" waves-effect waves-block">Suscripciones y pagos</a>
-                                </li>
+                               
                             </ul>
                         </li>
                         <li>
@@ -259,15 +202,7 @@ if(isset($_GET['bim'])) {
                                 <li>
                                     <a href="index_empresas.php" class=" waves-effect waves-block">Empresas</a>
                                 </li>
-                                <li>
-                                    <a href="index_tarifas.html" class=" waves-effect waves-block">Tarifas</a>
-                                </li>
-                                <li>
-                                    <a href="index_pagos.html" class=" waves-effect waves-block">Pagos</a>
-                                </li>
-                                <li>
-                                    <a href="pages/ui/badges.html" class=" waves-effect waves-block">Informes</a>
-                                </li>
+                                
 
                             </ul>
                         </li>
@@ -362,31 +297,7 @@ if(isset($_GET['bim'])) {
         <!-- #END# Right Sidebar -->
     </section>
 
-    <section class="content">
-        <div class="container-fluid">
-            <div class="container1">
-                <div class="col-12">
-                    <p class="margin">ÚLTIMA ACTIVIDAD</p>
-                </div>
-            </div>
-            <div class="container2">
-                <div class="col-12">
-                    <p class="margin">ÚLTIMA ACTIVIDAD</p>
-                </div>
-                <div class="col-12">
-                    <ul class="nav nav-tabs nav-tabs-simple" role="tablist" data-init-reponsive-tabs="collapse">
-                        <li class=""><a href="#_857xkb" data-toggle="tab" role="tab" aria-expanded="false">Asignadas</a></li>
-                        <li class="active"><a href="#_zpy4dq" data-toggle="tab" role="tab" aria-expanded="true">En proceso</a></li>
-                        <li class=""><a href="#_rm5arq" data-toggle="tab" role="tab" aria-expanded="false">Hecho</a></li>
-                        <li class=""><a href="#_ymgvuv" data-toggle="tab" role="tab" aria-expanded="false">Revisado</a></li>
-                    </ul>
-                </div>
-                <button type="button" class="btn bg-red btn-block waves-effect mt5" style="color:white;">Ver Tareas</button> </div>
-            <div class="cd-nav-trigger">
-                <i class="material-icons">menu</i></div>
-        </div>
-    </section>
-
+    
     <!-- Jquery Core Js -->
     <script async="" src="https://www.google-analytics.com/analytics.js"></script>
     <script src="plugins/jquery/jquery.min.js"></script>
