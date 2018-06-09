@@ -231,11 +231,10 @@ require_once("../bd/conexion.php");
     </section>
     <section class="content">
         <div class="princicontent">
-            <div class="col-lg-2 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
+        <div class="col-lg-2 flexstart"> <a href="index_backend.php"><i class="material-icons">ic_keyboard_backspace</i></a>
             </div>
             <div class="col-lg-5 flexcenter">Contactos</div>
-            <div class="col-lg-5 flexend " style="margin:botton"> <i class="material-icons ">ic_save</i><span class="mr10">Nuevo Usuario</span></a>
-                <i class="material-icons">delete</i><span class="mr10"> Eliminar</span></a>
+            <div class="col-lg-5 flexend "><a href="index_crearUsuarios.php" ><i class="material-icons ">ic_save</i><span class="mr10">Nuevo Usuario</span></a>
             </div>
             
                

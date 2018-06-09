@@ -1,3 +1,31 @@
+<?php
+    require_once("../bd/conexion.php");
+session_start();
+$usu=$_SESSION["usuario"];
+$usu=$_GET["idusuario"];
+$_SESSION["usuario"]=$usu;
+
+if(isset($_POST['submit2'])) {
+    $nombre = $_POST['idnombreusuarionuevo'];
+    $email = $_POST['idusernameusuario'];
+    $contraN=$_POST['idcontraseniausuario'];
+    $repecontraN=$_POST['idrepecontraseniausuario'];
+
+    if(!empty($email) && !empty($nombre) && !empty($contraN) && !empty($repecontraN)){
+      
+        if($contraN==$repecontraN){          
+            $insertarUSU="call INSERT_USUARIO('$email','$nombre','$contraN')";
+            $resultado3 = mysqli_query($conexion, $insertarUSU);       
+    
+        }
+
+    }
+   
+
+
+
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -12,7 +40,6 @@
 
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
-    <script src="js/querylista.js"></script>
 
     <!-- Bootstrap Core Css -->
     <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
@@ -42,7 +69,7 @@
     <link href="css/themes/all-themes.css" rel="stylesheet" />
 </head>
 
-<body class="theme-red">
+<body class="theme-red" style="background: white;">
     <!-- Page Loader -->
     <div class="page-loader-wrapper" style="display: none;">
         <div class="loader">
@@ -64,15 +91,7 @@
     <div class="overlay"></div>
     <!-- #END# Overlay For Sidebars -->
     <!-- Search Bar -->
-    <div class="search-bar">
-        <div class="search-icon">
-            <i class="material-icons">search</i>
-        </div>
-        <input type="text" placeholder="EMPIEZA A ESCRIBIR...">
-        <div class="close-search">
-            <i class="material-icons">close</i>
-        </div>
-    </div>
+    
     <!-- #END# Search Bar -->
     <!-- Top Bar -->
     <nav class="navbar">
@@ -94,72 +113,40 @@
                             <li class="body">
                                 <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;">
                                     <ul class="menu" style="overflow: hidden; width: auto; height: 254px;">
-                                        <li>
-                                            <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                        
+                                        <?php
+                                            $sql= 'select GUID from Usuarios where username ="'.$_SESSION["email"].'"';
+                                            $resultado = mysqli_query($conexion, $sql);
+                                            $intent= mysqli_fetch_row($resultado);
+                                            $guidusu= $intent[0];
+                                            //echo "El GUID ES: ".$guidusu;
+                                           $empresas='select NOMBREFISCAL,BDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
+                                            $query = mysqli_query($conexion, $empresas);
+                                            while( $fila = mysqli_fetch_array($query)){
+                                                    echo '<li id='.$fila[1].'>';                                
+                                                    echo '<a href="javascript:void(0);" class=" waves-effect waves-block">';
+                                                    echo '<div class="menu-info">';
+                                                    echo '<h4>'.$fila[0].'</h4>';
+                                                    echo '</div>';  
+                                                    echo '</a>';
+                                                     echo "</li>";
+                                                }
+                                        ?>
 
-                                                <div class="menu-info">
-                                                    <h4>EMPRESA 1</h4>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class=" waves-effect waves-block">
-
-                                                <div class="menu-info">
-                                                    <h4>EMPRESA 2</h4>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button type="button" class="btn bg-red btn-block btn-sm waves-effect">Gestionar</button>
-
-                                        </li>
                                     </ul>
                                     <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div>
                                     <div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
                                 </div>
                             </li>
                             <li class="footer">
-                                <a href="javascript:void(0);" class=" waves-effect waves-block">View All Notifications</a>
+                                <button type="button" id="btngestionar" class="btn bg-red btn-block btn-sm waves-effect"onclick="openGestionar();">Gestionar</button>
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <img src="images/ic_device_hub_white_24px.svg" alt="">
-                            <!--      <span class="label-count">8</span> -->
-                        </a>
-                    </li>
+                   
                 </ul>
 
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Call Search -->
-                    <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
-                    <!-- #END# Call Search -->
-                    <!-- Notifications -->
-
-
-
-
-
-
-                    <!-- #END# Notifications -->
-                    <!-- Tasks -->
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <i class="material-icons">flag</i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">TASKS</li>
-                            <li class="body">
-                                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;">
-                                    <ul class="menu tasks" style="overflow: hidden; width: auto; height: 254px;">
-
-                                    </ul>
-                            </li>
-                            <!-- #END# Tasks -->
-                            <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
-                        </ul>
+               
                         </div>
             </div>
     </nav>
@@ -173,17 +160,13 @@
                     <img src="images/david.jpg" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?php echo $usu; ?>
-                    </div>
-                    <div class="email">
-                        <?php echo $_SESSION["email"]; ?>
-                    </div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["email"]; ?></div>
+                    <div class="email"><?php echo $_SESSION["email"]; ?></div>
                     <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float:right;">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="index_home_perfil.html" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
-
+                            <li><a href="index_home_perfil.php" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
+                          
                             <li><a href="logout.php" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>
                     </div>
@@ -201,23 +184,7 @@
                                 <span>Inicio</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
-                                <i class="material-icons">event</i>
-                                <span>Mis Cosas</span>
-                            </a>
-                            <ul class="ml-menu">
-                                <li>
-                                    <a href="pages/widgets/cards/basic.html" class=" waves-effect waves-block">Alertas</a>
-                                </li>
-                                <li>
-                                    <a href="pages/widgets/cards/colored.html" class=" waves-effect waves-block">Notas</a>
-                                </li>
-                                <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Calendario</a>
-                                </li>
-                            </ul>
-                        </li>
+                        
                         <li>
                             <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
                                 <i class="material-icons">layers</i>
@@ -225,20 +192,15 @@
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="pages/widgets/cards/basic.html" class=" waves-effect waves-block">Contactos</a>
+                                    <a href="index_contactos.php" class=" waves-effect waves-block">Contactos</a>
                                 </li>
                                 <li>
-                                    <a href="pages/widgets/cards/colored.html" class=" waves-effect waves-block">Llamadas telefónicas</a>
+                                    <a href="index_proyectos.php" class=" waves-effect waves-block">Proyectos</a>
                                 </li>
                                 <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Casos</a>
+                                    <a href="index_categorias.php" class=" waves-effect waves-block">Categorias</a>
                                 </li>
-                                <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Tareas</a>
-                                </li>
-                                <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Negociaciones</a>
-                                </li>
+                               
                             </ul>
                         </li>
                         <li>
@@ -248,14 +210,9 @@
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="pages/widgets/cards/basic.html" class=" waves-effect waves-block">Usuarios</a>
+                                    <a href="index_usuarios.php" class=" waves-effect waves-block">Usuarios</a>
                                 </li>
-                                <li>
-                                    <a href="pages/widgets/cards/colored.html" class=" waves-effect waves-block">Grupos de usuarios</a>
-                                </li>
-                                <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Suscripciones y pagos</a>
-                                </li>
+                               
                             </ul>
                         </li>
                         <li>
@@ -265,17 +222,9 @@
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="pages/ui/alerts.html" class=" waves-effect waves-block">Empresas</a>
+                                    <a href="index_empresas.php" class=" waves-effect waves-block">Empresas</a>
                                 </li>
-                                <li>
-                                    <a href="pages/ui/animations.html" class=" waves-effect waves-block">Tarifas</a>
-                                </li>
-                                <li>
-                                    <a href="pages/ui/badges.html" class=" waves-effect waves-block">Pagos</a>
-                                </li>
-                                <li>
-                                    <a href="pages/ui/badges.html" class=" waves-effect waves-block">Informes</a>
-                                </li>
+                                
 
                             </ul>
                         </li>
@@ -285,7 +234,6 @@
                     <div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
                 </div>
             </div>
-
             <!-- #Menu -->
             <!-- Footer -->
             <div class="legal">
@@ -371,73 +319,90 @@
         <!-- #END# Right Sidebar -->
     </section>
     <section class="content">
+    <form action="index_crearUsuarios.php" method="post">
         <div class="princicontent">
-            <div class="headerr">
-                <div class="col-lg-1 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
-                </div>
-                <div class="col-lg-6 flexcenter">Contactos</div>
-                <div class="col-lg-5 flexend "> <i class="material-icons">ic_save</i><span class="mr10">Nueva Tarea</span></a>
-
-                    <i class="material-icons">supervisor_account</i><span class="mr10"> Tarea de todos</span></a>
-
-                    <i class="material-icons">grid_on</i><span> Tarea de todos</span></a>
+            <div class="col-lg-4 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
+            </div>
+            <div class="col-lg-4 flexcenter">Usuario</div>
+            <div class="col-lg-4 flexend">
+                <div id="id_saveperfil">
+                <input type="submit" name="submit2" value="Insertar" />
                 </div>
             </div>
-            <div class="tablaperfil" style="padding: 0;    height: 400px;">
-                <div class="panel panel-default">
-                    <div class="panel-heading-small">
-                        <div class="panel-title-small">Filtros</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 border">
-                        <label class="ml14">TIPO</label>
-                        <select class="form-control show-tick ">
-                                <optgroup label="Todo">
-                                    <option>NRBirds</option>
-                                    <option>Programación</option>
-                                    <option>Europharm</option>
-                                    <option>NRGestion</option>
-                                    <option>OrganixCRM</option>  
-                                    <option>NRCom</option>  
-                                </optgroup>
-                                
-                            </select>
-                    </div>
-                    <div class="col-md-4 border">
-                        <label class="ml14">PRIORIDAD</label>
-                        <select class="form-control show-tick ">
-                                    <optgroup label="Todo">
-                                        <option>Baja</option>
-                                        <option>Normal</option>
-                                        <option>Alta</option>
-                                    </optgroup>
-                                    
-                                </select>
-                    </div>
-                    <div class="col-md-4 border">
-                        <label class="ml14">GRUPO</label>
-                        <select class="form-control show-tick ">
-                                        <optgroup label="Todo">
-                                            <option>Diseño</option>
-                                            <option>Externos</option>
-                                            <option>Programación</option>
-                                            <option>Soporte</option>
-                                         
-                                        </optgroup>
-                                        
-                                    </select>
-                    </div>
-                    <div class="col-md-3 mt10">PENDIENTES</div>
-                    <div class="col-md-3 mt10">ASIGNADAS</div>
-                    <div class="col-md-3 mt10">ENPROCESO</div>
-                    <div class="col-md-3 mt10">HECHO</div>
-
-                </div>
-
+            <div class="col-lg-12">
+                <div class="col-lg-2 misdatos">Mis datos</div>
             </div>
+            <div class="tablaperfil">
+                <div class="col-lg-2">
+                </div>
+                <div class="col-lg-10">
+                    <div class="flexcolumn">
+                        <div class="row">
+                            <div class="col-lg-5">Nombre
+                                <input type="text" class="form-control" name="idnombreusuarionuevo" id="idnombreusuarionuevo">
+                            </div>
+                            <div class="col-lg-1">*</div>
 
+                            <div class="col-lg-5">Apellidos
+                            <input type="text" class="form-control" id="idapellidos">
+
+                            </div>
+                            <div class="col-lg-1">*</div>
+
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-3">Username
+                            <input type="text" class="form-control" name="idusernameusuario" id="idusernameusuario">
+
+                            </div>
+                            <div class="col-lg-1">*</div>
+
+                            <div class="col-lg-4">Contraseña
+                            <input type="text" class="form-control" name="idcontraseniausuario" id="idcontraseniausuario">
+                        
+
+                            </div>
+                            <div class="col-lg-4">Repetir Contraseña
+                            <input type="text" class="form-control" name="idrepecontraseniausuario" id="idrepecontraseniausuario">
+
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-lg-6">Idioma
+                                <select class="form-control show-tick" style="margin-top: 12px;">
+                                            <optgroup label="Idioma">
+                                                <option>Español</option>
+                                                <option>Catalá</option>
+                                                <option>Inglés</option>
+                                            </optgroup>
+                                            
+                                        </select>
+                            </div>
+                            <div class="col-lg-6">Zona Horaria
+
+                                <select class="form-control show-tick" style="margin-top: 12px;">
+                                            <optgroup label="Zona Horaria">
+                                                <option>Europa/Budapest (GMT+01:00)</option>
+                                                <option>Europa/Madrid (GMT+01:00)</option>
+                                                <option>Europa/Ámsterdam (GMT+01:00)</option>
+                                                <option>Pacífico/Midway (GMT-11:00)</option>
+                                                <option>US/Samoa (GMT-11:00)</option>
+                                                <option>US/Alaska (GMT-09:00)</option>
+
+                                            </optgroup>
+
+                                        </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            
         </div>
+        </form>
     </section>
 
 
@@ -455,7 +420,10 @@
 
     <!-- Waves Effect Plugin Js -->
     <script src="plugins/node-waves/waves.js"></script>
-
+    <!--
+    <script src="js/querylista.js"></script>
+    <script src="js/queryejemplo.js"></script>
+-->
     <!-- Autosize Plugin Js -->
     <script src="plugins/autosize/autosize.js"></script>
 
@@ -472,3 +440,5 @@
     <!-- Demo Js -->
     <script src="js/demo.js"></script>
 </body>
+
+</html>

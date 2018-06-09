@@ -409,10 +409,10 @@ if(isset($_GET['bim'])) {
     </section>
     <section class="content">
         <div class="princicontent">
-            <div class="col-lg-2 flexstart"> <i class="material-icons">ic_keyboard_backspace</i>
+        <div class="col-lg-2 flexstart"> <a href="index_backend.php"><i class="material-icons">ic_keyboard_backspace</i></a>
             </div>
-            <div class="col-lg-5 flexcenter">Contactos</div>
-            <div class="col-lg-4 flexend "> <a href="form_contacto.php"><label><i class="material-icons">ic_save</i><span>Nuevo Contacto</span></label></a>
+            <div class="col-lg-7 flexcenter">Contactos</div>
+            <div class="col-lg-2 flexend "> <a href="form_contacto.php"><label><i class="material-icons">ic_save</i><span>Nuevo Contacto</span></label></a>
             </div>
             <div class="tablaperfil">
                 

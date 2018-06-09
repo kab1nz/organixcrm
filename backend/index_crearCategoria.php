@@ -78,7 +78,7 @@ if(isset($_POST['guardarCategoria'])){
         <div class="container">
             <div class="row">
             <form action="index_crearCategoria.php" method="post" name="form">
-            <?php echo "GUID: ". $_SESSION['bd']?>
+
 
                 <div class="col-md-12">
                     <div class="col-md-11 mgtopgrande">Nueva Categoria</div>
@@ -119,13 +119,16 @@ if(isset($_POST['guardarCategoria'])){
                     </div>
   
                     <div class="col-md-12">
-                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" name="guardarCategoria" type="submit" onclick="valida_envia()">Guardar</button>
+                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" name="guardarCategoria" type="submit" onclick="valida_envia();">Guardar</button>
                         <br>
-                         <button class="btn btn-block btn-lg bg-red waves-effect cblanco"  name="volver">Volver</button>
                     </div>
                 </div>
                     </form>
-
+                    <div class="col-md-12">
+                    <div class="col-md-12" style="margin-top:10px;">
+                    <button class="btn btn-block btn-lg bg-red waves-effect cblanco" id="volver"  name="volver ">Volver</button>
+                    </div>
+                    </div>
                 </div>
             </div>
 
@@ -176,6 +179,7 @@ if(isset($_POST['guardarCategoria'])){
 
         <!-- Demo Js -->
         <script src="js/demo.js"></script>
+        <script src="js/querylista.js"></script>
 
                 <?php
             mysqli_close($conexion);

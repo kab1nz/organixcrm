@@ -359,6 +359,12 @@ label {
     float: left;
 }
 
+.dv-image2 {
+    border-radius: 50%;
+    width: 94px;
+    margin-left: 5px;
+}
+
 .panel-body {
     margin: 9px 5px 5px 0;
     padding: 5px 0;
@@ -484,6 +490,12 @@ ul>li {
 
 body {
     background: #fff;
+}
+
+.btn,
+.btn-danger,
+.btn-cons {
+    color: #D3D3D3 !important;
 }
 
 

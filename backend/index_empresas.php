@@ -51,7 +51,7 @@ $guidusu=$_SESSION['guidusu'];
     <link href="css/themes/all-themes.css" rel="stylesheet" />
 </head>
 
-<body class="theme-red">
+<body class="theme-red" style="background: white;">
     <!-- Page Loader -->
     <div class="page-loader-wrapper" style="display: none;">
         <div class="loader">
@@ -73,15 +73,7 @@ $guidusu=$_SESSION['guidusu'];
     <div class="overlay"></div>
     <!-- #END# Overlay For Sidebars -->
     <!-- Search Bar -->
-    <div class="search-bar">
-        <div class="search-icon">
-            <i class="material-icons">search</i>
-        </div>
-        <input type="text" placeholder="EMPIEZA A ESCRIBIR...">
-        <div class="close-search">
-            <i class="material-icons">close</i>
-        </div>
-    </div>
+    
     <!-- #END# Search Bar -->
     <!-- Top Bar -->
     <nav class="navbar">
@@ -103,71 +95,40 @@ $guidusu=$_SESSION['guidusu'];
                             <li class="body">
                                 <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;">
                                     <ul class="menu" style="overflow: hidden; width: auto; height: 254px;">
-                                        <li>
-                                            <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                        
+                                        <?php
+                                            $sql= 'select GUID from Usuarios where username ="'.$_SESSION["email"].'"';
+                                            $resultado = mysqli_query($conexion, $sql);
+                                            $intent= mysqli_fetch_row($resultado);
+                                            $guidusu= $intent[0];
+                                            //echo "El GUID ES: ".$guidusu;
+                                           $empresas='select NOMBREFISCAL,BDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
+                                            $query = mysqli_query($conexion, $empresas);
+                                            while( $fila = mysqli_fetch_array($query)){
+                                                    echo '<li id='.$fila[1].'>';                                
+                                                    echo '<a href="javascript:void(0);" class=" waves-effect waves-block">';
+                                                    echo '<div class="menu-info">';
+                                                    echo '<h4>'.$fila[0].'</h4>';
+                                                    echo '</div>';  
+                                                    echo '</a>';
+                                                     echo "</li>";
+                                                }
+                                        ?>
 
-                                                <div class="menu-info">
-                                                    <h4>EMPRESA 1</h4>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class=" waves-effect waves-block">
-
-                                                <div class="menu-info">
-                                                    <h4>EMPRESA 2</h4>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button type="button" class="btn bg-red btn-block btn-sm waves-effect">Gestionar</button>
-                                        </li>
                                     </ul>
                                     <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div>
                                     <div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
                                 </div>
                             </li>
                             <li class="footer">
-                                <a href="javascript:void(0);" class=" waves-effect waves-block">View All Notifications</a>
+                                <button type="button" id="btngestionar" class="btn bg-red btn-block btn-sm waves-effect"onclick="openGestionar();">Gestionar</button>
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <img src="images/ic_device_hub_white_24px.svg" alt="">
-                            <!--      <span class="label-count">8</span> -->
-                        </a>
-                    </li>
+                   
                 </ul>
 
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Call Search -->
-                    <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
-                    <!-- #END# Call Search -->
-                    <!-- Notifications -->
-
-
-
-
-
-
-                    <!-- #END# Notifications -->
-                    <!-- Tasks -->
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <i class="material-icons">flag</i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">TASKS</li>
-                            <li class="body">
-                                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;">
-                                    <ul class="menu tasks" style="overflow: hidden; width: auto; height: 254px;">
-
-                                    </ul>
-                            </li>
-                            <!-- #END# Tasks -->
-                            <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
-                        </ul>
+               
                         </div>
             </div>
     </nav>
@@ -188,7 +149,7 @@ $guidusu=$_SESSION['guidusu'];
                         <?php echo $_SESSION["email"]; ?>
                     </div>
                     <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" style="float:right;" aria-expanded="true">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
                             <li><a href="index_home_perfil.html" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
 
@@ -379,23 +340,16 @@ $guidusu=$_SESSION['guidusu'];
         <!-- #END# Right Sidebar -->
     </section>
     <section class="content">
-            <div class="col-lg-2 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
+    <div class="container-fluid"></div>
+            <div class="col-lg-2 flexstart"> <a href="index_backend.php"><i class="material-icons">ic_keyboard_backspace</i></a>
             </div>
-            <div class="col-lg-5 flexcenter">Contactos</div>
-            <div class="col-lg-5 flexend "> <i class="material-icons ">ic_save</i><span class="mr10">Nuevo Usuario</span></a>
-                <i class="material-icons">delete</i><span class="mr10"> Eliminar</span></a>
+            <div class="col-lg-5 flexcenter">Empresas</div>
+            <div class="col-lg-5 flexend "><a href="form_empresa.php
+            "> <i class="material-icons ">ic_save</i><span class="mr10">Nueva Empresa</span></a>
             </div>
-            <div class="tablaperfil">
-                <div class="col-md-12 form-group form-group-default input-group" style="overflow: visible"><label>Búsqueda</label><input class="form-control" type="text" placeholder="Búsqueda" id="_oq4nsw"><span class="input-group-addon" title="Búsqueda avanzada"><i class="material-icons">sync</i></span><span class="input-group-addon" title="Refrescar"><img src="images/filter.svg" style="width: 15px;">
-
-                </span></div>
-                <div class="btn-toolbar mb5" id="_emm8ek">
-                    <div class="btn-group"><button type="button" class="btn btn-default" data-fld="name"><div class="pg-sortdown pg-small"></div>Nombre</button><button type="button" class="btn btn-default" data-fld="sector"><div class="pg-sortup pg-small"></div>Sector</button>
-                        <button type="button" class="btn btn-default" data-fld="aliascrm">
-                            <div class="pg-sortup pg-small"></div>Alias</button><button type="button" class="btn btn-default" data-fld="created">Creacion</button><button type="button" class="btn btn-default" data-fld="lastconnection">Ult. conexion</button>
-                        <button type="button" class="btn btn-default" data-fld="verified">Verificado</button>
-                    </div>
-                </div>
+            <div class="tablaperfil"> 
+               
+            
 </div>
                 <?php
                      $sql="select GUID,NOMBRECOMERCIAL,FECHADECREACION,ALIASCRM from empresas,usu_empr where empresas.guid=usu_empr.guidempresa and usu_empr.guidusuario='".$guidusu."'";
@@ -409,7 +363,7 @@ $guidusu=$_SESSION['guidusu'];
                                     echo "<a href=index_editar_empresa.php?id=$id_empresa>";
                                     echo'<div class="panel-body">';
                                         
-                                        echo'<img src="images/avatar.png" class="dv-image1">';
+                                        echo'<img src="images/avatar.png" class="dv-image2">';
                                         echo'<div class="data">';           
                                             echo'<span class="bold">'.$fila[1].'</span>';
                                          echo '<div class="dv-data-title">Informática</div>';
