@@ -1,6 +1,9 @@
 <?php
 require_once("../bd/conexion.php");
 session_start();
+$url=$_GET['idmepre'];
+$bd= new mysqli("localhost","root","root",'empresa'.$url);
+
 $usu=$_SESSION["usuario"];
 ?>
     <!DOCTYPE html>

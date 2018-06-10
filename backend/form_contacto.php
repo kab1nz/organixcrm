@@ -3,6 +3,7 @@ session_start();
 $usu=$_SESSION["usuario"];
 
 require_once("../bd/conexion.php");
+require_once("../PHPMailer/PHPMailerAutoload.php");
 $bd= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
 
 
@@ -17,7 +18,9 @@ $direccion=$_REQUEST['direccionContacto'];
 $provincia=$_REQUEST['provinciaContacto'];
 $paisContacto=$_REQUEST['pais'];
 $telefono=$_REQUEST['telefonoContacto'];
-    
+$email=$_REQUEST['idemailcliente'];
+$contra=$_REQUEST['idpasscliente'];
+$nbd=$_SESSION['nbd'];    
    
 
 
@@ -60,7 +63,40 @@ $telefono=$_REQUEST['telefonoContacto'];
             }
                      
         }
-}
+        $inserCliente="call insert_contacto_usuario('$email','$usu',1,1,'$contra');";
+        $resultado6=mysqli_query($bd,$inserCliente);
+        if(!$resultado6){
+            echo "<br>el cliente fallo = ". mysqli_error($bd);
+        }
+        $selectguid="select guid from contacto_usuario where username='".$email."'";
+        $resultado7=mysqli_query($bd,$selectguid);
+        $filaguid=mysqli_fetch_row($resultado7);
+        
+        
+        
+        //envio correo
+        $mail = new PHPMailer();
+        $mail ->IsSmtp();
+        $mail ->SMTPDebug = 0;
+        $mail ->SMTPAuth = true;
+        $mail ->SMTPSecure = 'ssl';
+        $mail ->Host = "smtp.gmail.com";
+        $mail ->Port = 465;
+        $mail ->IsHTML(true);
+        $mail ->Username = "borregoismael95@gmail.com";
+        $mail ->Password = "ismaeliyo619";
+        $mail ->SetFrom("borregoismael95@gmail.com");
+        $mail ->Subject="Enlace Cliente";
+        $mail ->Body = "Copia este enlace para loguearte-->  "."localhost/organixcrm/intranet?idcliente=empresa".$_SESSION['bd'];
+        $mail ->AddAddress($email);
+        if(!$mail->Send()){
+            echo "Mail No enviado!";
+        }else{
+            echo "Mail  enviado!";
+
+        }
+
+    }
 
 if(isset($_POST['volver'])){
     header("location: index_contactos.php");
@@ -169,7 +205,21 @@ if(isset($_POST['volver'])){
                             </div>
                         </div>
                     </div>
-
+                    <div class="col-md-8 mgtoppeque">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input class="form-control" type="text" name="idemailcliente" placeholder="Email">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4 mgtoppeque">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input class="form-control" type="password" name="idpasscliente" placeholder="Contraseña">
+                            </div>
+                        </div>
+                    </div>
                     <div class="col-md-8 mgtoppeque">
                         <div class="form-group">
                             <div class="form-line">
