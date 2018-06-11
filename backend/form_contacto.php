@@ -20,8 +20,6 @@ $paisContacto=$_REQUEST['pais'];
 $telefono=$_REQUEST['telefonoContacto'];
 $email=$_REQUEST['idemailcliente'];
 $contra=$_REQUEST['idpasscliente'];
-$nbd=$_SESSION['nbd'];    
-   
 
 
         //comprobar usuario exisente
@@ -248,7 +246,7 @@ if(isset($_POST['volver'])){
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="button" onclick="valida_enviaContactos()">Guardar</button>
+                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="submit"onclick="valida_enviaContactos()">Guardar</button>
                         <br>
                          <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="volver">Volver</button>
                     </div>

@@ -6,7 +6,7 @@
     $usuario="";
     $contra="";
     $nbd=$_GET['idcliente'];
-    $_SESSION['idcli']=$
+    $_SESSION['idcli']=$nbd;
     echo "Numero bd -->".$nbd;
     $mysqli= new mysqli("localhost","root","root",$nbd);
 

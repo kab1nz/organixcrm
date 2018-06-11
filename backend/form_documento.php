@@ -1,21 +1,35 @@
 <?php
 session_start();
-$usu=$_SESSION["usuario"];
 
 require_once("../bd/conexion.php");
 $bd= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
-
-
-if(isset($_REQUEST['nombreContacto']) && isset($_REQUEST['nifContacto']) && isset($_REQUEST['postalContacto']) && isset($_REQUEST['ciudadContacto']) && isset($_REQUEST['direccionContacto']) && isset($_REQUEST['provinciaContacto']) && isset($_REQUEST['pais']) && isset($_REQUEST['telefonoContacto'])){
+if(isset($_POST['guardardoc'])){
+    if(isset($_FILES["file"])){
+    if(is_uploaded_file($_FILES['file']['tmp_name'])){
+    if(isset($_REQUEST['nombreDocumento']) && isset($_REQUEST['sproyecto']) && isset($_REQUEST['scategoria']) && isset($_REQUEST['file'])){
     
+    $nombre=$_REQUEST['nombreDocumento'];
+    $proyecto=$_REQUEST['sproyecto'];
+    $categoria=$_REQUEST['scategoria'];
+    
+    $ruta="upload/";
+    $nombrefinal=trim ($_FILES['file']['name']);
+    $upload =$ruta.$nombrefinal;
+    echo $upload;
+        if(move_uploaded_file($_FILES['file']['tmp_name'], $upload)){
+            $query1="call insert_documentos('$nombre','$proyecto','$categoria','$upload');";
+            $resultado2=mysqli_query($bd,$query1);
 
+        }    
         
         
 
     }
-
+}
+}
+}
 if(isset($_POST['volver'])){
-    header("location: index_contactos.php");
+    header("location: indexCliente.php");
 }
 
 ?>
@@ -54,7 +68,6 @@ if(isset($_POST['volver'])){
 
         <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
         <link href="css/themes/all-themes.css" rel="stylesheet" />
-        <script type="text/javascript" src="js/funciones.js"></script>
 
     </head>
 
@@ -62,7 +75,7 @@ if(isset($_POST['volver'])){
         <!-- Page Loader -->
         <div class="container">
             <div class="row">
-                <form action="form_documento.php" name="frmFileUpload" id="frmFileUpload" class="dropzone dz-clickable" method="post" enctype="multipart/form-data">
+                <form action="form_documento.php" method="post" enctype="multipart/form-data">
 
                     <div class="col-md-12">
                         <div class="col-md-11 mgtopgrande">Nuevo documento</div>
@@ -70,7 +83,7 @@ if(isset($_POST['volver'])){
                         <div class="col-md-8 mgtoppeque">
                             <div class="form-group">
                                 <div class="form-line">
-                                    <input class="form-control" type="text" name="nombreDocumento" placeholder="NOMBRE DOCUMENTO">
+                                    <input class="form-control" type="text" name="nombreDocumento" id="nombreDocumento" placeholder="NOMBRE DOCUMENTO">
                                 </div>
                             </div>
                         </div>
@@ -78,7 +91,7 @@ if(isset($_POST['volver'])){
                         <div class="col-md-4 mgtoppeque">
                             <div class="form-group">
                                 <div class="form-line">
-                                    <select class="form-control w20" id="empresa" name="empresa" required>                         
+                                    <select class="form-control w20" id="sproyecto" name="sproyecto" required>                         
                              <option selected disabled>Seleccione un proyecto</option>
                              <?php
                               $query= 'select NOMBRE, GUID from proyectos';
@@ -95,11 +108,11 @@ if(isset($_POST['volver'])){
                             </div>
                         </div>
                     </div>
-                  <div class="col-md-12">                  
-                    <div class="col-md-6 mgtoppeque">
-                        <div class="form-group">
-                            <div class="form-line">
-                                <select class="form-control w20" id="empresa" name="empresa" required>                         
+                    <div class="col-md-12">
+                        <div class="col-md-6 mgtoppeque">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <select class="form-control w20" id="scategoria" name="scategoria" required>                         
                              <option selected disabled>Seleccione un proyecto</option>
                              <?php
                               $query1= 'select NOMBRE, GUID from categoria';
@@ -113,24 +126,24 @@ if(isset($_POST['volver'])){
                                 }
 
                                 echo "</select></div>"; ?>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mgtoppeque">
+                            <div class="form-group">
+                                <input type="file" name="file" />
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mgtoppeque">
-                        <div class="form-group">
-                            <input type="file" name="datoDocumento" />
-                        </div>
-                    </div>
-                    </div>
+                </form>
+
             </div>
 
-            </form>
 
             <div class="col-md-12">
-                <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="button" onclick="valida_enviaContactos()">Guardar</button>
+            <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="button" name="guardardoc" onclick="validaEnvia()">Guardar</button>
                 <br>
-                <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="volver">Volver</button>
+                <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="button" name="volver">Volver</button>
             </div>
-        </div>
         </div>
 
 
@@ -178,6 +191,7 @@ if(isset($_POST['volver'])){
         <script src="js/admin.js"></script>
         <script src="js/pages/index.js"></script>
 
+        <script type="text/javascript" src="js/funciones.js"></script>
 
         <!-- Demo Js -->
         <script src="js/demo.js"></script>
