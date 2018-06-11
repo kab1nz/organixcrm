@@ -87,7 +87,7 @@ $nbd=$_SESSION['nbd'];
         $mail ->Password = "ismaeliyo619";
         $mail ->SetFrom("borregoismael95@gmail.com");
         $mail ->Subject="Enlace Cliente";
-        $mail ->Body = "Copia este enlace para loguearte-->  "."localhost/organixcrm/intranet?idcliente=empresa".$_SESSION['bd'];
+        $mail ->Body = "Copia este enlace para loguearte-->  "."http://localhost/organixcrm/intranet/loginCliente.php?idcliente=empresa".$_SESSION['bd'];
         $mail ->AddAddress($email);
         if(!$mail->Send()){
             echo "Mail No enviado!";

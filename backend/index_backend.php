@@ -178,7 +178,9 @@ if(isset($_GET['bim'])) {
                                 <li>
                                     <a href="index_categorias.php" class=" waves-effect waves-block">Categorias</a>
                                 </li>
-                               
+                                <li>
+                                    <a href="form_documento.php" class=" waves-effect waves-block">Documentos</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
