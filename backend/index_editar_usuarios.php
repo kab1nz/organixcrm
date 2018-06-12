@@ -62,8 +62,33 @@ if(isset($_POST['submit2'])) {
             $resultado6=mysqli_query($conexion, $actu);
         }
     }
+    if(isset($_FILES['foto']['tmp_name'])){
+        echo "foto asdasdasd";
 
-
+    $tmp_name = $_FILES['foto']['tmp_name'];
+    //si hemos enviado un directorio que existe realmente y hemos subido el archivo    
+   
+        $img_file = $_FILES['foto']['name'];
+        $img_type = $_FILES['foto']['type'];
+        echo 1;
+        // Si se trata de una imagen   
+        if (((strpos($img_type, "gif") || strpos($img_type, "jpeg") ||
+ strpos($img_type, "jpg")) || strpos($img_type, "png")))
+        {
+            
+            //¿Tenemos permisos para subir la imágen?
+           if(move_uploaded_file($tmp_name, "fotos" . '/' . $img_file)){
+               echo "foto subida";
+            $destino="fotos/".$img_file;
+            $update1 = "update usuarios set foto='$destino' where guid='$usu';";
+            $resultadox=mysqli_query($conexion, $update1);
+           }else{
+               echo "foto no subida";
+           }
+           
+        }
+    
+    }
 
 }
 ?>
@@ -518,6 +543,13 @@ if(isset($_POST['submit2'])) {
 
                                         </select>
                             </div>
+                            <div class"col-lg-6">
+                        <div class="col-md-6 " style="margin-top:13px;margin-botton:50px;">
+                            <div class="form-group">
+                                <input type="file" name="foto" />
+                            </div>
+                        </div>
+                    </div>        
                         </div>
 
                     </div>

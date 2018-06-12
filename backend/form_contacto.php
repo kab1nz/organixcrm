@@ -10,10 +10,12 @@ require_once("../PHPMailer/PHPMailerAutoload.php");
 $bd= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
 
 
-if(isset($_REQUEST['nombreContacto']) && isset($_REQUEST['nifContacto']) && isset($_REQUEST['postalContacto']) && isset($_REQUEST['ciudadContacto']) && isset($_REQUEST['direccionContacto']) && isset($_REQUEST['provinciaContacto']) && isset($_REQUEST['pais']) && isset($_REQUEST['telefonoContacto'])){
+if(isset($_REQUEST['nombreContacto']) && isset($_REQUEST['nifContacto']) && isset($_REQUEST['postalContacto']) && isset($_REQUEST['ciudadContacto']) 
+&& isset($_REQUEST['direccionContacto']) && isset($_REQUEST['provinciaContacto']) && isset($_REQUEST['pais']) && isset($_REQUEST['telefonoContacto'])){
     
 //Recogida Datos
 $nombre=$_REQUEST['nombreContacto'];
+$_SESSION['nombrecontacto']=$nombre;
 $nif=$_REQUEST['nifContacto'];
 $postal=$_REQUEST['postalContacto'];
 $ciudad=$_REQUEST['ciudadContacto'];
@@ -23,6 +25,7 @@ $paisContacto=$_REQUEST['pais'];
 $telefono=$_REQUEST['telefonoContacto'];
 $email=$_REQUEST['idemailcliente'];
 $contra=$_REQUEST['idpasscliente'];
+$permiso=$_REQUEST['permisos'];
 
 
         //comprobar usuario exisente
@@ -36,6 +39,9 @@ $contra=$_REQUEST['idpasscliente'];
         //Insercción de contacto
         $insertarCONTACTOS="call insert_contacto('$nombre','$nif');";
         $resultado2=mysqli_query($bd, $insertarCONTACTOS);
+        if(!$resultado2){
+            echo "ERROR INSERTAR NOMBRE-> " . mysqli_error($bd);
+        }
     
         //GUID del contacto
         $selectGUID="select * from Contactos where CIF='$nif'";
@@ -64,7 +70,13 @@ $contra=$_REQUEST['idpasscliente'];
             }
                      
         }
-        $inserCliente="call insert_contacto_usuario('$email','$usu',1,1,'$contra');";
+        $selectguidcon="select guid from contactos where nombre='".$nombre."'";
+        $resultadose=mysqli_query($bd, $selectguidcon);
+        $array2=mysqli_fetch_row($resultadose);
+        $nom=$array2[0];
+        echo "nombre -->".$nombre;
+
+        $inserCliente="call insert_contacto_usuario('$email','$nom',1,$permiso,'$contra');";
         $resultado6=mysqli_query($bd,$inserCliente);
         if(!$resultado6){
             echo "<br>el cliente fallo = ". mysqli_error($bd);
@@ -248,6 +260,17 @@ if(isset($_POST['volver'])){
                             </div>
                         </div>
                     </div>
+                    <div class="col-lg-12" style="margin-bottom: 150px;margin-top: 13px;">Permisos
+                            <select class="form-control show-tick" style="margin-top: 12px;" name="permisos">
+                                    <optgroup label="Nivel de Permisos">
+                                        <option value="3">Lectura</option>  
+                                        <option value="2">Lectura,Escritura</option>  
+                                        <option value="1">Lectura,Escritura,Borrado</option>                                                                              
+                                    </optgroup>
+
+                            </select>
+                            </div>
+                    
                     <div class="col-md-12">
                         <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="submit"onclick="valida_enviaContactos()">Guardar</button>
                         <br>
