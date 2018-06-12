@@ -1,6 +1,9 @@
 <?php
 require_once("../bd/conexion.php");
 session_start();
+if(!isset($_SESSION['idcli'])){
+    header("Location: http://localhost/organixcrm/index.php");
+}
 $bd= new mysqli("localhost","root","root", $_SESSION['idcli']);
 
 $usu=$_SESSION["usuario"];
@@ -241,11 +244,11 @@ $idproyecto=$_GET['idproyecto'];
                         
                         if ($resultado = $bd->use_result()) {
                             while ($fila = $resultado->fetch_row()) {
-                                $id_contact=$fila[1];
+                                $id_categoria=$fila[1];
 
-                                echo'<div class="col-md-4" id="'.$id_contact.'">'; 
-                                $_SESSION["contact"]=$id_contact;
-                                    echo "<a href=index_editar_contactos.php?id=$id_contact>";
+                                echo'<div class="col-md-4" id="'.$id_categoria.'">'; 
+                                $_SESSION["idcat"]=$id_categoria;
+                                    echo "<a href=indexVerDocumentos.php?idcategoria=$id_categoria>";
                                     echo'<div class="panel">';
                                         echo'<div class="media contact2">';
 

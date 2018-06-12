@@ -360,6 +360,10 @@ label {
     max-width: 128px;
 }
 
+.dv-imagechica {
+    width: 50px;
+}
+
 .dv-image1 {
     border-radius: 50%;
     width: 94px;

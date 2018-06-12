@@ -1,6 +1,10 @@
 <?php
-require_once("../bd/conexion.php");
 session_start();
+if(!isset($_SESSION['idcli'])){
+    header("Location: http://localhost/organixcrm/index.php");
+}
+require_once("../bd/conexion.php");
+
 $bd= new mysqli("localhost","root","root", $_SESSION['idcli']);
 
 $usu=$_SESSION["usuario"];

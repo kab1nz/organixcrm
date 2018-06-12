@@ -1,7 +1,9 @@
 <?php
  require_once("../bd/conexion.php");
  session_start();
-
+ if(!isset( $_SESSION['nombre'])){
+    header("Location: http://localhost/organixcrm/index.php");
+}
  $mysqli= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
 $usu=$_SESSION["usuario"];
 $guidusu=$_SESSION['guidusu'];

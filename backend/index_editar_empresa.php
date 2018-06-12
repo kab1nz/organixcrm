@@ -1,7 +1,9 @@
 <?php
     require_once("../bd/conexion.php");
     session_start();
-
+    if(!isset( $_SESSION['nombre'])){
+        header("Location: http://localhost/organixcrm/index.php");
+    }
     
     $usu=$_GET["id"];
     $_SESSION["EMPRE"]=$usu;

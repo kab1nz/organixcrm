@@ -1,7 +1,24 @@
 <?php
 require_once("../bd/conexion.php");
 session_start();
+if(!isset($_SESSION['idcli'])){
+    header("Location: http://localhost/organixcrm/index.php");
+}
+$bd= new mysqli("localhost","root","root", $_SESSION['idcli']);
+
 $usu=$_SESSION["usuario"];
+$idcategoria=$_GET['idcategoria'];
+$cate=$idcategoria;
+$file=$_GET['file'];
+$nombre=explode('/',$file);
+echo $nombre[0]."<br>";
+echo $nombre[1];
+$rutaf="../backend/archivos/".$nombre[1];
+header('Content-Type: application/force-download');
+header('Content-Disposition: attachment; filename='.$nombre[1]);
+header('Content-Transfer-Encoding: binary');
+header('Content-Length: '.filesize($rutaf));
+readfile($ruta);
 ?>
     <!DOCTYPE html>
     <html>
@@ -32,7 +49,7 @@ $usu=$_SESSION["usuario"];
 
         <!-- Custom Css -->
         <link href="../backend/css/style.css" rel="stylesheet">
-        <link href="../backend/scss/estilo.css" rel="stylesheet">
+        <link href="../backend/css/estilo.css" rel="stylesheet">
 
 
 
@@ -62,78 +79,18 @@ $usu=$_SESSION["usuario"];
         <div class="overlay"></div>
         <!-- #END# Overlay For Sidebars -->
         <!-- Search Bar -->
-        <div class="search-bar">
-            <div class="search-icon">
-                <i class="material-icons">search</i>
-            </div>
-            <input type="text" placeholder="EMPIEZA A ESCRIBIR...">
-            <div class="close-search">
-                <i class="material-icons">close</i>
-            </div>
-        </div>
-        <!-- #END# Search Bar -->
-        <!-- Top Bar -->
+       
         <nav class="navbar">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                     <a href="javascript:void(0);" class="bars" style="display: none;"></a>
-                    <a class="navbar-brand" href="index_backend.php">Organix Crm</a>
+                    <a class="navbar-brand" href="indexCliente.php">Organix Crm</a>
                 </div>
                 <div class="collapse navbar-collapse" id="navbar-collapse">
-                    <ul class="nav navbar-nav navbar-left" style="    margin-left: 143px;">
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                                <i class="material-icons">dashboard</i>
-                                <!--      <span class="label-count">8</span> -->
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">EMPRESAS</li>
-                                <li class="body">
-                                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;">
-                                        <ul class="menu" style="overflow: hidden; width: auto; height: 254px;">
+                   
 
-
-                                            <li>
-                                                <button type="button" id="btngestionar" class="btn bg-red btn-block btn-sm waves-effect" onclick="openGestionar();">Gestionar</button>
-                                            </li>
-                                        </ul>
-                                        <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div>
-                                        <div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-                                    </div>
-                                </li>
-                                <li class="footer">
-                                    <a href="javascript:void(0);" class=" waves-effect waves-block">View All Notifications</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                                <img src="images/ic_device_hub_white_24px.svg" alt="">
-                                <!--      <span class="label-count">8</span> -->
-                            </a>
-                        </li>
-                    </ul>
-
-                    <ul class="nav navbar-nav navbar-right">
-                        <!-- Call Search -->
-                        <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
-
-                        <li class="dropdown">
-                            <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                                <i class="material-icons">flag</i>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="header">TASKS</li>
-                                <li class="body">
-                                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;">
-                                        <ul class="menu tasks" style="overflow: hidden; width: auto; height: 254px;">
-
-                                        </ul>
-                                </li>
-                                <!-- #END# Tasks -->
-                                <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
-                            </ul>
+                    
                             </div>
                 </div>
         </nav>
@@ -144,17 +101,17 @@ $usu=$_SESSION["usuario"];
                 <!-- User Info -->
                 <div class="user-info">
                     <div class="image">
-                        <img src="images/david.jpg" width="48" height="48" alt="User">
+                        <img src="img/boss.png" width="48" height="48" alt="User">
                     </div>
                     <div class="info-container">
                         <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            ismael@gmail.com
+                            <?php echo $_SESSION["emailcliente"]?>
                         </div>
                         <div class="email">
-                            ismael@gmail.com
+                        <?php echo $_SESSION["emailcliente"]?>
                         </div>
                         <div class="btn-group user-helper-dropdown">
-                            <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                            <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float:right;">keyboard_arrow_down</i>
                             <ul class="dropdown-menu pull-right">
                                 <li><a href="index_home_perfil.php" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
 
@@ -171,13 +128,13 @@ $usu=$_SESSION["usuario"];
                         <ul class="list" style="overflow: hidden; width: auto; height: 517px;">
                             <li class="header">MAIN NAVIGATION</li>
                             <li class="active">
-                                <a href="proyectos.html" class="toggled waves-effect waves-block">
+                                <a href="indexCliente.php" class="toggled waves-effect waves-block">
                                     <i class="material-icons">home</i>
                                     <span>Proyectos</span>
                                 </a>
                             </li>
                             <li class="active">
-                                <a href="index.html" class="toggled waves-effect waves-block">
+                                <a href="indexCategorias.php" class="toggled waves-effect waves-block">
                                     <i class="material-icons">event</i>
                                     <span>Categorias</span>
                                 </a>
@@ -281,28 +238,74 @@ $usu=$_SESSION["usuario"];
             <!-- #END# Right Sidebar -->
         </section>
 
-        <section class="content">
-            <div class="container-fluid">
-                <div class="dropdown">
-                    <button class="dropbtn">ADMINISTRACIÓN</button>
-                    <div class="dropdown-content">
-                        <a href="#">Factura Enero</a>
-                        <a href="#">Factura Febrero</a>
-                        <a href="#">Factura Marzo</a>
-                    </div>
+         <section class="content">
+        <div class="princicontent">
+       
+            <div class="tablaperfil">
+                
+                
+                
+                
+                
+                <?php
+                
+                $sql="select nombre,guid,datos from documentos where idcategoria='$idcategoria'";
+                if($bd->multi_query($sql)){
+                    do {
+                        
+                        if ($resultado = $bd->use_result()) {
+                            while ($fila = $resultado->fetch_row()) {
+                                $id_contact=$fila[1];
+                                $ruta=$fila[2];
 
-                </div>
-                <div class="dropdown">
-                    <button class="dropbtn">DTF</button>
-                    <div class="dropdown-content">
-                        <a href="#">Validación Software</a>
-                        <a href="#">Certificados</a>
-                    </div>
+                                echo'<div class="col-md-4" id="'.$id_contact.'">'; 
+                                $_SESSION["contact"]=$id_contact;
+                                    echo'<div class="panel">';
+                                        echo'<div class="media contact2">';
 
-                </div>
+                                            echo'<div class="media-left">';
+                                                echo'<div class="dv-imagechica">';
+                                                    echo'<img src="img/folder.png" alt="">';
+                                                echo'</div>';
+                                            echo'</div>';
 
+                                        echo'<div class="media-body">';
+                                            echo'<div class="dv-data contanct2-title">';
+                                                echo'<div class="dv-data-name">';
+                                                    echo'<span>'.$fila[0].'</span>';
+                                                echo'</div>';
+
+                                        echo'<div class="dv-data-title">';
+                                            echo'<span>Descarga:</span> &nbsp;';
+                                            echo "<a href=indexVerDocumentos.php?file=$ruta&idcategoria=$cate>";
+                                                echo "<img src='img/icon.png'></a>";
+                                            echo'</div>';
+
+                                       echo'<br>';
+                                       echo'<div class="dataview-info"></div>';
+
+                                            echo'</div>';
+                                            echo'</div>';
+
+                                      echo'</div>';
+                                    echo'</div>';
+                                 echo'</div>';
+                                
+                            }
+                            $resultado->close();
+                        }
+
+                    } while ($bd->next_result());
+                }
+                
+                        
+                ?>
             </div>
-        </section>
+
+        </div>
+        </div>
+
+    </section>
 
         <!-- Jquery Core Js -->
         <script async="" src="https://www.google-analytics.com/analytics.js"></script>

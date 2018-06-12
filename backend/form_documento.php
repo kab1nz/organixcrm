@@ -1,32 +1,35 @@
 <?php
 session_start();
-
+if(!isset( $_SESSION['nombre'])){
+    header("Location: http://localhost/organixcrm/index.php");
+}
 require_once("../bd/conexion.php");
 $bd= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
-if(isset($_POST['guardardoc'])){
-    if(isset($_FILES["file"])){
-    if(is_uploaded_file($_FILES['file']['tmp_name'])){
-    if(isset($_REQUEST['nombreDocumento']) && isset($_REQUEST['sproyecto']) && isset($_REQUEST['scategoria']) && isset($_REQUEST['file'])){
-    
+
+    if(isset($_REQUEST['nombreDocumento']) && isset($_REQUEST['sproyecto']) && isset($_REQUEST['sproyecto']) 
+    && isset($_REQUEST['scategoria']) && isset($_FILES['file']['name']) && isset($_FILES['file']['size']) 
+    && isset($_FILES['file']['tmp_name'])){
     $nombre=$_REQUEST['nombreDocumento'];
     $proyecto=$_REQUEST['sproyecto'];
     $categoria=$_REQUEST['scategoria'];
-    
-    $ruta="upload/";
-    $nombrefinal=trim ($_FILES['file']['name']);
-    $upload =$ruta.$nombrefinal;
-    echo $upload;
-        if(move_uploaded_file($_FILES['file']['tmp_name'], $upload)){
-            $query1="call insert_documentos('$nombre','$proyecto','$categoria','$upload');";
-            $resultado2=mysqli_query($bd,$query1);
 
-        }    
-        
-        
-
+    $nombrefichero = $_FILES['file']['name'];
+    $tipo = $_FILES['file']['type'];
+    $tamanio = $_FILES['file']['size'];
+    $ruta = $_FILES['file']['tmp_name'];
+    $destino="archivos/".$nombrefichero;
     }
-}
-}
+if(isset($_POST['enviar'])){
+    if($nombrefichero != ""){
+        if(copy($ruta,$destino)){
+            echo "Exito";
+            $insertdoc= "call insert_documentos('$nombre','$proyecto','$categoria','$destino');";
+            $docmy=mysqli_query($bd,$insertdoc);
+        }else{
+            echo "Error";
+        }
+    }
+    
 }
 if(isset($_POST['volver'])){
     header("location: indexCliente.php");
@@ -113,7 +116,7 @@ if(isset($_POST['volver'])){
                             <div class="form-group">
                                 <div class="form-line">
                                     <select class="form-control w20" id="scategoria" name="scategoria" required>                         
-                             <option selected disabled>Seleccione un proyecto</option>
+                             <option selected disabled>Seleccione una categoria</option>
                              <?php
                               $query1= 'select NOMBRE, GUID from categoria';
                               $resultado1 =mysqli_query($bd,$query1);
@@ -134,16 +137,17 @@ if(isset($_POST['volver'])){
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-12">
+                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="enviar" id="enviar">Guardar</button>
+                        <br>
+                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="button" name="volver">Volver</button>
+                    </div>
                 </form>
 
             </div>
 
 
-            <div class="col-md-12">
-            <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="button" name="guardardoc" onclick="validaEnvia()">Guardar</button>
-                <br>
-                <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="button" name="volver">Volver</button>
-            </div>
+
         </div>
 
 
@@ -197,7 +201,7 @@ if(isset($_POST['volver'])){
         <script src="js/demo.js"></script>
 
         <?php
-            mysqli_close($conexion);
+            mysqli_close($bd);
         ?>
 
 
