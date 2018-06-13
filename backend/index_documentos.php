@@ -71,185 +71,257 @@ readfile($ruta);
     </head>
 
     <body class="theme-red" style="background: white;">
-        <!-- Page Loader -->
-        <div class="page-loader-wrapper" style="display: none;">
-            <div class="loader">
-                <div class="preloader">
-                    <div class="spinner-layer pl-red">
-                        <div class="circle-clipper left">
-                            <div class="circle"></div>
-                        </div>
-                        <div class="circle-clipper right">
-                            <div class="circle"></div>
-                        </div>
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper" style="display: none;">
+        <div class="loader">
+            <div class="preloader">
+                <div class="spinner-layer pl-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
                     </div>
                 </div>
-                <p>Please wait...</p>
             </div>
+            <p>Please wait...</p>
         </div>
-        <!-- #END# Page Loader -->
-        <!-- Overlay For Sidebars -->
-        <div class="overlay"></div>
-        <!-- #END# Overlay For Sidebars -->
-        <!-- Search Bar -->
-       
-        <nav class="navbar">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
-                    <a href="javascript:void(0);" class="bars" style="display: none;"></a>
-                    <a class="navbar-brand" href="indexCliente.php">Organix Crm</a>
-                </div>
-                <div class="collapse navbar-collapse" id="navbar-collapse">
+    </div>
+    <!-- #END# Page Loader -->
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+    <!-- Search Bar -->
+    
+    <!-- #END# Search Bar -->
+    <!-- Top Bar -->
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="bars" style="display: none;"></a>
+                <a class="navbar-brand" href="index_backend.php">Organix Crm</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav navbar-left" style="    margin-left: 143px;">
+                    <li class="dropdown">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                            <i class="material-icons">dashboard</i>
+                            <!--      <span class="label-count">8</span> -->
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="header">EMPRESAS</li>
+                            <li class="body">
+                                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;">
+                                    <ul class="menu" style="overflow: hidden; width: auto; height: 254px;">
+                                        
+                                        <?php
+                                            $sql= 'select GUID from Usuarios where username ="'.$_SESSION["email"].'"';
+                                            $resultado = mysqli_query($conexion, $sql);
+                                            $intent= mysqli_fetch_row($resultado);
+                                            $guidusu= $intent[0];
+                                            //echo "El GUID ES: ".$guidusu;
+                                           $empresas='select NOMBREFISCAL,BDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
+                                            $query = mysqli_query($conexion, $empresas);
+                                            while( $fila = mysqli_fetch_array($query)){
+                                                    echo '<li id='.$fila[1].'>';                                
+                                                    echo '<a href="javascript:void(0);" class=" waves-effect waves-block">';
+                                                    echo '<div class="menu-info">';
+                                                    echo '<h4>'.$fila[0].'</h4>';
+                                                    echo '</div>';  
+                                                    echo '</a>';
+                                                     echo "</li>";
+                                                }
+                                        ?>
+
+                                    </ul>
+                                    <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div>
+                                    <div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+                                </div>
+                            </li>
+                            <li class="footer">
+                                <button type="button" id="btngestionar" class="btn bg-red btn-block btn-sm waves-effect"onclick="openGestionar();">Gestionar</button>
+                            </li>
+                        </ul>
+                    </li>
                    
+                </ul>
 
-                    
-                            </div>
+               
+                        </div>
+            </div>
+    </nav>
+    <!-- #Top Bar -->
+    <section>
+        <!-- Left Sidebar -->
+        <aside id="leftsidebar" class="sidebar">
+            <!-- User Info -->
+            <div class="user-info">
+                <div class="image">
+                    <img src="<?php echo $rowf[0] ?>" width="48" height="48" alt="User">
                 </div>
-        </nav>
-        <!-- #Top Bar -->
-        <section>
-            <!-- Left Sidebar -->
-            <aside id="leftsidebar" class="sidebar">
-                <!-- User Info -->
-                <div class="user-info">
-                    <div class="image">
-                        <img src="img/boss.png" width="48" height="48" alt="User">
+                <div class="info-container">
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["email"]; ?></div>
+                    <div class="email"><?php echo $_SESSION["email"]; ?></div>
+                    <div class="btn-group user-helper-dropdown">
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float:right;">keyboard_arrow_down</i>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="index_home_perfil.php" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
+                          
+                            <li><a href="logout.php" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
+                        </ul>
                     </div>
-                    <div class="info-container">
-                        <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <?php echo $_SESSION["emailcliente"]?>
-                        </div>
-                        <div class="email">
-                        <?php echo $_SESSION["emailcliente"]?>
-                        </div>
-                        <div class="btn-group user-helper-dropdown">
-                            <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float:right;">keyboard_arrow_down</i>
-                            <ul class="dropdown-menu pull-right">
-                                <li><a href="index_home_perfil.php" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
+                </div>
+            </div>
+            <!-- #User Info -->
+            <!-- Menu -->
+            <div class="menu">
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 517px;">
+                    <ul class="list" style="overflow: hidden; width: auto; height: 517px;">
+                        <li class="header">MAIN NAVIGATION</li>
+                        <li class="active">
+                            <a href="index_backend.php" class="toggled waves-effect waves-block">
+                                <i class="material-icons">home</i>
+                                <span>Inicio</span>
+                            </a>
+                        </li>
+                        
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
+                                <i class="material-icons">layers</i>
+                                <span>CRM</span>
+                            </a>
+                            <ul class="ml-menu">
+                                <li>
+                                    <a href="index_contactos.php" class=" waves-effect waves-block">Contactos</a>
+                                </li>
+                                <li>
+                                    <a href="index_proyectos.php" class=" waves-effect waves-block">Proyectos</a>
+                                </li>
+                                <li>
+                                    <a href="index_categorias.php" class=" waves-effect waves-block">Categorias</a>
+                                </li>
+                                <li>
+                                    <a href="form_documento.php" class=" waves-effect waves-block">Documentos</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
+                                <i class="material-icons">widgets</i>
+                                <span>Configuración</span>
+                            </a>
+                            <ul class="ml-menu">
+                                <li>
+                                    <a href="index_usuarios.php" class=" waves-effect waves-block">Usuarios</a>
+                                </li>
+                               
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
+                                <i class="material-icons">swap_calls</i>
+                                <span>Administración</span>
+                            </a>
+                            <ul class="ml-menu">
+                                <li>
+                                    <a href="index_empresas.php" class=" waves-effect waves-block">Empresas</a>
+                                </li>
+                                
 
-                                <li><a href="logout.php" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                    <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 0px; z-index: 99; right: 1px; height: 517px;"></div>
+                    <div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+                </div>
+            </div>
+
+            <!-- #Menu -->
+            <!-- Footer -->
+            <div class="legal">
+                <div class="copyright">
+                    © 2017 - 2018 <a href="javascript:void(0);">Organix-CRM</a>.
+                </div>
+                <div class="version">
+                    <b>Version: </b> 1.0.0
+                </div>
+            </div>
+            <!-- #Footer -->
+        </aside>
+        <!-- #END# Left Sidebar -->
+        <!-- Right Sidebar -->
+        <aside id="rightsidebar" class="right-sidebar">
+            <ul class="nav nav-tabs tab-nav-right" role="tablist">
+                <li role="presentation" class="active"><a href="#skins" data-toggle="tab">SKINS</a></li>
+                <li role="presentation"><a href="#settings" data-toggle="tab">SETTINGS</a></li>
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane fade in active in active" id="skins">
+                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 256px;">
+
+                        <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 6px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px; height: 72.8178px;"></div>
+                        <div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane fade" id="settings">
+                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 256px;">
+                        <div class="demo-settings" style="overflow: hidden; width: auto; height: 256px;">
+                            <p>GENERAL SETTINGS</p>
+                            <ul class="setting-list">
+                                <li>
+                                    <span>Report Panel Usage</span>
+                                    <div class="switch">
+                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span>Email Redirect</span>
+                                    <div class="switch">
+                                        <label><input type="checkbox"><span class="lever"></span></label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <p>SYSTEM SETTINGS</p>
+                            <ul class="setting-list">
+                                <li>
+                                    <span>Notifications</span>
+                                    <div class="switch">
+                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span>Auto Updates</span>
+                                    <div class="switch">
+                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
+                                    </div>
+                                </li>
+                            </ul>
+                            <p>ACCOUNT SETTINGS</p>
+                            <ul class="setting-list">
+                                <li>
+                                    <span>Offline</span>
+                                    <div class="switch">
+                                        <label><input type="checkbox"><span class="lever"></span></label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span>Location Permission</span>
+                                    <div class="switch">
+                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
+                        <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 6px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div>
+                        <div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
                     </div>
                 </div>
-                <!-- #User Info -->
-                <!-- Menu -->
-
-                <div class="menu">
-                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 517px;">
-                        <ul class="list" style="overflow: hidden; width: auto; height: 517px;">
-                            <li class="header">MAIN NAVIGATION</li>
-                            <li class="active">
-                                <a href="indexCliente.php" class="toggled waves-effect waves-block">
-                                    <i class="material-icons">home</i>
-                                    <span>Proyectos</span>
-                                </a>
-                            </li>
-                            <li class="active">
-                                <a href="indexCategorias.php" class="toggled waves-effect waves-block">
-                                    <i class="material-icons">event</i>
-                                    <span>Categorias</span>
-                                </a>
-                            </li>
-                            <li class="active">
-                                <a href="index.html" class="toggled waves-effect waves-block">
-                                    <i class="material-icons">layers</i>
-                                    <span>Documentos</span>
-                                </a>
-                            </li>
-
-
-
-                        </ul>
-                        <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 0px; z-index: 99; right: 1px; height: 517px;"></div>
-                        <div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-                    </div>
-                </div>
-                <!-- #Menu -->
-                <!-- Footer -->
-                <div class="legal">
-                    <div class="copyright">
-                        © 2017 - 2018 <a href="javascript:void(0);">Organix-CRM</a>.
-                    </div>
-                    <div class="version">
-                        <b>Version: </b> 1.0.0
-                    </div>
-                </div>
-                <!-- #Footer -->
-            </aside>
-            <!-- #END# Left Sidebar -->
-            <!-- Right Sidebar -->
-            <aside id="rightsidebar" class="right-sidebar">
-                <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                    <li role="presentation" class="active"><a href="#skins" data-toggle="tab">SKINS</a></li>
-                    <li role="presentation"><a href="#settings" data-toggle="tab">SETTINGS</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active in active" id="skins">
-                        <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 256px;">
-
-                            <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 6px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px; height: 72.8178px;"></div>
-                            <div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-                        </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="settings">
-                        <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 256px;">
-                            <div class="demo-settings" style="overflow: hidden; width: auto; height: 256px;">
-                                <p>GENERAL SETTINGS</p>
-                                <ul class="setting-list">
-                                    <li>
-                                        <span>Report Panel Usage</span>
-                                        <div class="switch">
-                                            <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span>Email Redirect</span>
-                                        <div class="switch">
-                                            <label><input type="checkbox"><span class="lever"></span></label>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <p>SYSTEM SETTINGS</p>
-                                <ul class="setting-list">
-                                    <li>
-                                        <span>Notifications</span>
-                                        <div class="switch">
-                                            <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span>Auto Updates</span>
-                                        <div class="switch">
-                                            <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <p>ACCOUNT SETTINGS</p>
-                                <ul class="setting-list">
-                                    <li>
-                                        <span>Offline</span>
-                                        <div class="switch">
-                                            <label><input type="checkbox"><span class="lever"></span></label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span>Location Permission</span>
-                                        <div class="switch">
-                                            <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 6px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div>
-                            <div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-                        </div>
-                    </div>
-                </div>
-            </aside>
-            <!-- #END# Right Sidebar -->
-        </section>
+            </div>
+        </aside>
+        <!-- #END# Right Sidebar -->
+    </section>
 
          <section class="content">
         <div class="princicontent">
@@ -257,7 +329,12 @@ readfile($ruta);
             <div class="tablaperfil">
                 
                 
-                
+            <div class="col-lg-2 flexstart"> <a href="index_backend.php"><i class="material-icons">ic_keyboard_backspace</i></a>
+            </div>
+            <div class="col-lg-7 flexcenter">Documentos</div>
+            <div class="col-lg-2 flexend "> <a href="form_documento.php"><label><i class="material-icons">ic_save</i><span> Nuevo Documento</span></label></a>
+            </div>
+            <div class="tablaperfil">
                 
                 
                 <?php

@@ -5,32 +5,31 @@ if(!isset( $_SESSION['nombre'])){
 }
 require_once("../bd/conexion.php");
 $bd= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
-
-    if(isset($_FILES['file']['name']) && isset($_FILES['file']['size']) 
-    && isset($_FILES['file']['tmp_name'])){
-   
-
-    $nombrefichero = $_FILES['file']['name'];
-    $tipo = $_FILES['file']['type'];
-    $tamanio = $_FILES['file']['size'];
-    $ruta = $_FILES['file']['tmp_name'];
-    $destino="archivos/".$nombrefichero;
-    }
 if(isset($_POST['enviar'])){
-    if($nombrefichero != ""){
-        if(copy($ruta,$destino)){
-            echo "Exito";
-            $insertdoc= "call insert_documentos('$nombre','$proyecto','$categoria','$destino');";
-            $docmy=mysqli_query($bd,$insertdoc);
-        }else{
-            echo "Error";
-        }
-    }
+    $iddoc=$_GET['iddoc'];
+    echo "insertado";
+    if(isset($_REQUEST['ndoc'])){
+    $nombre=$_REQUEST['ndoc'];
+
+    $nombrefichero = $_FILES['img']['name'];
+    $tipo = $_FILES['img']['type'];
+    $tamanio = $_FILES['img']['size'];
+    $ruta = $_FILES['img']['tmp_name'];
+    $destino="archivos/".$nombrefichero;
     
+ 
+
+            echo "id $iddoc nombre $nombre destino $destino";
+            $updatedoc = "call update_documentos ('$iddoc','$nombre','$destino');";
+
+            $docmy=mysqli_query($bd,$updatedoc);
+    
+    
+    
+        }
 }
-if(isset($_POST['volver'])){
-    header("location: indexCliente.php");
-}
+
+
 ?>
     <!DOCTYPE html>
     <html>
@@ -74,32 +73,32 @@ if(isset($_POST['volver'])){
         <!-- Page Loader -->
         <div class="container">
             <div class="row">
-                <form action="index_editar_documentos.php?iddoc=<?php echo $id ?>" method="post" name="form">
+                <form action="index_editar_documentos.php?iddoc=<?php echo $_GET['iddoc']; ?>" method="post" name="form" enctype="multipart/form-data">
 
-                        <div class="col-md-11 mgtopgrande">Editar Proyecto</div>
-                        <div class="col-md-1"></div>
-                        <div class="col-md-8 mgtoppeque">
-                            <div class="form-group">
-                                <div class="form-line">
-                                    <input class="form-control" type="text" name="nombreDocumento" placeholder="<?php echo $guidresult[0] ?>">
-                                </div>
+                    <div class="col-md-11 mgtopgrande">Editar Proyecto</div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-8 mgtoppeque">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input class="form-control" type="text" name="ndoc" placeholder="">
                             </div>
                         </div>
-                            <div class="form-group">
-                                <input type="file" name="file" id="file"/>
-                            </div>
-
-
-                        <div class="col-md-12">
-
-                            <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="enviar"s>Guardar</button>
-                            <br>
-                            <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="volver">Volver</button>
+                        <div class="form-group">
+                            <input type="file" name="img" id="img" />
                         </div>
                     </div>
-                </form>
 
+
+
+                    <div class="col-md-12">
+
+                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="enviar">Guardar</button>
+                        <br>
+                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" id="volver" name="volver">Volver</button>
+                    </div>
             </div>
+            </form>
+
         </div>
 
 

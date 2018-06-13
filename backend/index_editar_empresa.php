@@ -94,7 +94,7 @@ if(isset($_POST['submit1'])) {
     <link href="css/themes/all-themes.css" rel="stylesheet" />
 </head>
 
-<body class="theme-red">
+<body class="theme-red" style="background: white;">
     <!-- Page Loader -->
     <div class="page-loader-wrapper" style="display: none;">
         <div class="loader">
@@ -116,15 +116,7 @@ if(isset($_POST['submit1'])) {
     <div class="overlay"></div>
     <!-- #END# Overlay For Sidebars -->
     <!-- Search Bar -->
-    <div class="search-bar">
-        <div class="search-icon">
-            <i class="material-icons">search</i>
-        </div>
-        <input type="text" placeholder="EMPIEZA A ESCRIBIR...">
-        <div class="close-search">
-            <i class="material-icons">close</i>
-        </div>
-    </div>
+    
     <!-- #END# Search Bar -->
     <!-- Top Bar -->
     <nav class="navbar">
@@ -146,72 +138,40 @@ if(isset($_POST['submit1'])) {
                             <li class="body">
                                 <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;">
                                     <ul class="menu" style="overflow: hidden; width: auto; height: 254px;">
-                                        <li>
-                                            <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                        
+                                        <?php
+                                            $sql= 'select GUID from Usuarios where username ="'.$_SESSION["email"].'"';
+                                            $resultado = mysqli_query($conexion, $sql);
+                                            $intent= mysqli_fetch_row($resultado);
+                                            $guidusu= $intent[0];
+                                            //echo "El GUID ES: ".$guidusu;
+                                           $empresas='select NOMBREFISCAL,BDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
+                                            $query = mysqli_query($conexion, $empresas);
+                                            while( $fila = mysqli_fetch_array($query)){
+                                                    echo '<li id='.$fila[1].'>';                                
+                                                    echo '<a href="javascript:void(0);" class=" waves-effect waves-block">';
+                                                    echo '<div class="menu-info">';
+                                                    echo '<h4>'.$fila[0].'</h4>';
+                                                    echo '</div>';  
+                                                    echo '</a>';
+                                                     echo "</li>";
+                                                }
+                                        ?>
 
-                                                <div class="menu-info">
-                                                    <h4>EMPRESA 1</h4>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0);" class=" waves-effect waves-block">
-
-                                                <div class="menu-info">
-                                                    <h4>EMPRESA 2</h4>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <button type="button" class="btn bg-red btn-block btn-sm waves-effect">Gestionar</button>
-
-                                        </li>
                                     </ul>
                                     <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div>
                                     <div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
                                 </div>
                             </li>
                             <li class="footer">
-                                <a href="javascript:void(0);" class=" waves-effect waves-block">View All Notifications</a>
+                                <button type="button" id="btngestionar" class="btn bg-red btn-block btn-sm waves-effect"onclick="openGestionar();">Gestionar</button>
                             </li>
                         </ul>
                     </li>
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <img src="images/ic_device_hub_white_24px.svg" alt="">
-                            <!--      <span class="label-count">8</span> -->
-                        </a>
-                    </li>
+                   
                 </ul>
 
-                <ul class="nav navbar-nav navbar-right">
-                    <!-- Call Search -->
-                    <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
-                    <!-- #END# Call Search -->
-                    <!-- Notifications -->
-
-
-
-
-
-
-                    <!-- #END# Notifications -->
-                    <!-- Tasks -->
-                    <li class="dropdown">
-                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <i class="material-icons">flag</i>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">TASKS</li>
-                            <li class="body">
-                                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 254px;">
-                                    <ul class="menu tasks" style="overflow: hidden; width: auto; height: 254px;">
-
-                                    </ul>
-                            </li>
-                            <!-- #END# Tasks -->
-                            <li class="pull-right"><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i class="material-icons">more_vert</i></a></li>
-                        </ul>
+               
                         </div>
             </div>
     </nav>
@@ -222,22 +182,16 @@ if(isset($_POST['submit1'])) {
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="images/david.jpg" width="48" height="48" alt="User">
+                    <img src="<?php echo $rowf[0] ?>" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >                       
-                        <label id="nombreUsu">
-                            <?php echo $row[0]; ?>
-                        </label>
-                    </div>
-                    <div class="email">
-                        <?php echo $_SESSION["email"]; ?>
-                    </div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["email"]; ?></div>
+                    <div class="email"><?php echo $_SESSION["email"]; ?></div>
                     <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float:right;margin-bottom:5px;">keyboard_arrow_down</i>
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float:right;">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="index_home_perfil.html" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
-
+                            <li><a href="index_home_perfil.php" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
+                          
                             <li><a href="logout.php" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>
                     </div>
@@ -255,23 +209,7 @@ if(isset($_POST['submit1'])) {
                                 <span>Inicio</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
-                                <i class="material-icons">event</i>
-                                <span>Mis Cosas</span>
-                            </a>
-                            <ul class="ml-menu">
-                                <li>
-                                    <a href="index_home_perfil.html" class=" waves-effect waves-block">Alertas</a>
-                                </li>
-                                <li>
-                                    <a href="index_home_perfil.html" class=" waves-effect waves-block">Notas</a>
-                                </li>
-                                <li>
-                                    <a href="index_home_calendario.html" class=" waves-effect waves-block">Calendario</a>
-                                </li>
-                            </ul>
-                        </li>
+                        
                         <li>
                             <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
                                 <i class="material-icons">layers</i>
@@ -279,19 +217,16 @@ if(isset($_POST['submit1'])) {
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="index_contactos.html" class=" waves-effect waves-block">Contactos</a>
+                                    <a href="index_contactos.php" class=" waves-effect waves-block">Contactos</a>
                                 </li>
                                 <li>
-                                    <a href="index_llamadas.html" class=" waves-effect waves-block">Llamadas telefónicas</a>
+                                    <a href="index_proyectos.php" class=" waves-effect waves-block">Proyectos</a>
                                 </li>
                                 <li>
-                                    <a href="index_casos.html" class=" waves-effect waves-block">Casos</a>
+                                    <a href="index_categorias.php" class=" waves-effect waves-block">Categorias</a>
                                 </li>
                                 <li>
-                                    <a href="index_tareas.html" class=" waves-effect waves-block">Tareas</a>
-                                </li>
-                                <li>
-                                    <a href="index_negociaciones.html" class=" waves-effect waves-block">Negociaciones</a>
+                                    <a href="form_documento.php" class=" waves-effect waves-block">Documentos</a>
                                 </li>
                             </ul>
                         </li>
@@ -302,14 +237,9 @@ if(isset($_POST['submit1'])) {
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="index_usuarios.html" class=" waves-effect waves-block">Usuarios</a>
+                                    <a href="index_usuarios.php" class=" waves-effect waves-block">Usuarios</a>
                                 </li>
-                                <li>
-                                    <a href="index_grupo_usuario.html" class=" waves-effect waves-block">Grupos de usuarios</a>
-                                </li>
-                                <li>
-                                    <a href="index_suscripciones.html" class=" waves-effect waves-block">Suscripciones y pagos</a>
-                                </li>
+                               
                             </ul>
                         </li>
                         <li>
@@ -319,17 +249,9 @@ if(isset($_POST['submit1'])) {
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="index_empresas.html" class=" waves-effect waves-block">Empresas</a>
+                                    <a href="index_empresas.php" class=" waves-effect waves-block">Empresas</a>
                                 </li>
-                                <li>
-                                    <a href="index_tarifas.html" class=" waves-effect waves-block">Tarifas</a>
-                                </li>
-                                <li>
-                                    <a href="index_pagos.html" class=" waves-effect waves-block">Pagos</a>
-                                </li>
-                                <li>
-                                    <a href="pages/ui/badges.html" class=" waves-effect waves-block">Informes</a>
-                                </li>
+                                
 
                             </ul>
                         </li>

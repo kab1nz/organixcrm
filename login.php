@@ -124,7 +124,7 @@
 
 
                             //sacamos al usuario
-                            $sql= 'select GUID from Usuarios where username ="'.$_REQUEST['email'].'"';
+                            $sql= 'select GUID from usuarios where username ="'.$_REQUEST['email'].'"';
                             $resultado = mysqli_query($conexion, $sql);
                             $cont= mysqli_num_rows($resultado);
                             $intent= mysqli_fetch_row($resultado);           

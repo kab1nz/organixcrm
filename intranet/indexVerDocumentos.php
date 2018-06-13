@@ -9,16 +9,23 @@ $bd= new mysqli("localhost","root","root", $_SESSION['idcli']);
 $usu=$_SESSION["usuario"];
 $idcategoria=$_GET['idcategoria'];
 $cate=$idcategoria;
-$file=$_GET['file'];
+/*
 $nombre=explode('/',$file);
 echo $nombre[0]."<br>";
 echo $nombre[1];
 $rutaf="../backend/archivos/".$nombre[1];
+ echo "la ruta es: ".$rutaf;
+if(is_file($rutaf)){
 header('Content-Type: application/force-download');
 header('Content-Disposition: attachment; filename='.$nombre[1]);
 header('Content-Transfer-Encoding: binary');
 header('Content-Length: '.filesize($rutaf));
 readfile($ruta);
+echo "Se ha subido";
+}else{
+   echo "No se ha subido";
+}
+*/
 ?>
     <!DOCTYPE html>
     <html>
@@ -96,6 +103,7 @@ readfile($ruta);
         </nav>
         <!-- #Top Bar -->
         <section>
+            
             <!-- Left Sidebar -->
             <aside id="leftsidebar" class="sidebar">
                 <!-- User Info -->
@@ -167,74 +175,7 @@ readfile($ruta);
             </aside>
             <!-- #END# Left Sidebar -->
             <!-- Right Sidebar -->
-            <aside id="rightsidebar" class="right-sidebar">
-                <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                    <li role="presentation" class="active"><a href="#skins" data-toggle="tab">SKINS</a></li>
-                    <li role="presentation"><a href="#settings" data-toggle="tab">SETTINGS</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active in active" id="skins">
-                        <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 256px;">
-
-                            <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 6px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px; height: 72.8178px;"></div>
-                            <div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-                        </div>
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="settings">
-                        <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 256px;">
-                            <div class="demo-settings" style="overflow: hidden; width: auto; height: 256px;">
-                                <p>GENERAL SETTINGS</p>
-                                <ul class="setting-list">
-                                    <li>
-                                        <span>Report Panel Usage</span>
-                                        <div class="switch">
-                                            <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span>Email Redirect</span>
-                                        <div class="switch">
-                                            <label><input type="checkbox"><span class="lever"></span></label>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <p>SYSTEM SETTINGS</p>
-                                <ul class="setting-list">
-                                    <li>
-                                        <span>Notifications</span>
-                                        <div class="switch">
-                                            <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span>Auto Updates</span>
-                                        <div class="switch">
-                                            <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <p>ACCOUNT SETTINGS</p>
-                                <ul class="setting-list">
-                                    <li>
-                                        <span>Offline</span>
-                                        <div class="switch">
-                                            <label><input type="checkbox"><span class="lever"></span></label>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <span>Location Permission</span>
-                                        <div class="switch">
-                                            <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 6px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div>
-                            <div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-                        </div>
-                    </div>
-                </div>
-            </aside>
+          
             <!-- #END# Right Sidebar -->
         </section>
 
@@ -243,7 +184,15 @@ readfile($ruta);
        
             <div class="tablaperfil">
                 
-                
+            <div class="col-lg-2 flexstart"> <a href="indexCategorias.php"><i class="material-icons">ic_keyboard_backspace</i></a>
+            </div>
+            <div class="col-lg-7 flexcenter">Documentos</div>
+            <?php
+                if($_SESSION['permiso']==1 || $_SESSION['permiso']==2){
+                    echo ' <div class="col-lg-2 flexend "> <a href="formDocumento.php"><label><i class="material-icons">ic_save</i><span>Nuevo Documento</span></label></a></div>';
+                }
+            ?>
+           
                 
                 
                 
@@ -257,6 +206,7 @@ readfile($ruta);
                             while ($fila = $resultado->fetch_row()) {
                                 $id_contact=$fila[1];
                                 $ruta=$fila[2];
+                                
 
                                 echo'<div class="col-md-4" id="'.$id_contact.'">'; 
                                 $_SESSION["contact"]=$id_contact;
@@ -299,6 +249,60 @@ readfile($ruta);
                 }
                 
                         
+                ?>
+                 <?php
+                if(!isset($_GET['idcategoria'])){
+                $sql="select nombre,guid,datos from documentos ";
+                if($bd->multi_query($sql)){
+                    do {
+                        
+                        if ($resultado = $bd->use_result()) {
+                            while ($fila = $resultado->fetch_row()) {
+                                $id_contact=$fila[1];
+                                $ruta=$fila[2];
+                                
+
+                                echo'<div class="col-md-4" id="'.$id_contact.'">'; 
+                                $_SESSION["contact"]=$id_contact;
+                                    echo'<div class="panel">';
+                                        echo'<div class="media contact2">';
+
+                                            echo'<div class="media-left">';
+                                                echo'<div class="dv-imagechica">';
+                                                    echo'<img src="img/folder.png" alt="">';
+                                                echo'</div>';
+                                            echo'</div>';
+
+                                        echo'<div class="media-body">';
+                                            echo'<div class="dv-data contanct2-title">';
+                                                echo'<div class="dv-data-name">';
+                                                    echo'<span>'.$fila[0].'</span>';
+                                                echo'</div>';
+
+                                        echo'<div class="dv-data-title">';
+                                            echo'<span>Descarga:</span> &nbsp;';
+                                            echo "<a href=indexVerDocumentos.php?file=$ruta&idcategoria=$cate>";
+                                                echo "<img src='img/icon.png'></a>";
+                                            echo'</div>';
+
+                                       echo'<br>';
+                                       echo'<div class="dataview-info"></div>';
+
+                                            echo'</div>';
+                                            echo'</div>';
+
+                                      echo'</div>';
+                                    echo'</div>';
+                                 echo'</div>';
+                                
+                            }
+                            $resultado->close();
+                        }
+
+                    } while ($bd->next_result());
+                }
+                
+            }    
                 ?>
             </div>
 

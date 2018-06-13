@@ -67,11 +67,12 @@
 
 
                                 //sacamos al usuario
-                                $sql= 'select GUID from contacto_usuario where username ="'.$_REQUEST['emailcliente'].'"';
+                                $sql= 'select GUID,PERMISOS from contacto_usuario where username ="'.$_REQUEST['emailcliente'].'"';
                                 $resultado = mysqli_query($mysqli, $sql);
                                 $intent= mysqli_fetch_row($resultado);
                                 $cont1= mysqli_num_rows($resultado);
                                 $guidusu= $intent[0];
+                                $_SESSION['permiso']=$intent[1];
                             
                                 if($cont1 != 0){
                                 

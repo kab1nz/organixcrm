@@ -269,7 +269,6 @@ if(isset($_GET['bim'])) {
                                 $id_contact=$fila[1];
                                 $foto=$fila[2];
                                 if(empty($foto)){
-                                    echo "asdasda";
                                     $foto="fotos/boy.png";
                                     $_SESSION['fotocontacto']=$foto;
                                 }else{
@@ -283,9 +282,9 @@ if(isset($_GET['bim'])) {
                                         echo'<div class="media contact2">';
 
                                             echo'<div class="media-left">';
-                                                echo'<div class="dv-image">';
-                                                    echo'<img src="'.$foto.'" alt="">';
-                                                echo'</div>';
+                                              
+                                                    echo'<img src="'.$foto.'" style="margin-left: 176px;">';
+                                              
                                             echo'</div>';
 
                                         echo'<div class="media-body">';

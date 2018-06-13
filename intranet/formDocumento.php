@@ -1,10 +1,11 @@
 <?php
+require_once("../bd/conexion.php");
 session_start();
-if(!isset( $_SESSION['nombre'])){
+if(!isset($_SESSION['idcli'])){
     header("Location: http://localhost/organixcrm/index.php");
 }
-require_once("../bd/conexion.php");
-$bd= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
+$bd= new mysqli("localhost","root","root", $_SESSION['idcli']);
+
 if(isset($_POST['enviar'])){
 
     if(isset($_REQUEST['nombreDocumento']) && isset($_REQUEST['sproyecto'])){
@@ -16,14 +17,20 @@ if(isset($_POST['enviar'])){
     $tipo = $_FILES['file']['type'];
     $tamanio = $_FILES['file']['size'];
     $ruta = $_FILES['file']['tmp_name'];
-    $destino="archivos/".$nombrefichero;
+    $destino="upload/".$nombrefichero;
+    $carpeta="upload/";
+    opendir($carpeta);
+    $desti = $carpeta.$nombrefichero;
+    copy($ruta,$desti);
     
  
 
     
             $insertdoc = "insert into documentos (NOMBRE,IDPROYECTO,IDCATEGORIA,DATOS) values ('$nombre','$proyecto','$categoria','$destino');";
             $docmy=mysqli_query($bd,$insertdoc);
-    
+        
+           
+
     
     
         }
@@ -42,32 +49,28 @@ if(isset($_POST['volver'])){
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <title>Welcome To | ORGANIXCRM</title>
-        <!-- Favicon-->
-        <link rel="icon" href="favicon.ico" type="image/x-icon">
+            <!-- Favicon-->
+            <link rel="icon" href="favicon.ico" type="image/x-icon">
 
-        <!-- Google Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
 
-        <!-- Bootstrap Core Css -->
-        <link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+<!-- Bootstrap Core Css -->
+<link href="../backend/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
 
-        <!-- Waves Effect Css -->
-        <link href="plugins/node-waves/waves.css" rel="stylesheet" />
+<!-- Waves Effect Css -->
+<link href="../backend/plugins/node-waves/waves.css" rel="stylesheet" />
 
-        <!-- Animation Css -->
-        <link href="plugins/animate-css/animate.css" rel="stylesheet" />
+<!-- Animation Css -->
+<link href="../backend/plugins/animate-css/animate.css" rel="stylesheet" />
 
-        <!-- Morris Chart Css-->
-        <link href="plugins/morrisjs/morris.css" rel="stylesheet" />
+<!-- Morris Chart Css-->
+<link href="../backend/plugins/morrisjs/morris.css" rel="stylesheet" />
 
-        <!-- Custom Css -->
-        <link href="css/style.css" rel="stylesheet">
-        <link href="scss/estilo.css" rel="stylesheet">
-
-
-        <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
-        <link href="css/themes/all-themes.css" rel="stylesheet" />
+<!-- Custom Css -->
+<link href="../backend/css/style.css" rel="stylesheet">
+<link href="../backend/css/estilo.css" rel="stylesheet">
 
     </head>
 
@@ -75,12 +78,13 @@ if(isset($_POST['volver'])){
         <!-- Page Loader -->
         <div class="container">
             <div class="row">
-                <form action="form_documento.php" method="post" enctype="multipart/form-data">
 
-                    <div class="col-md-12">
-                        <div class="col-md-11 mgtopgrande">Nuevo documento</div>
+                <form action="formDocumento.php" method="post" enctype="multipart/form-data">
+
+                    <div class="col-md-12" style="margin-top:50px;">
+                        <div class="col-md-11 mgtopgrande" style="margin-bottom:30px;">Nuevo documento</div>
                         <div class="col-md-1"></div>
-                        <div class="col-md-8 mgtoppeque">
+                        <div class="col-md-8 mgtoppeque"  style="margin-bottom:30px;">
                             <div class="form-group">
                                 <div class="form-line">
                                     <input class="form-control" type="text" name="nombreDocumento" id="nombreDocumento" placeholder="NOMBRE DOCUMENTO">
@@ -109,7 +113,7 @@ if(isset($_POST['volver'])){
                         </div>
                     </div>
                     <div class="col-md-12">
-                        <div class="col-md-6 mgtoppeque">
+                        <div class="col-md-6 mgtoppeque"  style="margin-bottom:30px;">
                             <div class="form-group">
                                 <div class="form-line">
                                     <select class="form-control w20" id="scategoria" name="scategoria" required>                         
@@ -140,8 +144,8 @@ if(isset($_POST['volver'])){
                         <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="button" name="volver">Volver</button>
                     </div>
                 </form>
-
             </div>
+            </section>
 
 
 
@@ -150,56 +154,51 @@ if(isset($_POST['volver'])){
 
 
 
-        <!-- Jquery Core Js -->
-        <script async="" src="https://www.google-analytics.com/analytics.js"></script>
-        <script src="plugins/jquery/jquery.min.js"></script>
+         <!-- Jquery Core Js -->
+         <script async="" src="https://www.google-analytics.com/analytics.js"></script>
+        <script src="../backend/plugins/jquery/jquery.min.js"></script>
 
         <!-- Bootstrap Core Js -->
-        <script src="plugins/bootstrap/js/bootstrap.js"></script>
+        <script src="../backend/plugins/bootstrap/js/bootstrap.js"></script>
 
         <!-- Select Plugin Js -->
-        <script src="plugins/bootstrap-select/js/bootstrap-select.js"></script>
+        <script src="../backend/plugins/bootstrap-select/js/bootstrap-select.js"></script>
 
         <!-- Slimscroll Plugin Js -->
-        <script src="plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+        <script src="../backend/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+
+        <!-- My Script -->
 
         <!-- Waves Effect Plugin Js -->
-        <script src="plugins/node-waves/waves.js"></script>
+        <script src="../backend/plugins/node-waves/waves.js"></script>
 
         <!-- Jquery CountTo Plugin Js -->
-        <script src="plugins/jquery-countto/jquery.countTo.js"></script>
+        <script src="../backend/plugins/jquery-countto/jquery.countTo.js"></script>
 
         <!-- Morris Plugin Js -->
-        <script src="plugins/raphael/raphael.min.js"></script>
-        <script src="plugins/morrisjs/morris.js"></script>
-
-        <script src="myscript.js"></script>
+        <script src="../backend/plugins/raphael/raphael.min.js"></script>
+        <script src="../backend/plugins/morrisjs/morris.js"></script>
 
         <!-- ChartJs -->
-        <script src="plugins/chartjs/Chart.bundle.js"></script>
+        <script src="../backend/plugins/chartjs/Chart.bundle.js"></script>
 
         <!-- Flot Charts Plugin Js -->
-        <script src="plugins/flot-charts/jquery.flot.js"></script>
-        <script src="plugins/flot-charts/jquery.flot.resize.js"></script>
-        <script src="plugins/flot-charts/jquery.flot.pie.js"></script>
-        <script src="plugins/flot-charts/jquery.flot.categories.js"></script>
-        <script src="plugins/flot-charts/jquery.flot.time.js"></script>
+        <script src="../backend/plugins/flot-charts/jquery.flot.js"></script>
+        <script src="../backend/plugins/flot-charts/jquery.flot.resize.js"></script>
+        <script src="../backend/plugins/flot-charts/jquery.flot.pie.js"></script>
+        <script src="../backend/plugins/flot-charts/jquery.flot.categories.js"></script>
+        <script src="../backend/plugins/flot-charts/jquery.flot.time.js"></script>
 
         <!-- Sparkline Chart Plugin Js -->
-        <script src="plugins/jquery-sparkline/jquery.sparkline.js"></script>
+        <script src="../backend/plugins/jquery-sparkline/jquery.sparkline.js"></script>
 
         <!-- Custom Js -->
-        <script src="js/admin.js"></script>
-        <script src="js/pages/index.js"></script>
-
-        <script type="text/javascript" src="js/funciones.js"></script>
+        <script src="../backend/js/admin.js"></script>
+        <script src="../backend/js/pages/index.js"></script>
 
         <!-- Demo Js -->
-        <script src="js/demo.js"></script>
+        <script src="../backend/js/demo.js"></script>
 
-        <?php
-            mysqli_close($bd);
-        ?>
 
 
 

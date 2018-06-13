@@ -142,20 +142,16 @@ $guidusu=$_SESSION['guidusu'];
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="images/david.jpg" width="48" height="48" alt="User">
+                    <img src="<?php echo $rowf[0] ?>" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <?php echo $usu; ?>
-                    </div>
-                    <div class="email">
-                        <?php echo $_SESSION["email"]; ?>
-                    </div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["email"]; ?></div>
+                    <div class="email"><?php echo $_SESSION["email"]; ?></div>
                     <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" style="float:right;" aria-expanded="true">keyboard_arrow_down</i>
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float:right;">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
-                            <li><a href="index_home_perfil.html" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
-
+                            <li><a href="index_home_perfil.php" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
+                          
                             <li><a href="logout.php" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
                         </ul>
                     </div>
@@ -173,23 +169,7 @@ $guidusu=$_SESSION['guidusu'];
                                 <span>Inicio</span>
                             </a>
                         </li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
-                                <i class="material-icons">event</i>
-                                <span>Mis Cosas</span>
-                            </a>
-                            <ul class="ml-menu">
-                                <li>
-                                    <a href="pages/widgets/cards/basic.html" class=" waves-effect waves-block">Alertas</a>
-                                </li>
-                                <li>
-                                    <a href="pages/widgets/cards/colored.html" class=" waves-effect waves-block">Notas</a>
-                                </li>
-                                <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Calendario</a>
-                                </li>
-                            </ul>
-                        </li>
+                        
                         <li>
                             <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
                                 <i class="material-icons">layers</i>
@@ -197,19 +177,16 @@ $guidusu=$_SESSION['guidusu'];
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="pages/widgets/cards/basic.html" class=" waves-effect waves-block">Contactos</a>
+                                    <a href="index_contactos.php" class=" waves-effect waves-block">Contactos</a>
                                 </li>
                                 <li>
-                                    <a href="pages/widgets/cards/colored.html" class=" waves-effect waves-block">Llamadas telefónicas</a>
+                                    <a href="index_proyectos.php" class=" waves-effect waves-block">Proyectos</a>
                                 </li>
                                 <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Casos</a>
+                                    <a href="index_categorias.php" class=" waves-effect waves-block">Categorias</a>
                                 </li>
                                 <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Tareas</a>
-                                </li>
-                                <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Negociaciones</a>
+                                    <a href="form_documento.php" class=" waves-effect waves-block">Documentos</a>
                                 </li>
                             </ul>
                         </li>
@@ -220,14 +197,9 @@ $guidusu=$_SESSION['guidusu'];
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="pages/widgets/cards/basic.html" class=" waves-effect waves-block">Usuarios</a>
+                                    <a href="index_usuarios.php" class=" waves-effect waves-block">Usuarios</a>
                                 </li>
-                                <li>
-                                    <a href="pages/widgets/cards/colored.html" class=" waves-effect waves-block">Grupos de usuarios</a>
-                                </li>
-                                <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Suscripciones y pagos</a>
-                                </li>
+                               
                             </ul>
                         </li>
                         <li>
@@ -237,17 +209,9 @@ $guidusu=$_SESSION['guidusu'];
                             </a>
                             <ul class="ml-menu">
                                 <li>
-                                    <a href="pages/ui/alerts.html" class=" waves-effect waves-block">Empresas</a>
+                                    <a href="index_empresas.php" class=" waves-effect waves-block">Empresas</a>
                                 </li>
-                                <li>
-                                    <a href="pages/ui/animations.html" class=" waves-effect waves-block">Tarifas</a>
-                                </li>
-                                <li>
-                                    <a href="pages/ui/badges.html" class=" waves-effect waves-block">Pagos</a>
-                                </li>
-                                <li>
-                                    <a href="pages/ui/badges.html" class=" waves-effect waves-block">Informes</a>
-                                </li>
+                                
 
                             </ul>
                         </li>
