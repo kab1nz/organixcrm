@@ -138,7 +138,7 @@ if(isset($_GET['bim'])) {
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="images/david.jpg" width="48" height="48" alt="User">
+                    <img src="<?php echo $_SESSION['foto'] ?>" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["email"]; ?></div>
@@ -182,7 +182,7 @@ if(isset($_GET['bim'])) {
                                     <a href="index_categorias.php" class=" waves-effect waves-block">Categorias</a>
                                 </li>
                                 <li>
-                                    <a href="form_documento.php" class=" waves-effect waves-block">Documentos</a>
+                                    <a href="index_documentos.php" class=" waves-effect waves-block">Documentos</a>
                                 </li>
                             </ul>
                         </li>

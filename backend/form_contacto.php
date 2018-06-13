@@ -27,6 +27,10 @@ $email=$_REQUEST['idemailcliente'];
 $contra=$_REQUEST['idpasscliente'];
 $permiso=$_REQUEST['permisos'];
 
+        $consupais="select CODIGOISO from paises where nombre='".$paisContacto."'";
+        $resultado=mysqli_query($conexion,$consupais);
+        $mysqlres=mysqli_fetch_row($resultado);
+        $codiso=$mysqlres[0];
 
         //comprobar usuario exisente
         $comprobacion = "select * from CONTACTOS where CIF = '$nif'";
@@ -50,11 +54,11 @@ $permiso=$_REQUEST['permisos'];
         echo "La GUID es = $array1[0]";
             
         //insertar direccion
-        $insertDIRECCION="call INSERT_DIRECCIONES('$array1[0]','$nombre','$direccion','$postal','$ciudad','$provincia','$paisContacto');";    
+        $insertDIRECCION="call INSERT_DIRECCIONES('$array1[0]','$nombre','$direccion','$postal','$ciudad','$provincia','$codiso');";    
         $resultado4=mysqli_query($bd, $insertDIRECCION);
             
         if(!$resultado4){
-            echo "<br>La direccion fallo";
+            echo "<br>La direccion fallo". mysqli_error($bd);
         }else{
             echo "<br>direccion insertada";
         }

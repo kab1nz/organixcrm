@@ -1,13 +1,36 @@
 <?php
- require_once("../bd/conexion.php");
- session_start();
- if(!isset( $_SESSION['nombre'])){
+session_start();
+if(!isset( $_SESSION['nombre'])){
     header("Location: http://localhost/organixcrm/index.php");
 }
- $mysqli= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
-$usu=$_SESSION["usuario"];
-$guidusu=$_SESSION['guidusu'];
+require_once("../bd/conexion.php");
+$bd= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
 
+    if(isset($_FILES['file']['name']) && isset($_FILES['file']['size']) 
+    && isset($_FILES['file']['tmp_name'])){
+   
+
+    $nombrefichero = $_FILES['file']['name'];
+    $tipo = $_FILES['file']['type'];
+    $tamanio = $_FILES['file']['size'];
+    $ruta = $_FILES['file']['tmp_name'];
+    $destino="archivos/".$nombrefichero;
+    }
+if(isset($_POST['enviar'])){
+    if($nombrefichero != ""){
+        if(copy($ruta,$destino)){
+            echo "Exito";
+            $insertdoc= "call insert_documentos('$nombre','$proyecto','$categoria','$destino');";
+            $docmy=mysqli_query($bd,$insertdoc);
+        }else{
+            echo "Error";
+        }
+    }
+    
+}
+if(isset($_POST['volver'])){
+    header("location: indexCliente.php");
+}
 ?>
     <!DOCTYPE html>
     <html>
@@ -43,71 +66,44 @@ $guidusu=$_SESSION['guidusu'];
 
         <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
         <link href="css/themes/all-themes.css" rel="stylesheet" />
+        <script type="text/javascript" src="js/funciones.js"></script>
+
     </head>
 
     <body class="theme-red" style="background: white;">
         <!-- Page Loader -->
         <div class="container">
+            <div class="row">
+                <form action="index_editar_documentos.php?iddoc=<?php echo $id ?>" method="post" name="form">
 
-            <div>
-                <label class="mgtopgrande">Empresas</label>
-            </div>
-            <div class="mgbtngrande">
-                <div class="btn btn-danger btn-cons" onclick="openCrearProyecto();">Nuevo proyecto</div>
-                <div class="btn btn-danger btn-cons">Eliminar proyecto</div>
-            </div>
-            
-           
-           
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="header">
-                        <div class="body">
-                            <div class="table-responsive" style="    margin-top: 10px;">
-                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Nombre</th>
-                                            
-                                        </tr>
-                                        <?php
-                                $empresas='select NOMBRE,GUID from PROYECTOS';
-                                $result = mysqli_query($mysqli, $empresas);
-                                       while($mostrar=mysqli_fetch_array($result)){
-
-                                        ?>
-                                        <tr>
-                                        <td>
-                                            <input type="checkbox" id="<?php echo $mostrar['NOMBRE'] ?>" name="checkProyecto[]" value="checked" />
-                                             <label for="checkbox">Accept</label>
-                                        </td>
-                                            <td>
-                                            <a href="index_editar_proyecto.php?idproyecto=<?php echo $mostrar['GUID'] ?>">
-
-                                            <?php echo $mostrar['NOMBRE'] ?> </a></td>
-                                           
-
-                                        </tr>
-                                        <?php
-                                       }
-                                        ?>
-                                    </thead>
-                                </table>
-
+                        <div class="col-md-11 mgtopgrande">Editar Proyecto</div>
+                        <div class="col-md-1"></div>
+                        <div class="col-md-8 mgtoppeque">
+                            <div class="form-group">
+                                <div class="form-line">
+                                    <input class="form-control" type="text" name="nombreDocumento" placeholder="<?php echo $guidresult[0] ?>">
+                                </div>
                             </div>
                         </div>
+                            <div class="form-group">
+                                <input type="file" name="file" id="file"/>
+                            </div>
+
+
+                        <div class="col-md-12">
+
+                            <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="enviar"s>Guardar</button>
+                            <br>
+                            <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="volver">Volver</button>
+                        </div>
                     </div>
-                </div>
-
-
-
-
-
-
+                </form>
 
             </div>
         </div>
+
+
+
 
         <!-- Jquery Core Js -->
         <script async="" src="https://www.google-analytics.com/analytics.js"></script>
@@ -132,6 +128,8 @@ $guidusu=$_SESSION['guidusu'];
         <script src="plugins/raphael/raphael.min.js"></script>
         <script src="plugins/morrisjs/morris.js"></script>
 
+        <script src="myscript.js"></script>
+
         <!-- ChartJs -->
         <script src="plugins/chartjs/Chart.bundle.js"></script>
 
@@ -149,10 +147,15 @@ $guidusu=$_SESSION['guidusu'];
         <script src="js/admin.js"></script>
         <script src="js/pages/index.js"></script>
 
+
         <!-- Demo Js -->
         <script src="js/demo.js"></script>
-        <script src="myscript.js"></script>
         <script src="js/querylista.js"></script>
+
+        <?php
+            mysqli_close($conexion);
+        ?>
+
 
 
     </body>

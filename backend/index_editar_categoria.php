@@ -1,17 +1,42 @@
 <?php
- require_once("../bd/conexion.php");
- session_start();
- if(!isset( $_SESSION['nombre'])){
+session_start();
+if(!isset( $_SESSION['nombre'])){
     header("Location: http://localhost/organixcrm/index.php");
 }
- $mysqli= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
 $usu=$_SESSION["usuario"];
-$guidusu=$_SESSION['guidusu'];
+
+require_once("../bd/conexion.php");
+$bd= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
+
+
+if(isset($_REQUEST['nombreCategoria'])){
+    
+//Recogida Datos
+$nombre=$_REQUEST['nombreCategoria'];
+
+    
+   
+
+
+       
+}
+
+if(isset($_POST['guardarCategoria'])){
+    $proyecto = $_GET['idcategoria'];
+    $guidpro = "select nombre from categorias where NOMBRE='$proyecto'";
+    $resultado1 = mysqli_query($bd,$guidpro);
+    $guidresult=mysqli_fetch_row($resultado1);
+    
+    if($categoria)
+    $insertarPRO="call UPDATE_CATEGORIAS('$proyecto','$nombre');";
+
+    $resultado=mysqli_query($bd, $insertarPRO);
+
+}
 
 ?>
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html>
-
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
@@ -43,71 +68,42 @@ $guidusu=$_SESSION['guidusu'];
 
         <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
         <link href="css/themes/all-themes.css" rel="stylesheet" />
+        <script type="text/javascript" src="js/funciones.js"></script>
+     
     </head>
 
     <body class="theme-red" style="background: white;">
         <!-- Page Loader -->
         <div class="container">
-
-            <div>
-                <label class="mgtopgrande">Empresas</label>
-            </div>
-            <div class="mgbtngrande">
-                <div class="btn btn-danger btn-cons" onclick="openCrearProyecto();">Nuevo proyecto</div>
-                <div class="btn btn-danger btn-cons">Eliminar proyecto</div>
-            </div>
-            
+            <div class="row">
+            <form action="index_editar_proyecto.php?idproyecto=<?php echo $id ?>" method="post" name="form">
            
-           
-            <div class="row clearfix">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <div class="header">
-                        <div class="body">
-                            <div class="table-responsive" style="    margin-top: 10px;">
-                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Nombre</th>
-                                            
-                                        </tr>
-                                        <?php
-                                $empresas='select NOMBRE,GUID from PROYECTOS';
-                                $result = mysqli_query($mysqli, $empresas);
-                                       while($mostrar=mysqli_fetch_array($result)){
-
-                                        ?>
-                                        <tr>
-                                        <td>
-                                            <input type="checkbox" id="<?php echo $mostrar['NOMBRE'] ?>" name="checkProyecto[]" value="checked" />
-                                             <label for="checkbox">Accept</label>
-                                        </td>
-                                            <td>
-                                            <a href="index_editar_proyecto.php?idproyecto=<?php echo $mostrar['GUID'] ?>">
-
-                                            <?php echo $mostrar['NOMBRE'] ?> </a></td>
-                                           
-
-                                        </tr>
-                                        <?php
-                                       }
-                                        ?>
-                                    </thead>
-                                </table>
-
+                <div class="col-md-12">
+                    <div class="col-md-11 mgtopgrande">Editar Proyecto</div>
+                    <div class="col-md-1"></div>
+                    <div class="col-md-8 mgtoppeque">
+                        <div class="form-group">
+                            <div class="form-line">
+                                <input class="form-control" type="text" name="nombreProyecto" placeholder="NOMBRE">
                             </div>
                         </div>
                     </div>
+             
+                    
+                    <div class="col-md-12">
+
+                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="submit"onclick="valida_enviaContactos()">Guardar</button>
+                        <br>
+                         <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="volver">Volver</button>
+                    </div>
                 </div>
+                    </form>
 
-
-
-
-
-
-
+                </div>
             </div>
-        </div>
+
+
+        
 
         <!-- Jquery Core Js -->
         <script async="" src="https://www.google-analytics.com/analytics.js"></script>
@@ -132,6 +128,8 @@ $guidusu=$_SESSION['guidusu'];
         <script src="plugins/raphael/raphael.min.js"></script>
         <script src="plugins/morrisjs/morris.js"></script>
 
+        <script src="myscript.js"></script>
+
         <!-- ChartJs -->
         <script src="plugins/chartjs/Chart.bundle.js"></script>
 
@@ -148,12 +146,17 @@ $guidusu=$_SESSION['guidusu'];
         <!-- Custom Js -->
         <script src="js/admin.js"></script>
         <script src="js/pages/index.js"></script>
+        
 
         <!-- Demo Js -->
         <script src="js/demo.js"></script>
-        <script src="myscript.js"></script>
         <script src="js/querylista.js"></script>
 
+                <?php
+            mysqli_close($conexion);
+        ?>
+
+        
 
     </body>
 

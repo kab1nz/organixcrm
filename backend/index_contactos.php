@@ -17,7 +17,7 @@ if(isset($_GET['bim'])) {
   header("Location: http://localhost/organixcrm/backend/index_contactos.php");
 
 }
-   
+
 ?>
 
 <!DOCTYPE html>
@@ -152,13 +152,13 @@ if(isset($_GET['bim'])) {
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="images/david.jpg" width="48" height="48" alt="User">
+                    <img src="<?php echo $_SESSION["foto"]; ?>" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["email"]; ?></div>
                     <div class="email"><?php echo $_SESSION["email"]; ?></div>
                     <div class="btn-group user-helper-dropdown">
-                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float : right;">keyboard_arrow_down</i>
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float:right;">keyboard_arrow_down</i>
                         <ul class="dropdown-menu pull-right">
                             <li><a href="index_home_perfil.php" class=" waves-effect waves-block"><i class="material-icons">person</i>Perfil</a></li>
                           
@@ -195,7 +195,9 @@ if(isset($_GET['bim'])) {
                                 <li>
                                     <a href="index_categorias.php" class=" waves-effect waves-block">Categorias</a>
                                 </li>
-                               
+                                <li>
+                                    <a href="form_documento.php" class=" waves-effect waves-block">Documentos</a>
+                                </li>
                             </ul>
                         </li>
                         <li>
@@ -229,104 +231,6 @@ if(isset($_GET['bim'])) {
                     <div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
                 </div>
             </div>
-            <!-- #User Info -->
-            <!-- Menu -->
-            <div class="menu">
-                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 517px;">
-                    <ul class="list" style="overflow: hidden; width: auto; height: 517px;">
-                        <li class="header">MAIN NAVIGATION</li>
-                        <li class="active">
-                            <a href="index_backend.php" class="toggled waves-effect waves-block">
-                                <i class="material-icons">home</i>
-                                <span>Inicio</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
-                                <i class="material-icons">event</i>
-                                <span>Mis Cosas</span>
-                            </a>
-                            <ul class="ml-menu">
-                                <li>
-                                    <a href="pages/widgets/cards/basic.html" class=" waves-effect waves-block">Alertas</a>
-                                </li>
-                                <li>
-                                    <a href="pages/widgets/cards/colored.html" class=" waves-effect waves-block">Notas</a>
-                                </li>
-                                <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Calendario</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
-                                <i class="material-icons">layers</i>
-                                <span>CRM</span>
-                            </a>
-                            <ul class="ml-menu">
-                                <li>
-                                    <a href="index_contactos.php" class=" waves-effect waves-block">Contactos</a>
-                                </li>
-                                <li>
-                                    <a href="pages/widgets/cards/colored.html" class=" waves-effect waves-block">Llamadas telefónicas</a>
-                                </li>
-                                <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Casos</a>
-                                </li>
-                                <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Tareas</a>
-                                </li>
-                                <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Negociaciones</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
-                                <i class="material-icons">widgets</i>
-                                <span>Configuración</span>
-                            </a>
-                            <ul class="ml-menu">
-                                <li>
-                                    <a href="pages/widgets/cards/basic.html" class=" waves-effect waves-block">Usuarios</a>
-                                </li>
-                                <li>
-                                    <a href="pages/widgets/cards/colored.html" class=" waves-effect waves-block">Grupos de usuarios</a>
-                                </li>
-                                <li>
-                                    <a href="pages/widgets/cards/no-header.html" class=" waves-effect waves-block">Suscripciones y pagos</a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
-                                <i class="material-icons">swap_calls</i>
-                                <span>Administración</span>
-                            </a>
-                            <ul class="ml-menu">
-                                <li>
-                                    <a href="pages/ui/alerts.html" class=" waves-effect waves-block">Empresas</a>
-                                </li>
-                                <li>
-                                    <a href="pages/ui/animations.html" class=" waves-effect waves-block">Tarifas</a>
-                                </li>
-                                <li>
-                                    <a href="pages/ui/badges.html" class=" waves-effect waves-block">Pagos</a>
-                                </li>
-                                <li>
-                                    <a href="pages/ui/badges.html" class=" waves-effect waves-block">Informes</a>
-                                </li>
-
-                            </ul>
-                        </li>
-
-                    </ul>
-                    <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 0px; z-index: 99; right: 1px; height: 517px;"></div>
-                    <div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-                </div>
-            </div>
-
-            <!-- #Menu -->
             <!-- Footer -->
             <div class="legal">
                 <div class="copyright">
@@ -339,76 +243,7 @@ if(isset($_GET['bim'])) {
             <!-- #Footer -->
         </aside>
         <!-- #END# Left Sidebar -->
-        <!-- Right Sidebar -->
-        <aside id="rightsidebar" class="right-sidebar">
-            <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                <li role="presentation" class="active"><a href="#skins" data-toggle="tab">SKINS</a></li>
-                <li role="presentation"><a href="#settings" data-toggle="tab">SETTINGS</a></li>
-            </ul>
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active in active" id="skins">
-                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 256px;">
-
-                        <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 6px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px; height: 72.8178px;"></div>
-                        <div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="settings">
-                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 256px;">
-                        <div class="demo-settings" style="overflow: hidden; width: auto; height: 256px;">
-                            <p>GENERAL SETTINGS</p>
-                            <ul class="setting-list">
-                                <li>
-                                    <span>Report Panel Usage</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Email Redirect</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox"><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <p>SYSTEM SETTINGS</p>
-                            <ul class="setting-list">
-                                <li>
-                                    <span>Notifications</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Auto Updates</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <p>ACCOUNT SETTINGS</p>
-                            <ul class="setting-list">
-                                <li>
-                                    <span>Offline</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox"><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Location Permission</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 6px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div>
-                        <div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-                    </div>
-                </div>
-            </div>
-        </aside>
-        <!-- #END# Right Sidebar -->
+        
     </section>
     <section class="content">
         <div class="princicontent">
@@ -425,13 +260,21 @@ if(isset($_GET['bim'])) {
                 
                 <?php
                 
-                $sql="select nombre,guid from contactos;";
+                $sql="select nombre,guid,foto from contactos;";
                 if($mysqli->multi_query($sql)){
                     do {
                         
                         if ($resultado = $mysqli->use_result()) {
                             while ($fila = $resultado->fetch_row()) {
                                 $id_contact=$fila[1];
+                                $foto=$fila[2];
+                                if(empty($foto)){
+                                    echo "asdasda";
+                                    $foto="fotos/boy.png";
+                                    $_SESSION['fotocontacto']=$foto;
+                                }else{
+                                $_SESSION['fotocontacto']=$foto;
+                            }
 
                                 echo'<div class="col-md-4" id="'.$id_contact.'">'; 
                                 $_SESSION["contact"]=$id_contact;
@@ -441,7 +284,7 @@ if(isset($_GET['bim'])) {
 
                                             echo'<div class="media-left">';
                                                 echo'<div class="dv-image">';
-                                                    echo'<img src="images/avatar.png" alt="">';
+                                                    echo'<img src="'.$foto.'" alt="">';
                                                 echo'</div>';
                                             echo'</div>';
 

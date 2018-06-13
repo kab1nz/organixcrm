@@ -79,12 +79,22 @@
 
                                         if(md5($contra)==$pass){
                                             
-                                            
+                                            $queryfoto="select foto from usuarios where username ='".$_REQUEST['email']."'";
+                                            $mys=mysqli_query($conexion,$queryfoto);
+                                            $rowfina=mysqli_fetch_row($mys);
+                                            if(empty($rowfina[0])){
+                                                echo "asdasda";
+                                                $rowfina[0]="fotos/boy.png";
+                                                $_SESSION['foto']=$rowfina[0];
+                                            }else{
+                                            $_SESSION['foto']=$rowfina[0];
+                                        }
                                             
                                             mysqli_close($conexion);
                                             $_SESSION["bd"]=$_REQUEST["empresa"];
                                             $_SESSION["email"]=$_REQUEST["email"];
                                             header("location: backend/index_backend.php");
+                                            
 
                                         }else{
                                             echo '<spam class="error">Introduce una contraseña valida</spam>';                    

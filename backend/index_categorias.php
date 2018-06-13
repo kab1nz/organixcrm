@@ -2,6 +2,8 @@
 require_once("../bd/conexion.php");
 
 session_start();
+$mysqli= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
+
 if(!isset( $_SESSION['nombre'])){
     header("Location: http://localhost/organixcrm/index.php");
 }
@@ -56,9 +58,49 @@ $guidusu=$_SESSION['guidusu'];
                 <div class="btn btn-danger btn-cons" onclick="openCrearCategoria();">Nueva Categoria</div>
                 <div class="btn btn-danger btn-cons">Eliminar Categoria</div>
             </div>
-           
-           
-</span></div>
+            <div class="row clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="header">
+                        <div class="body">
+                            <div class="table-responsive" style="    margin-top: 10px;">
+                                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Nombre</th>
+                                            
+                                        </tr>
+                                        <?php
+                                $categorias='select NOMBRE,GUID from categoria';
+                                $result = mysqli_query($mysqli, $categorias);
+                                       while($mostrar=mysqli_fetch_array($result)){
+
+                                        ?>
+                                        <tr>
+                                        <td>
+                                            <input type="checkbox" id="<?php echo $mostrar['NOMBRE'] ?>" name="checkCategoria[]" value="checked" />
+                                             <label for="checkbox">Accept</label>
+                                        </td>
+                                            <td>
+                                            <a href="index_editar_categoria.php?idcategoria=<?php echo $mostrar['GUID'] ?>">
+
+                                            <?php echo $mostrar['NOMBRE'] ?> </a></td>
+                                           
+
+                                        </tr>
+                                        <?php
+                                       }
+                                        ?>
+                                    </thead>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+        </div>
 
 
 
@@ -67,7 +109,7 @@ $guidusu=$_SESSION['guidusu'];
 
 
 
-            </div>
+        </div>
         </div>
 
         <!-- Jquery Core Js -->
