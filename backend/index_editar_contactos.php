@@ -15,6 +15,13 @@
     }
     $row=mysqli_fetch_array($result);
  
+    $queryfoto="select foto from contacto_usuario where IDCONTACTO='".$usu."'";
+    $mys=mysqli_query($mysqli,$queryfoto);
+    $rowfina=mysqli_fetch_row($mys);
+    if(empty($rowfina[0])){
+        $rowfina[0]="fotos/boy.png";
+    }
+
     $select="select username from contacto_usuario where idcontacto='".$usu."'";
     $query=mysqli_query($mysqli,$select);
     $row=mysqli_fetch_row($query);
@@ -59,8 +66,34 @@ if(isset($_POST['submit1'])) {
             }
         }
     }
-   
+    if(isset($_FILES['file']['tmp_name'])){
+        echo "foto asdasdasd";
 
+    $tmp_name = $_FILES['file']['tmp_name'];
+    //si hemos enviado un directorio que existe realmente y hemos subido el archivo    
+   
+        $img_file = $_FILES['file']['name'];
+        $img_type = $_FILES['file']['type'];
+        echo 1;
+        // Si se trata de una imagen   
+        if (((strpos($img_type, "gif") || strpos($img_type, "jpeg") ||
+ strpos($img_type, "jpg")) || strpos($img_type, "png")))
+        {
+            
+            //¿Tenemos permisos para subir la imágen?
+           if(move_uploaded_file($tmp_name, "fotos" . '/' . $img_file)){
+               echo "foto subida";
+            $destino="fotos/".$img_file;
+            $update1 = "update contacto_usuario set foto='$destino' where IDCONTACTO='$usu';";
+            $resultadox=mysqli_query($mysqli, $update1);
+           }else{
+               echo "foto no subida";
+           }
+           
+        }
+    
+    }
+  
 
 }
 ?>
@@ -195,7 +228,7 @@ if(isset($_POST['submit1'])) {
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="images/david.jpg" width="48" height="48" alt="User">
+                    <img src="<?php echo $rowfina[0] ?>" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["email"]; ?></div>
@@ -358,7 +391,7 @@ if(isset($_POST['submit1'])) {
         <!-- #END# Right Sidebar -->
     </section>
     <section class="content">
-    <form action="index_editar_contactos.php?id=<?php echo $_SESSION['contact']?>" method="post">
+    <form action="index_editar_contactos.php?id=<?php echo $_SESSION['contact']?>" method="post" enctype="multipart/form-data">
         <div class="princicontent">
             <div class="col-lg-4 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
             </div>
@@ -373,7 +406,7 @@ if(isset($_POST['submit1'])) {
             </div>
             <div class="tablaperfil">
                 <div class="col-lg-2">
-                    <img src="images/david.jpg" width="160px" class="preview">
+                    <img src="<?php echo $rowfina[0]; ?>" width="160px" class="preview">
                 </div>
                 <div class="col-lg-10">
                     <div class="flexcolumn">
@@ -435,7 +468,7 @@ if(isset($_POST['submit1'])) {
 
                                         </select>
                             </div>
-                            <div class="col-lg-12" style="margin-bottom: 150px;margin-top: 13px;">Permisos
+                            <div class="col-lg-12" style="margin-bottom: 15px;margin-top: 13px;">Permisos
                             <select class="form-control show-tick" style="margin-top: 12px;" name="permisos">
                                     <optgroup label="Nivel de Permisos">
                                         <option value="3">Lectura</option>  
@@ -445,6 +478,11 @@ if(isset($_POST['submit1'])) {
 
                             </select>
                             </div>
+                            <div class="col-md-6 " style="margin-top:13px;margin-botton:13px;">
+                            <div class="form-group">
+                                <input type="file" name="file" />
+                            </div>
+                        </div>
                         </div>
 
                     </div>
