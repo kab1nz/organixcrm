@@ -34,7 +34,7 @@ if(!isset($_SESSION['autentificado'])){
             $pass=trim($_POST['contra']);
             $empresa=trim($_POST['empresa']);
 
-            $comprobacion = "select * from USUARIOS where USERNAME = '$usuario'";
+            $comprobacion = "select * from usuarios where USERNAME = '$usuario'";
             $resultado=mysqli_query($conexion,$comprobacion);
             $cont= mysqli_num_rows($resultado);
 
@@ -43,7 +43,7 @@ if(!isset($_SESSION['autentificado'])){
             }else{
                    
                 
-                $comprobacion2 = "select * from EMPRESAS where NOMBREFISCAL = '$empresa'";
+                $comprobacion2 = "select * from empresas where NOMBREFISCAL = '$empresa'";
                 $resultado2=mysqli_query($conexion,$comprobacion2);
                 $cont2= mysqli_num_rows($resultado2);
                 
@@ -59,7 +59,7 @@ if(!isset($_SESSION['autentificado'])){
                     mysqli_free_result($resultado3); //Libera la memoria asociada al resultado.
 
                     //insercion de empresa
-                    $insertarEMP="INSERT INTO EMPRESAS(NOMBREFISCAL, NOMBRECOMERCIAL, ALIASCRM, FECHADECREACION) VALUES ('$empresa','$empresa','$empresa',NOW());";
+                    $insertarEMP="call INSERT_EMPRESAS('$empresa')";
                     $resultado4=mysqli_query($conexion, $insertarEMP);           
                     mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
 
@@ -83,7 +83,7 @@ if(!isset($_SESSION['autentificado'])){
 
 
                     //insercion relacion usuario empresa
-                    $aux="INSERT INTO USU_EMPR VALUES((select GUID from USUARIOS where USERNAME='$usuario'),(select GUID from EMPRESAS where NOMBREFISCAL='$empresa'),3)"; 
+                    $aux="INSERT INTO usu_empr VALUES((select GUID from usuarios where USERNAME='$usuario'),(select GUID from empresas where NOMBREFISCAL='$empresa'),3)"; 
                     $resultado5=mysqli_query($conexion, $aux);
                     mysqli_close($conexion);
 
