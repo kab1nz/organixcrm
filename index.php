@@ -60,7 +60,7 @@ if(!isset($_SESSION['autentificado'])){
                         echo "Error al insertar usuario";
                     }
                     //insercion de empresa
-                    $insertarEMP="INSERT INTO EMPRESAS(NOMBREFISCAL, NOMBRECOMERCIAL, ALIASCRM, FECHADECREACION) VALUES ('$empresa','$empresa','$empresa',NOW());";
+                    $insertarEMP="call INSERT_EMPRESAS('$empresa')";
                     $resultado4=mysqli_query($conexion, $insertarEMP);           
                     mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
                     if(!$resultado4){
@@ -91,7 +91,7 @@ if(!isset($_SESSION['autentificado'])){
 
 
                     //insercion relacion usuario empresa
-                    $aux="INSERT INTO USU_EMPR VALUES((select GUID from USUARIOS where USERNAME='$usuario'),(select GUID from EMPRESAS where NOMBREFISCAL='$empresa'),3)"; 
+                    $aux="INSERT INTO usu_empr VALUES((select GUID from usuarios where USERNAME='$usuario'),(select GUID from empresas where NOMBREFISCAL='$empresa'),3)"; 
                     $resultado5=mysqli_query($conexion, $aux);
                     mysqli_close($conexion);
 
