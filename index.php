@@ -34,7 +34,7 @@ if(!isset($_SESSION['autentificado'])){
             $pass=trim($_POST['contra']);
             $empresa=trim($_POST['empresa']);
 
-            $comprobacion = "select * from USUARIOS where USERNAME = '$usuario'";
+            $comprobacion = "select * from usuarios where USERNAME = '$usuario'";
             $resultado=mysqli_query($conexion,$comprobacion);
             $cont= mysqli_num_rows($resultado);
 
@@ -43,7 +43,7 @@ if(!isset($_SESSION['autentificado'])){
             }else{
                    
                 
-                $comprobacion2 = "select * from EMPRESAS where NOMBREFISCAL = '$empresa'";
+                $comprobacion2 = "select * from empresas where NOMBREFISCAL = '$empresa'";
                 $resultado2=mysqli_query($conexion,$comprobacion2);
                 $cont2= mysqli_num_rows($resultado2);
                 
@@ -53,21 +53,29 @@ if(!isset($_SESSION['autentificado'])){
                    
 
                     //insercion del usuario
-                    $insertarUSU="call INSERT_USUARIO('$usuario','$nombre','$pass')";
+                    $insertarUSU="call insert_usuario('$usuario','$nombre','$pass')";
                     $resultado3 = mysqli_query($conexion, $insertarUSU);       
                     mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
-                    mysqli_free_result($resultado3); //Libera la memoria asociada al resultado.
-
+                    if(!$resultado3){
+                        echo "Error al insertar usuario";
+                    }
                     //insercion de empresa
                     $insertarEMP="INSERT INTO EMPRESAS(NOMBREFISCAL, NOMBRECOMERCIAL, ALIASCRM, FECHADECREACION) VALUES ('$empresa','$empresa','$empresa',NOW());";
                     $resultado4=mysqli_query($conexion, $insertarEMP);           
                     mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
+                    if(!$resultado4){
+                        echo "Error al insertar empresa";
+                    }
 
                     
                     //creacion BD emresa
                     $resultadoaux=mysqli_query($conexion,"select BDEMPRESA from empresas where ALIASCRM='$empresa'");
+                    if(!$resultadoaux){
+                        echo "Error al mostrar nbd";
+                    }
                     $intent= mysqli_fetch_row($resultadoaux);
                     $numbd= $intent[0];
+                    echo "Numero de empresa:_".$numbd;
                      
                     mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
                     mysqli_free_result($resultadoaux);

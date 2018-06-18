@@ -9,23 +9,20 @@ $bd= new mysqli("localhost","root","root", $_SESSION['idcli']);
 $usu=$_SESSION["usuario"];
 $idcategoria=$_GET['idcategoria'];
 $cate=$idcategoria;
-/*
+$file=$_GET['file'];
+
 $nombre=explode('/',$file);
 echo $nombre[0]."<br>";
 echo $nombre[1];
-$rutaf="../backend/archivos/".$nombre[1];
+$rutaf="../backend/archivos/".$nombre[0];
  echo "la ruta es: ".$rutaf;
-if(is_file($rutaf)){
 header('Content-Type: application/force-download');
 header('Content-Disposition: attachment; filename='.$nombre[1]);
 header('Content-Transfer-Encoding: binary');
 header('Content-Length: '.filesize($rutaf));
 readfile($ruta);
-echo "Se ha subido";
-}else{
-   echo "No se ha subido";
-}
-*/
+
+
 ?>
     <!DOCTYPE html>
     <html>
@@ -260,6 +257,7 @@ echo "Se ha subido";
                             while ($fila = $resultado->fetch_row()) {
                                 $id_contact=$fila[1];
                                 $ruta=$fila[2];
+                                echo "La ruta es: -->".$ruta;
                                 
 
                                 echo'<div class="col-md-4" id="'.$id_contact.'">'; 

@@ -62,7 +62,7 @@
 
 
                                 //sacamos al usuario
-                                $sql= 'select GUID from Usuarios where username ="'.$_REQUEST['email'].'"';
+                                $sql= 'select GUID from usuarios where username ="'.$_REQUEST['email'].'"';
                                 $resultado = mysqli_query($conexion, $sql);
                                 $intent= mysqli_fetch_row($resultado);
                                 $cont1= mysqli_num_rows($resultado);
@@ -146,7 +146,7 @@
 
                                         $empresas='select NOMBREFISCAL,GUIDEMPRESA from usu_empr, empresas where GUIDUSUARIO="'.$guidusu.'" and GUIDEMPRESA=GUID';
                                         $query = mysqli_query($conexion, $empresas);
-                                        $sqlnombre = 'select nombre from Usuarios where username ="'.$_REQUEST['email'].'"';
+                                        $sqlnombre = 'select nombre from usuarios where username ="'.$_REQUEST['email'].'"';
                                         $resultado1 = mysqli_query($conexion, $sqlnombre);
                                         $intent1= mysqli_fetch_row($resultado1);
                                         $nombre= $intent1[0];
