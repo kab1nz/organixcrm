@@ -215,7 +215,7 @@ if(isset($_POST['submit'])) {
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >                       
                         <label id="nombreUsu">
-                            <?php echo $usu; ?>
+                        <?php echo $_SESSION["email"]; ?>
                         </label>
                     </div>
                     <div class="email">

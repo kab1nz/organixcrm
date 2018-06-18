@@ -250,7 +250,7 @@ if(isset($_GET['bim'])) {
         <div class="col-lg-2 flexstart"> <a href="index_backend.php"><i class="material-icons">ic_keyboard_backspace</i></a>
             </div>
             <div class="col-lg-7 flexcenter">Contactos</div>
-            <div class="col-lg-2 flexend "> <a href="form_contacto.php"><label><i class="material-icons">ic_save</i><span>Nuevo Contacto</span></label></a>
+            <div class="col-lg-2 flexend "> <a href="form_contacto.php"><label><span>Nuevo Contacto</span></label><i class="material-icons">ic_save</i></a>
             </div>
             <div class="tablaperfil">
                 
@@ -283,7 +283,7 @@ if(isset($_GET['bim'])) {
 
                                             echo'<div class="media-left">';
                                               
-                                                    echo'<img src="'.$foto.'" style="margin-left: 176px;">';
+                                                    echo'<img src="'.$foto.'" style="margin-left: 143px;    width: 100px;">';
                                               
                                             echo'</div>';
 
