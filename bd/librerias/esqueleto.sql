@@ -329,18 +329,20 @@ BEGIN
 insert into contactos (NOMBRE,TIPO,CIF)values(nombre,"f06ccb7e-5ce2-11e8-94d5-f8a9638b2565",cif);   
 END;
 -- DELIMITADOR
-CREATE PROCEDURE `insert_contacto_usuario`(username varchar(100),asociado char(36), habilitado tinyint(4), permisos int(11))
+CREATE PROCEDURE `insert_contacto_usuario`(username varchar(100),asociado char(36), habilitado tinyint(4), permisos int(11), contra varchar(80))
 BEGIN
   declare id char(36);
   declare sem1 varchar(3);
   declare sem2 varchar(3);
   declare semi varchar(12);
   declare aux varchar(80);
+
+
     
   set sem1 =substring(rand(),-3);
   set sem2 =substring(rand(),-3);
     set id= uuid();
-    SET aux = concat(sem1, md5(pass) , sem2);
+    SET aux = concat(sem1, md5(contra) , sem2);
   set semi = concat(sem1 , sem2);
     
     insert into contacto_usuario (GUID, USERNAME, IDCONTACTO, HABILITADO, PERMISOS) values(id, username, asociado ,habilitado, permisos);
