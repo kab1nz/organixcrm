@@ -324,7 +324,7 @@ BEGIN
     END IF;
 END;
 -- DELIMITADOR
-CREATE PROCEDURE `insert_contacto`(nombre varchar(80), tipoC varchar(40))
+CREATE PROCEDURE `insert_contacto`(nombre varchar(80), cif varchar(40))
 BEGIN
 insert into contactos (NOMBRE,TIPO,CIF)values(nombre,"f06ccb7e-5ce2-11e8-94d5-f8a9638b2565",cif);   
 END;
