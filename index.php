@@ -53,21 +53,29 @@ if(!isset($_SESSION['autentificado'])){
                    
 
                     //insercion del usuario
-                    $insertarUSU="call INSERT_USUARIO('$usuario','$nombre','$pass')";
+                    $insertarUSU="call insert_usuario('$usuario','$nombre','$pass')";
                     $resultado3 = mysqli_query($conexion, $insertarUSU);       
                     mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
-                    mysqli_free_result($resultado3); //Libera la memoria asociada al resultado.
-
+                    if(!$resultado3){
+                        echo "Error al insertar usuario";
+                    }
                     //insercion de empresa
                     $insertarEMP="call INSERT_EMPRESAS('$empresa')";
                     $resultado4=mysqli_query($conexion, $insertarEMP);           
                     mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
+                    if(!$resultado4){
+                        echo "Error al insertar empresa";
+                    }
 
                     
                     //creacion BD emresa
                     $resultadoaux=mysqli_query($conexion,"select BDEMPRESA from empresas where ALIASCRM='$empresa'");
+                    if(!$resultadoaux){
+                        echo "Error al mostrar nbd";
+                    }
                     $intent= mysqli_fetch_row($resultadoaux);
                     $numbd= $intent[0];
+                    echo "Numero de empresa:_".$numbd;
                      
                     mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada 
                     mysqli_free_result($resultadoaux);

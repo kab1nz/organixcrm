@@ -1,5 +1,5 @@
 <?php
-    $conexion = mysqli_connect("www.iesmurgi.org:3306","admin2018","usuario2018","comun");
+    $conexion = mysqli_connect("localhost","root","root","comun");
     if(!$conexion){
         echo "Error al conectar a la base de datos";
     }else{
