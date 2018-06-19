@@ -390,7 +390,7 @@ BEGIN
     insert into proyectos values(nombre,tipo);
 END;
 -- DELIMITADOR
-CREATE  PROCEDURE `INSERT_TELEFONOS`(tipo int(8), asociado char(36), nom varchar(40), numero varchar(40), tid char(36))
+CREATE  PROCEDURE `INSERT_TELEFONOS`(asociado char(36), nom varchar(40), numero varchar(40))
 BEGIN
     INSERT INTO TELEFONOS(TIPO,IDASOCIADO ,NOMBRE,NUMERO,IDTIPO) VALUES (3, asociado,nom,numero,'7f3be94c-5d9a-11e8-94d5-f8a9638b2565'); 
 
