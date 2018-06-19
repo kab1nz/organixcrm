@@ -101,7 +101,7 @@ END;
 
 CREATE TABLE `claves` (
   `GUID` char(36) NOT NULL,
-  `PASSWORD` varchar(80) NOT NULL,
+  `CONTRA` varchar(80) NOT NULL,
   `SEMILLA` varchar(15) DEFAULT NULL,
   PRIMARY KEY (`GUID`)
 );
