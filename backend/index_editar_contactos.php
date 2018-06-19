@@ -15,7 +15,11 @@
     }
     $row=mysqli_fetch_array($result);
  
-    $queryfoto="select foto from contacto_usuario where IDCONTACTO='".$usu."'";
+        $queryidcontacto="select idcontacto from contacto_usuario where guid ='".$usu."'";
+        $mysi=mysqli_query($mysqli,$queryidcontacto);
+        $guidde=mysqli_fetch_row($mysi);
+
+    $queryfoto="select contacto_usuario.foto,nombre from contacto_usuario,contactos where contacto_usuario.idcontacto=contactos.guid and IDCONTACTO='".$guidde[0]."'";
     $mys=mysqli_query($mysqli,$queryfoto);
     $rowfina=mysqli_fetch_row($mys);
     if(empty($rowfina[0])){
@@ -35,7 +39,7 @@ if(isset($_POST['submit1'])) {
     $repecontraN = $_REQUEST['idrepecontrausu'];
     echo "guidusuario".$_SESSION["contact"];
     if(!empty($nombre)){
-    $updatePerfil = "update contactos set nombre='$nombre' where guid='$usu';";
+    $updatePerfil = "update contactos set nombre='$nombre' where guid='$guidde[0]';";
 
     $resultado4=mysqli_query($mysqli, $updatePerfil);  
     echo "El resultado es: ". $resultado4; 
@@ -45,7 +49,7 @@ if(isset($_POST['submit1'])) {
                     }
   
     if(!empty($email)){
-        $updateEmail = "update contacto_usario set username='$email' where guid='$usu';";
+        $updateEmail = "update contacto_usuario set username='$email' where guid='$usu';";
         $resultado5=mysqli_query($mysqli, $updateEmail);
         if(!$resultado5){
             echo "ERROR ACTUALIZAR email contacto-> " . mysqli_error($mysqli);
@@ -59,7 +63,7 @@ if(isset($_POST['submit1'])) {
             $sem=$sem1.$sem2;
             $contrCifra=md5($contraN);
             $contrCiNueva=$sem1.$contrCifra.$sem2;
-            $actu="update claves set contra='$contrCiNueva',semilla='$sem' where guid_pass='$usu'";
+            $actu="update claves set contra='$contrCiNueva',semilla='$sem' where guid='$usu'";
             $resultado6=mysqli_query($mysqli, $actu);
             if(!$resultado6){
                 echo "ERROR ACTUALIZAR contra-> " . mysqli_error($mysqli);
@@ -84,9 +88,9 @@ if(isset($_POST['submit1'])) {
            if(move_uploaded_file($tmp_name, "fotos" . '/' . $img_file)){
                echo "foto subida";
             $destino="fotos/".$img_file;
-            $update1 = "update contacto_usuario set foto='$destino' where IDCONTACTO='$usu';";
+            $update1 = "update contacto_usuario set foto='$destino' where guid='$usu';";
             $resultadox=mysqli_query($mysqli, $update1);
-            $update2 = "update contactos set foto='$destino' where guid='$usu';";
+            $update2 = "update contactos set foto='$destino' where guid='$guidde[0]';";
             $resultadoxx=mysqli_query($mysqli, $update2);
            }else{
                echo "foto no subida";
@@ -230,10 +234,10 @@ if(isset($_POST['submit1'])) {
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="<?php echo $rowfina[0]; ?>" width="48" height="48" alt="User">
+                    <img src="<?php echo $_SESSION['foto']; ?>" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["email"]; ?></div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo  $rowfina[1]; ?></div>
                     <div class="email"><?php echo $_SESSION["email"]; ?></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float:right;">keyboard_arrow_down</i>
@@ -326,7 +330,7 @@ if(isset($_POST['submit1'])) {
     <section class="content">
     <form action="index_editar_contactos.php?id=<?php echo $_SESSION['contact']?>" method="post" enctype="multipart/form-data">
         <div class="princicontent">
-            <div class="col-lg-4 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
+        <div class="col-lg-4 flexstart"> <a href="index_backend.php"><i class="material-icons">ic_keyboard_backspace</i></a>
             </div>
             <div class="col-lg-4 flexcenter">Editar perfíl</div>
             <div class="col-lg-4 flexend">
@@ -345,7 +349,7 @@ if(isset($_POST['submit1'])) {
                     <div class="flexcolumn">
                         <div class="row">
                             <div class="col-lg-5">Nombre
-                                <input type="text" class="form-control" name="idnombrecontacto" id="idnombrecontacto" placeholder="<?php echo  $row[0]; ?>">
+                                <input type="text" class="form-control" name="idnombrecontacto" id="idnombrecontacto" placeholder="<?php echo  $rowfina[1]; ?>">
                             </div>
                             <div class="col-lg-1">*</div>
 
@@ -359,7 +363,7 @@ if(isset($_POST['submit1'])) {
                         <div class="row">
 
                             <div class="col-lg-3">Email
-                            <input type="text" class="form-control" name="idemailcon" id="idemailcon" placeholder="<?php echo $gui; ?>">
+                            <input type="text" class="form-control" name="idemailcon" id="idemailcon" placeholder="<?php echo $_SESSION['email']; ?>">
 
                             </div>
                             <div class="col-lg-1">*</div>

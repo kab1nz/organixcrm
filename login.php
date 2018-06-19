@@ -97,13 +97,13 @@
                                             
 
                                         }else{
-                                            echo '<spam class="error">Introduce una contraseña valida</spam>';                    
+                                            echo '<span class="error">Introduce una contraseña valida</span>';                    
                                         }
                                 
                                 }else{ echo '<span class="error">Introduce un usuario registrado</span>'; } 
 
                         }else{
-                            echo '<spam class="error">Rellena los campos</spam>';        
+                            echo '<span class="error">Rellena los campos</span>';        
                         }
 
 

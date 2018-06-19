@@ -4,7 +4,7 @@ if(!isset( $_SESSION['nombre'])){
     header("Location: http://localhost/organixcrm/index.php");
 }
 require_once("../bd/conexion.php");
-
+    
 ?>
 <!DOCTYPE html>
 <html>
@@ -234,15 +234,15 @@ require_once("../bd/conexion.php");
     </section>
     <section class="content">
         <div class="princicontent">
-        <div class="col-lg-2 flexstart"> <a href="index_backend.php"><i class="material-icons">ic_keyboard_backspace</i></a>
+        <div class="col-lg-4 flexstart"> <a href="index_backend.php"><i class="material-icons">ic_keyboard_backspace</i></a>
             </div>
-            <div class="col-lg-5 flexcenter">Contactos</div>
-            <div class="col-lg-5 flexend "><a href="index_crearUsuarios.php" ><i class="material-icons ">ic_save</i><span class="mr10">Nuevo Usuario</span></a>
+            <div class="col-lg-4 flexcenter">Usuarios</div>
+            <div class="col-lg-4 flexend "><a href="index_crearUsuarios.php" ><i class="material-icons ">ic_save</i><span class="mr10">Nuevo Usuario</span></a>
             </div>
             
                
                 <?php
-                    $sql="select GUID,USERNAME,NOMBRE from usuarios";
+                    $sql="select GUID,USERNAME,NOMBRE,FOTO from usuarios";
                     if($conexion->multi_query($sql)){
                         do{
                             if($resultado= $conexion->use_result()){
@@ -251,10 +251,15 @@ require_once("../bd/conexion.php");
                                     echo'<div class="col-md-4" id="'.$id_usuario.'" style="    margin-bottom: 15px;
                                     margin-top: 15px;">'; 
                                     $_SESSION["usu"]=$id_usuario;
+                                    $queryfoto="select foto from usuarios";
+                                    $foto=$fila[3];
+                                    if(empty($foto)){
+                                        $foto="fotos/boy.png";
+                                    }
                                         echo "<a href=index_editar_usuarios.php?idusuario=$id_usuario>";
                                         echo'<div class="panel-body">';
     
-                                             echo'<img src="images/avatar.png" class="dv-image1">';
+                                             echo'<img src="'.$foto.'" class="dv-image1">';
     
                                                 echo'<div class="dv-data">';
                                                     echo'<div class="dv-data-name">';

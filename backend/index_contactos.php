@@ -260,7 +260,7 @@ if(isset($_GET['bim'])) {
                 
                 <?php
                 
-                $sql="select nombre,guid,foto from contactos;";
+                $sql="select nombre,contacto_usuario.guid,contacto_usuario.foto from contactos,contacto_usuario where contactos.guid=contacto_usuario.idcontacto;";
                 if($mysqli->multi_query($sql)){
                     do {
                         

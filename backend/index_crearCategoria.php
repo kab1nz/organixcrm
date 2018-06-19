@@ -23,16 +23,17 @@ $nombre=$_REQUEST['nombreCategoria'];
 
 if(isset($_POST['guardarCategoria'])){
     $proyecto = $_REQUEST['idproye'];
+    
     $guidpro = "select GUID from proyectos where NOMBRE='$proyecto'";
     $resultado1 = mysqli_query($bd,$guidpro);
     $guidresult=mysqli_fetch_row($resultado1);
-    mysqli_next_result($bd);
+    /*
     $categoria = $_REQUEST['idproca'];
     $guidpro = "select GUID from categoria where NOMBRE='$categoria'";
     $resultado1 = mysqli_query($bd,$guidpro);
     $guidresult1=mysqli_fetch_row($resultado1);
-    if($categoria)
-    $insertarPRO="call INSERT_CATEGORIAS('$nombre','$guidresult[0]','$guidresult1[0]');";
+    */
+    $insertarPRO="call INSERT_CATEGORIAS('$nombre',','$guidresult[0]');";
 
     $resultado=mysqli_query($bd, $insertarPRO);
 
@@ -101,7 +102,7 @@ if(isset($_POST['guardarCategoria'])){
                                             }
                                         ?>    
                                 </select>
-                                <select class="form-control w20" id="idproca" name="idproca" placeholder="Proyecto" required>
+                                <select class="form-control w20" id="idproca" name="idproca" placeholder="Proyecto" >
                                      <option selected disabled value="">Seleccione una Categoria</option>
                                         <?php
                                             

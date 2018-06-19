@@ -48,7 +48,7 @@ $permiso=$_REQUEST['permisos'];
         }
     
         //GUID del contacto
-        $selectGUID="select * from Contactos where CIF='$nif'";
+        $selectGUID="select guid from Contactos where CIF='$nif'";
         $resultado3=mysqli_query($bd, $selectGUID);
         $array1=mysqli_fetch_row($resultado3);
         echo "La GUID es = $array1[0]";

@@ -142,10 +142,10 @@ $guidusu=$_SESSION['guidusu'];
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="<?php echo $rowf[0] ?>" width="48" height="48" alt="User">
+                    <img src="<?php echo $_SESSION['foto'] ?>" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["email"]; ?></div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo  $_SESSION['nombreusuario']; ?></div>
                     <div class="email"><?php echo $_SESSION["email"]; ?></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float:right;">keyboard_arrow_down</i>
@@ -186,7 +186,7 @@ $guidusu=$_SESSION['guidusu'];
                                     <a href="index_categorias.php" class=" waves-effect waves-block">Categorias</a>
                                 </li>
                                 <li>
-                                    <a href="form_documento.php" class=" waves-effect waves-block">Documentos</a>
+                                    <a href="index_documentos.php" class=" waves-effect waves-block">Documentos</a>
                                 </li>
                             </ul>
                         </li>
@@ -221,8 +221,6 @@ $guidusu=$_SESSION['guidusu'];
                     <div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
                 </div>
             </div>
-
-            <!-- #Menu -->
             <!-- Footer -->
             <div class="legal">
                 <div class="copyright">
@@ -235,83 +233,14 @@ $guidusu=$_SESSION['guidusu'];
             <!-- #Footer -->
         </aside>
         <!-- #END# Left Sidebar -->
-        <!-- Right Sidebar -->
-        <aside id="rightsidebar" class="right-sidebar">
-            <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                <li role="presentation" class="active"><a href="#skins" data-toggle="tab">SKINS</a></li>
-                <li role="presentation"><a href="#settings" data-toggle="tab">SETTINGS</a></li>
-            </ul>
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active in active" id="skins">
-                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 256px;">
-
-                        <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 6px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px; height: 72.8178px;"></div>
-                        <div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="settings">
-                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 256px;">
-                        <div class="demo-settings" style="overflow: hidden; width: auto; height: 256px;">
-                            <p>GENERAL SETTINGS</p>
-                            <ul class="setting-list">
-                                <li>
-                                    <span>Report Panel Usage</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Email Redirect</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox"><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <p>SYSTEM SETTINGS</p>
-                            <ul class="setting-list">
-                                <li>
-                                    <span>Notifications</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Auto Updates</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <p>ACCOUNT SETTINGS</p>
-                            <ul class="setting-list">
-                                <li>
-                                    <span>Offline</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox"><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Location Permission</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 6px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div>
-                        <div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-                    </div>
-                </div>
-            </div>
-        </aside>
-        <!-- #END# Right Sidebar -->
+        
     </section>
     <section class="content">
     <div class="container-fluid"></div>
-            <div class="col-lg-2 flexstart"> <a href="index_backend.php"><i class="material-icons">ic_keyboard_backspace</i></a>
+            <div class="col-lg-4 flexstart"> <a href="index_backend.php"><i class="material-icons">ic_keyboard_backspace</i></a>
             </div>
-            <div class="col-lg-5 flexcenter">Empresas</div>
-            <div class="col-lg-5 flexend "><a href="form_empresa.php
+            <div class="col-lg-4 flexcenter">Empresas</div>
+            <div class="col-lg-4 flexend "><a href="form_empresa.php
             "> <i class="material-icons ">ic_save</i><span class="mr10">Nueva Empresa</span></a>
             </div>
             <div class="tablaperfil"> 

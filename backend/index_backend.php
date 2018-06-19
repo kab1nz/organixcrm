@@ -12,6 +12,12 @@ if(isset($_GET['bim'])) {
   header("Location:http://localhost/organixcrm/backend/index_backend.php");
 
 }
+
+    $select="select nombre from usuarios where guid='".$_SESSION['guidusu']."'";
+    $query=mysqli_query($conexion,$select);
+    $row=mysqli_fetch_row($query);
+    $nombre=$row[0];
+    $_SESSION['nombreusuario']=$nombre;
 ?>
 <!DOCTYPE html>
 <html>
@@ -141,7 +147,7 @@ if(isset($_GET['bim'])) {
                     <img src="<?php echo $_SESSION['foto'] ?>" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["email"]; ?></div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $nombre; ?></div>
                     <div class="email"><?php echo $_SESSION["email"]; ?></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
@@ -229,7 +235,7 @@ if(isset($_GET['bim'])) {
             </div>
             <!-- #Footer -->
         </aside>
->
+
 
     
     <!-- Jquery Core Js -->
