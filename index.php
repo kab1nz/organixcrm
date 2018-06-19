@@ -159,36 +159,36 @@ if(!isset($_SESSION['autentificado'])){
 
                     </div>
                     <div class="col-12">
-                        <input type="text" id="namefield" class="sg" name="nombre" id="nombre" placeholder="Full Name" pattern="^[a-z[:space:]]*$" required>
+                        <input type="text" id="namefield" class="sg" name="nombre" id="nombre" placeholder="Nombre Completo" pattern="^[a-z[:space:]]*$" required>
                         <?php
                             if(isset($bnombre) && $bnombre==true){
-                                echo '<spam class="error">Introduce un nombre valido</spam>';                            
+                                echo '<span class="error">Introduce un nombre valido</spam>';                            
                             }
                         ?>
                     </div>
                     <div class="col-12">
-                        <input type="email" class="sg" name="email" name="email" placeholder="Email Address" required>
+                        <input type="email" class="sg" name="email" name="email" placeholder="Dirección Email" required>
                         <?php
                             if($existusuario==true){
-                                echo '<spam class="error">Este email ya esta registrado</spam>';                                
+                                echo '<span class="error">Este email ya esta registrado</span>';                                
                             }
                         ?>
                     </div>
                     <div class="col-12">
-                        <input type="password" class="sg" name="contra" name="contra" placeholder="Password" required>
+                        <input type="password" class="sg" name="contra" name="contra" placeholder="Contrasenia" required>
                         <?php
                             if(isset($bcontra) && $bcontra==true){
-                                echo '<spam class="error">Introduce una contraseña valida</spam>';                            
+                                echo '<span class="error">Introduce una contraseña valida</span>';                            
                             }
                         ?>
                     </div>
                     <div class="col-12">
-                        <input type="text" class="sg" name="empresa" placeholder="Name Business" required>
+                        <input type="text" class="sg" name="empresa" placeholder="Nombre Empresa" required>
                         <?php
                             if(isset($bempresa) && $bempresa==true){
-                                echo '<spam class="error">Introduce un nombre de empresa valido</spam>';                            
+                                echo '<span class="error">Introduce un nombre de empresa valido</span>';                            
                             }elseif($existempresa==true){
-                                echo '<spam class="error">Esta empresa ya esta registrada</spam>';                                
+                                echo '<span class="error">Esta empresa ya esta registrada</span>';                                
                             }else{}
                         ?>
                     </div>
@@ -196,7 +196,7 @@ if(!isset($_SESSION['autentificado'])){
                         <small class="small">By clicking 'Create account', you agree to the</small>
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="btn btn-danger btnfinal" >GET STARTED FREE</button>
+                        <button type="submit" class="btn btn-danger btnfinal" >¡COMIENCE GRATIS!</button>
                         <a href="login.php"><button type="button" class="btn btn-danger btnfinal">LOGIN</button></a>
 
                     </div>
