@@ -113,7 +113,7 @@ function valida_enviaEmpresas() {
     return true;
 
 }
-
+//----------------------------------------------------------------------------------------------------------------------------------
 function validaDocumento() {
     if (document.form.nombreDocumento.value == "") {
         document.form.nombreDocumento.focus();
@@ -124,3 +124,14 @@ function validaDocumento() {
     }
 }
 //----------------------------------------------------------------------------------------------------------------------------------
+
+function validaCategoria(){
+   if (document.form.nombreCategoria.value == "" || document.form.nombreCategoria.value == " ") {
+        alert("Por favor indica una Categoria");
+        document.form.nombreCategoria.focus();
+        return 0;
+    }
+    
+        document.form.submit();
+        return true;
+}

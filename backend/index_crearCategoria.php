@@ -21,22 +21,38 @@ $nombre=$_REQUEST['nombreCategoria'];
        
 }
 
-if(isset($_POST['guardarCategoria'])){
-    $proyecto = $_REQUEST['idproye'];
+if(isset($_REQUEST['idproye'])  && isset($_REQUEST['nombreCategoria'])){
+
     
+    $proyecto = $_REQUEST['idproye'];
     $guidpro = "select GUID from proyectos where NOMBRE='$proyecto'";
+    
+    if(isset($_REQUEST['idproca'])){
+        
+            $categoriapadre=$_REQUEST['idproca'];
+
+    }else{
+        $categoriapadre="null";
+    }
+
     $resultado1 = mysqli_query($bd,$guidpro);
     $guidresult=mysqli_fetch_row($resultado1);
-    /*
-    $categoria = $_REQUEST['idproca'];
-    $guidpro = "select GUID from categoria where NOMBRE='$categoria'";
-    $resultado1 = mysqli_query($bd,$guidpro);
-    $guidresult1=mysqli_fetch_row($resultado1);
-    */
-    $insertarPRO="call INSERT_CATEGORIAS('$nombre',','$guidresult[0]');";
+
+    
+    if($categoriapadre !="null"){
+
+        
+         $insertarPRO="call INSERT_CATEGORIAS('$nombre','$guidresult[0]','$categoriapadre');";
 
     $resultado=mysqli_query($bd, $insertarPRO);
 
+    }else{
+        $insertarPRO="call INSERT_CATEGORIAS('$nombre','$guidresult[0]','');";
+            echo "categoria normal";
+
+        $resultado=mysqli_query($bd, $insertarPRO);
+
+    }
 }
 
 ?>
@@ -102,7 +118,7 @@ if(isset($_POST['guardarCategoria'])){
                                             }
                                         ?>    
                                 </select>
-                                <select class="form-control w20" id="idproca" name="idproca" placeholder="Proyecto" >
+                                <select class="form-control w20" id="idproca" name="idproca" placeholder="Categoria padre" >
                                      <option selected disabled value="">Seleccione una Categoria</option>
                                         <?php
                                             
@@ -110,7 +126,7 @@ if(isset($_POST['guardarCategoria'])){
                                             $query = mysqli_query($bd, $CAT);                                    
                                     
                                              while( $fila = mysqli_fetch_array($query)){
-                                                echo '<option value="'.$fila[0].'">'.$fila[0].'</option>';
+                                                echo '<option value="'.$fila[1].'">'.$fila[0].'</option>';
                                             }
                                         ?>    
                                 </select>
@@ -123,14 +139,14 @@ if(isset($_POST['guardarCategoria'])){
                     </div>
   
                     <div class="col-md-12">
-                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" name="guardarCategoria" type="submit" onclick="valida_envia();">Guardar</button>
+                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" name="guardarCategoria" type="button" onclick="validaCategoria();">Guardar</button>
                         <br>
                     </div>
                 </div>
                     </form>
                     <div class="col-md-12">
                     <div class="col-md-12" style="margin-top:10px;">
-                    <button class="btn btn-block btn-lg bg-red waves-effect cblanco" id="volver"  name="volver ">Volver</button>
+                    <button class="btn btn-block btn-lg bg-red waves-effect cblanco" id="volvercat"  name="volvercat">Volver</button>
                     </div>
                     </div>
                 </div>
@@ -162,6 +178,9 @@ if(isset($_POST['guardarCategoria'])){
         <script src="plugins/morrisjs/morris.js"></script>
 
         <script src="myscript.js"></script>
+        
+        <!-- My Js -->
+        <script type="text/javascript" src="js/funciones.js"></script>
 
         <!-- ChartJs -->
         <script src="plugins/chartjs/Chart.bundle.js"></script>
