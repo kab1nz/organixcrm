@@ -2,7 +2,7 @@
     session_start();
     require_once("bd/conexion.php");
     $_SESSION["usuario"]="";
-    setcookie("logueo",$_SESSION["usuariocli"], time()+3600);
+    setcookie("logueo",$_SESSION["usuario"], time()+3600);
     $usuario="";
     $contra="";
     
