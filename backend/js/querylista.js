@@ -6,3 +6,10 @@ $(".dropdown-menu .menu li").click(function() {
 $("#volver").click(function() {
     window.location = 'http://localhost/organixcrm/backend/index_backend.php';
 });
+
+$("#volverpro").click(function() {
+    window.location = 'http://localhost/organixcrm/backend/index_proyectos.php';
+});
+$("#volvercat").click(function() {
+    window.location = 'http://localhost/organixcrm/backend/index_categorias.php';
+});

@@ -8,6 +8,27 @@
 $usu=$_SESSION["usuario"];
 $guidusu=$_SESSION['guidusu'];
 
+if(isset($_GET['bim'])) {
+    $bim = $_GET['bim'];
+    echo $bim;
+    
+    $aux = explode(",",$bim);
+    
+    for($i=0;$i<count($aux);$i++){
+        $baja = "call delete_proyectos('$aux[$i]');";
+            
+        $resultadoBaja = mysqli_query($mysqli,$baja);
+        
+            if(!$resultadoBaja){
+                echo "<br>Fallo la eliminar proyecto = ". mysqli_error($conexion);
+            }else{
+                echo "<br>Proyecto con GUID -> $aux[$i] ELIMINADO";
+            }
+    }    
+
+
+}
+
 ?>
     <!DOCTYPE html>
     <html>
@@ -54,7 +75,9 @@ $guidusu=$_SESSION['guidusu'];
             </div>
             <div class="mgbtngrande">
                 <div class="btn btn-danger btn-cons" onclick="openCrearProyecto();">Nuevo proyecto</div>
-                <div class="btn btn-danger btn-cons">Eliminar proyecto</div>
+                <div class="btn btn-danger btn-cons" name="bajaProyecto" id="bajaProyecto">Eliminar proyecto</div>
+                <div class="btn btn-danger btn-cons" name="volver" id="volver">Volver</div>
+
             </div>
             
            
@@ -74,13 +97,15 @@ $guidusu=$_SESSION['guidusu'];
                                         <?php
                                 $empresas='select NOMBRE,GUID from PROYECTOS';
                                 $result = mysqli_query($mysqli, $empresas);
+                                        $cont=0;
+
                                        while($mostrar=mysqli_fetch_array($result)){
 
                                         ?>
                                         <tr>
                                         <td>
-                                            <input type="checkbox" id="<?php echo $mostrar['NOMBRE'] ?>" name="checkProyecto[]" value="checked" />
-                                             <label for="checkbox">Accept</label>
+                                             <input type="checkbox" id="<?php echo $mostrar['GUID']; ?>" name="checkProyecto_<?php echo $cont;?>" value="<?php echo $mostrar['NOMBRE'] ?>"/>
+                                             <label for="<?php echo $mostrar['GUID'] ?>">Accept</label>
                                         </td>
                                             <td>
                                             <a href="index_editar_proyecto.php?idproyecto=<?php echo $mostrar['GUID'] ?>">
@@ -90,6 +115,7 @@ $guidusu=$_SESSION['guidusu'];
 
                                         </tr>
                                         <?php
+                                        $cont++;    
                                        }
                                         ?>
                                     </thead>
@@ -112,6 +138,9 @@ $guidusu=$_SESSION['guidusu'];
         <!-- Jquery Core Js -->
         <script async="" src="https://www.google-analytics.com/analytics.js"></script>
         <script src="plugins/jquery/jquery.min.js"></script>
+        
+        <!-- My Script -->
+        <script src="js/JSfunciones.js"></script>
 
         <!-- Bootstrap Core Js -->
         <script src="plugins/bootstrap/js/bootstrap.js"></script>

@@ -89,7 +89,7 @@ if(isset($_POST['guardarProyecto'])){
                     </form>
                     <div class="col-md-12">
                     <div class="col-md-12" style="margin-top:10px;">
-                    <button class="btn btn-block btn-lg bg-red waves-effect cblanco" id="volver"  name="volver ">Volver</button>
+                    <button class="btn btn-block btn-lg bg-red waves-effect cblanco" id="volverpro"  name="volverpro ">Volver</button>
                     </div>
                     </div>
                 </div>

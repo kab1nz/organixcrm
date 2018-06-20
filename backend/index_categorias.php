@@ -7,8 +7,30 @@ $mysqli= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
 if(!isset( $_SESSION['nombre'])){
     header("Location: http://localhost/organixcrm/index.php");
 }
+
 $usu=$_SESSION["usuario"];
 $guidusu=$_SESSION['guidusu'];
+
+if(isset($_GET['bim'])) {
+    $bim = $_GET['bim'];
+    echo $bim;
+    
+    $aux = explode(",",$bim);
+    
+    for($i=0;$i<count($aux);$i++){
+        $baja = "select delete_categoria('$aux[$i]');";
+            
+        $resultadoBaja = mysqli_query($mysqli,$baja);
+        
+            if(!$resultadoBaja){
+                echo "<br>Fallo la baja de empresa = ". mysqli_error($conexion);
+            }else{
+                echo "<br>Empresa con GUID -> $aux[$i] dada de BAJA";
+            }
+    }    
+
+
+}
 
 ?>
     <!DOCTYPE html>
@@ -56,7 +78,8 @@ $guidusu=$_SESSION['guidusu'];
             </div>
             <div class="mgbtngrande">
                 <div class="btn btn-danger btn-cons" onclick="openCrearCategoria();">Nueva Categoria</div>
-                <div class="btn btn-danger btn-cons">Eliminar Categoria</div>
+                <div class="btn btn-danger btn-cons" name="eliminarCategoria" id="eliminarCategoria">Eliminar Categoria</div>
+                <div class="btn btn-danger btn-cons" name="volver" id="volver">Volver</div>
             </div>
             <div class="row clearfix">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -73,13 +96,14 @@ $guidusu=$_SESSION['guidusu'];
                                         <?php
                                 $categorias='select NOMBRE,GUID from categoria';
                                 $result = mysqli_query($mysqli, $categorias);
+                                        $cont=0;
                                        while($mostrar=mysqli_fetch_array($result)){
 
                                         ?>
                                         <tr>
                                         <td>
-                                            <input type="checkbox" id="<?php echo $mostrar['NOMBRE'] ?>" name="checkCategoria[]" value="checked" />
-                                             <label for="checkbox">Accept</label>
+                                            <input type="checkbox" id="<?php echo $mostrar['GUID']; ?>" name="checkCategoria_<?php echo $cont;?>" value="<?php echo $mostrar['NOMBRE'] ?>"/>
+                                             <label for="<?php echo $mostrar['GUID'] ?>">Accept</label>
                                         </td>
                                             <td>
                                             <a href="index_editar_categoria.php?idcategoria=<?php echo $mostrar['GUID'] ?>">
@@ -89,6 +113,7 @@ $guidusu=$_SESSION['guidusu'];
 
                                         </tr>
                                         <?php
+                                        $cont++;    
                                        }
                                         ?>
                                     </thead>
@@ -115,6 +140,9 @@ $guidusu=$_SESSION['guidusu'];
         <!-- Jquery Core Js -->
         <script async="" src="https://www.google-analytics.com/analytics.js"></script>
         <script src="plugins/jquery/jquery.min.js"></script>
+        
+        <!-- My Script -->
+        <script src="js/JSfunciones.js"></script>
 
         <!-- Bootstrap Core Js -->
         <script src="plugins/bootstrap/js/bootstrap.js"></script>

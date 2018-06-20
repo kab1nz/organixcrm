@@ -93,7 +93,8 @@ if(!isset($_SESSION['autentificado'])){
                     //insercion relacion usuario empresa
                     $aux="INSERT INTO usu_empr VALUES((select GUID from usuarios where USERNAME='$usuario'),(select GUID from empresas where NOMBREFISCAL='$empresa'),3)"; 
                     $resultado5=mysqli_query($conexion, $aux);
-                    mysqli_close($conexion);
+                    mysqli_next_result($conexion); //Prepara el siguiente juego de resultados de una llamada                   
+
                     
                     //insercion de direccion de empresa    
                     $insertdire = "call INSERT_DIRECCIONES((select GUID from empresas where NOMBREFISCAL='$empresa'),2,'$empresa','Sin Especificar',' ','Sin Especificar','Sin Especificar',' ');";
