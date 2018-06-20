@@ -87,6 +87,7 @@ if(isset($_GET['bim'])) {
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars" style="display: none;"></a>
                 <a class="navbar-brand" href="index_backend.php">Organix Crm</a>
+                <?php echo 'numero bd-->'.$_SESSION['bd'] ?>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-left" style="    margin-left: 143px;">

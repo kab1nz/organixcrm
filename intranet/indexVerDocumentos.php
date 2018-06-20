@@ -12,15 +12,20 @@ $cate=$idcategoria;
 $file=$_GET['file'];
 
 $nombre=explode('/',$file);
-echo $nombre[0]."<br>";
-echo $nombre[1];
-$rutaf="../backend/archivos/".$nombre[0];
- echo "la ruta es: ".$rutaf;
+echo "Nombre directorio--> ".$nombre[1];
+$rutaf="../backend/archivos/".$nombre[1];
+
+if(is_file($rutaf)){
+    echo "hemos entrado";
+
 header('Content-Type: application/force-download');
 header('Content-Disposition: attachment; filename='.$nombre[1]);
 header('Content-Transfer-Encoding: binary');
 header('Content-Length: '.filesize($rutaf));
-readfile($ruta);
+readfile($rutaf);
+}else{
+    echo "NO ENTRAMOS";
+}
 
 
 ?>
@@ -185,7 +190,7 @@ readfile($ruta);
             </div>
             <div class="col-lg-7 flexcenter">Documentos</div>
             <?php
-                if($_SESSION['permiso']==1 || $_SESSION['permiso']==2){
+                if($_SESSION['permiso']==3 || $_SESSION['permiso']==2){
                     echo ' <div class="col-lg-2 flexend "> <a href="formDocumento.php"><label><i class="material-icons">ic_save</i><span>Nuevo Documento</span></label></a></div>';
                 }
             ?>

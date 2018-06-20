@@ -280,11 +280,12 @@ if(isset($_GET['bim'])) {
                                     echo "<a href=index_editar_contactos.php?id=$id_contact>";
                                     echo'<div class="panel">';
                                         echo'<div class="media contact2">';
-
-                                            echo'<div class="media-left">';
+                                            echo '<div class="col-md-12">';
+                                            echo'<div class="media-left ">';
                                               
-                                                    echo'<img src="'.$foto.'" style="margin-left: 143px;    width: 100px;">';
+                                                    echo'<img src="'.$foto.'" style="margin-left: 191px;    width: 100px;">';
                                               
+                                            echo'</div>';
                                             echo'</div>';
 
                                         echo'<div class="media-body">';

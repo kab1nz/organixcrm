@@ -26,7 +26,7 @@
         $rowfina[0]="fotos/boy.png";
     }
 
-    $select="select username from contacto_usuario where idcontacto='".$usu."'";
+    $select="select username from contacto_usuario where idcontacto='".$guidde[0]."'";
     $query=mysqli_query($mysqli,$select);
     $row=mysqli_fetch_row($query);
     $gui=$row[0];
@@ -237,7 +237,7 @@ if(isset($_POST['submit1'])) {
                     <img src="<?php echo $_SESSION['foto']; ?>" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo  $rowfina[1]; ?></div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['nombre']; ?></div>
                     <div class="email"><?php echo $_SESSION["email"]; ?></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float:right;">keyboard_arrow_down</i>
@@ -363,7 +363,7 @@ if(isset($_POST['submit1'])) {
                         <div class="row">
 
                             <div class="col-lg-3">Email
-                            <input type="text" class="form-control" name="idemailcon" id="idemailcon" placeholder="<?php echo $_SESSION['email']; ?>">
+                            <input type="text" class="form-control" name="idemailcon" id="idemailcon" placeholder="<?php echo $gui; ?>">
 
                             </div>
                             <div class="col-lg-1">*</div>

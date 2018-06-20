@@ -159,7 +159,7 @@ $usu=$_SESSION["usuario"];
             </div>
             <div class="col-lg-7 flexcenter">Proyectos</div>
             <?php
-            if($_SESSION['permiso']==1 || $_SESSION['permiso']==2){
+            if($_SESSION['permiso']==3 || $_SESSION['permiso']==2){
                     echo ' <div class="col-lg-2 flexend "> <a href="formProyecto.php"><label><i class="material-icons">ic_save</i><span>Nuevo Proyecto</span></label></a>';
                 }
 

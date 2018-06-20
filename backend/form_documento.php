@@ -17,7 +17,7 @@ if(isset($_POST['enviar'])){
     $tamanio = $_FILES['file']['size'];
     $ruta = $_FILES['file']['tmp_name'];
     $destino="archivos/".$nombrefichero;
-    
+    move_uploaded_file($ruta, $destino);
  
 
     

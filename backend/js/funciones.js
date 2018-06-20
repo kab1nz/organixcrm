@@ -126,7 +126,7 @@ function validaDocumento() {
 //----------------------------------------------------------------------------------------------------------------------------------
 
 function validaCategoria(){
-   if (document.form.nombreCategoria.value == "" || document.form.nombreCategoria.value == " ") {
+   if (document.form.nombreCategoria.value == "") {
         alert("Por favor indica una Categoria");
         document.form.nombreCategoria.focus();
         return 0;

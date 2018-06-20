@@ -21,7 +21,7 @@ $nombre=$_REQUEST['nombreCategoria'];
        
 }
 
-if(isset($_POST['guardarCategoria'])){
+if(isset($_POST['submit'])){
     $proyecto = $_GET['idcategoria'];
     $guidpro = "select nombre from categorias where NOMBRE='$proyecto'";
     $resultado1 = mysqli_query($bd,$guidpro);
@@ -76,15 +76,15 @@ if(isset($_POST['guardarCategoria'])){
         <!-- Page Loader -->
         <div class="container">
             <div class="row">
-            <form action="index_editar_proyecto.php?idproyecto=<?php echo $id ?>" method="post" name="form">
+            <form action="index_editar_categoria.php?idproyecto=<?php echo $id ?>" method="post" name="form">
            
                 <div class="col-md-12">
-                    <div class="col-md-11 mgtopgrande">Editar Proyecto</div>
+                    <div class="col-md-11 mgtopgrande">Editar Categoria</div>
                     <div class="col-md-1"></div>
                     <div class="col-md-8 mgtoppeque">
                         <div class="form-group">
                             <div class="form-line">
-                                <input class="form-control" type="text" name="nombreProyecto" placeholder="NOMBRE">
+                                <input class="form-control" type="text" name="nombreCategoria" placeholder="NOMBRE">
                             </div>
                         </div>
                     </div>
@@ -92,7 +92,7 @@ if(isset($_POST['guardarCategoria'])){
                     
                     <div class="col-md-12">
 
-                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="submit"onclick="valida_enviaContactos()">Guardar</button>
+                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="submit" >Guardar</button>
                         <br>
                          <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="volver">Volver</button>
                     </div>

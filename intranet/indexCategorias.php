@@ -167,7 +167,7 @@ $idproyecto=$_GET['idproyecto'];
             </div>
             <div class="col-lg-7 flexcenter">Categorias</div>
             <?php
-            if($_SESSION['permiso']==1 || $_SESSION['permiso']==2){
+            if($_SESSION['permiso']==3 || $_SESSION['permiso']==2){
                     echo ' <div class="col-lg-2 flexend "> <a href="formCategoria.php"><label><i class="material-icons">ic_save</i><span>Nueva Categoria</span></label></a>';
                 }
 
