@@ -2,7 +2,7 @@
     session_start();
     require_once("bd/conexion.php");
     $_SESSION["usuario"]="";
-    setcookie("logueo",$_SESSION["usuario"], time()+3600);
+    setcookie("logueo",$_SESSION["usuariocli"], time()+3600);
     $usuario="";
     $contra="";
     
@@ -79,7 +79,7 @@
 
                                         if(md5($contra)==$pass){
                                             
-                                            $queryfoto="select foto from usuarios where username ='".$_REQUEST['email']."'";
+                                            $queryfoto="select foto,guid from usuarios where username ='".$_REQUEST['email']."'";
                                             $mys=mysqli_query($conexion,$queryfoto);
                                             $rowfina=mysqli_fetch_row($mys);
                                             if(empty($rowfina[0])){
@@ -88,6 +88,7 @@
                                                 $_SESSION['foto']=$rowfina[0];
                                             }else{
                                             $_SESSION['foto']=$rowfina[0];
+                                            $_SESSION['idcliente']=$rowfina[1];
                                         }
                                             
                                             mysqli_close($conexion);

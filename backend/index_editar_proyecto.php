@@ -62,8 +62,14 @@ if(isset($_REQUEST['nombreProyecto'])){
             <form action="index_editar_proyecto.php?idproyecto=<?php echo $id ?>" method="post" name="form">
            
                 <div class="col-md-12">
-                    <div class="col-md-11 mgtopgrande">Editar Proyecto</div>
-                    <div class="col-md-1"></div>
+                <div class="header">
+                                <h2>
+                                    Editar Proyecto
+                                </h2>
+                                
+                            </div>
+                            <label>Nombre Proyecto</label>
+                                    <br>
                     <div class="col-md-8 mgtoppeque">
                         <div class="form-group">
                             <div class="form-line">

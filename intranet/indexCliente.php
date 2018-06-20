@@ -8,6 +8,12 @@ require_once("../bd/conexion.php");
 $bd= new mysqli("localhost","root","root", $_SESSION['idcli']);
 
 $usu=$_SESSION["usuario"];
+$select="select nombre from usuarios where guid='".$usu."'";
+    $query=mysqli_query($conexion,$select);
+    $row=mysqli_fetch_row($query);
+    $nombre=$row[0];
+    $_SESSION['nombreusuariocli']=$nombre;
+?>
 ?>
     <!DOCTYPE html>
     <html>
@@ -89,9 +95,7 @@ $usu=$_SESSION["usuario"];
                         <img src="img/boss.png" width="48" height="48" alt="User">
                     </div>
                     <div class="info-container">
-                        <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <?php echo $_SESSION["emailcliente"]?>
-                        </div>
+                        
                         <div class="email">
                         <?php echo $_SESSION["emailcliente"]?>
                         </div>

@@ -12,11 +12,9 @@ $cate=$idcategoria;
 $file=$_GET['file'];
 
 $nombre=explode('/',$file);
-echo "Nombre directorio--> ".$nombre[1];
 $rutaf="../backend/archivos/".$nombre[1];
 
 if(is_file($rutaf)){
-    echo "hemos entrado";
 
 header('Content-Type: application/force-download');
 header('Content-Disposition: attachment; filename='.$nombre[1]);
@@ -262,7 +260,6 @@ readfile($rutaf);
                             while ($fila = $resultado->fetch_row()) {
                                 $id_contact=$fila[1];
                                 $ruta=$fila[2];
-                                echo "La ruta es: -->".$ruta;
                                 
 
                                 echo'<div class="col-md-4" id="'.$id_contact.'">'; 

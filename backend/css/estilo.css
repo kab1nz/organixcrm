@@ -23,7 +23,10 @@
 .width50 {
     width: 50%;
 }
-
+.flexwrap{
+    flex-wrap: wrap !important;
+    display: flex !important;
+}
 .form-control {
     display: block;
     border: none;

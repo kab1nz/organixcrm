@@ -1,56 +1,41 @@
 <?php
-    require_once("../bd/conexion.php");
-    session_start();
-    if(!isset( $_SESSION['nombre'])){
-        header("Location: http://localhost/organixcrm/index.php");
-    }
+session_start();
+if(!isset( $_SESSION['nombre'])){
+    header("Location: http://localhost/organixcrm/index.php");
+}
+$usu=$_SESSION["usuario"];
+
+require_once("../bd/conexion.php");
+$bd= new mysqli("localhost","root","root",'empresa'.$_SESSION['bd']);
+$id=$_GET['id'];
+
+if(isset($_REQUEST['nombreFiscal'])){
     
-    $usu=$_GET["id"];
-    $_SESSION["EMPRE"]=$usu;
-  
-    $consulta='SELECT nombrefiscal, nombrecomercial FROM empresas WHERE GUID="'.$usu.'"';
-    $result=mysqli_query($conexion,$consulta);
-    if(!$result){
-        echo "ERROR -> " . mysqli_error($conexion);
-    }
-    $row=mysqli_fetch_array($result);
-  
+//Recogida Datos
+$nombre=$_REQUEST['nombreFiscal'];
 
-if(isset($_POST['submit1'])) {
-    $nombrefiscal = $_POST['idnombrefiscal'];
-    $nombrec=$_POST['idnombrecomer'];
-    if(!empty($nombrefiscal)){
-        echo "usuario -->". $_SESSION["EMPRE"];
-    $updatePerfil = "update empresas set nombrefiscal='$nombrefiscal',nombrecomercial='$nombrec' where guid='$usu';";
+
+
+       
+}
+if(isset($_REQUEST['nombreFiscal'])){
+    
+    //Recogida Datos
+    $nombreC=$_REQUEST['nombreComercial'];
+    
+    
+    
+           
+    }
+
+if(isset($_POST['enviar2'])){
+    $updatePerfil = "update empresas set nombrefiscal='$nombre',nombrecomercial='$nombreC' where guid='$id';";
     $resultado4=mysqli_query($conexion, $updatePerfil);  
-    echo "El resultado es: ". $resultado4; 
-    if(!$resultado4){
-        echo "ERROR -> " . mysqli_error($conexion);
-    }
-}
-  /* 
-  
-    if(!empty($email)){
-        $updateEmail = "update usuarios set username='$email' where guid_usu='$guidusu';";
-        $resultado5=mysqli_query($conexion, $updateEmail);
-    }
-  
-    if(!empty($contraN) && !empty($repecontraN)){
-        if($contraN==$repecontraN){
-            $sem1=mt_rand(100,999);
-            $sem2=mt_rand(100,999);
-            $sem=$sem1.$sem2;
-            $contrCifra=md5($contraN);
-            $contrCiNueva=$sem1.$contrCifra.$sem2;
-            $actu="update contrasenas set contra='$contrCiNueva',semilla='$sem' where guid_pass='$guidusu'";
-            $resultado6=mysqli_query($conexion, $actu);
-        }
-    }
-*/
-
 
 }
+
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -75,6 +60,7 @@ if(isset($_POST['submit1'])) {
     <!-- Animation Css -->
     <link href="plugins/animate-css/animate.css" rel="stylesheet" />
 
+
     <!-- Bootstrap Material Datetime Picker Css -->
     <link href="plugins/bootstrap-material-datetimepicker/css/bootstrap-material-datetimepicker.css" rel="stylesheet" />
 
@@ -87,7 +73,7 @@ if(isset($_POST['submit1'])) {
     <!-- Custom Css -->
     <link href="css/style.css" rel="stylesheet">
     <link href="css/estilo.css" rel="stylesheet">
-  
+
 
 
     <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
@@ -182,7 +168,7 @@ if(isset($_POST['submit1'])) {
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="<?php echo $rowf[0] ?>" width="48" height="48" alt="User">
+                    <img src="<?php echo $_SESSION["foto"]; ?>" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
                     <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["email"]; ?></div>
@@ -261,8 +247,6 @@ if(isset($_POST['submit1'])) {
                     <div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
                 </div>
             </div>
-
-            <!-- #Menu -->
             <!-- Footer -->
             <div class="legal">
                 <div class="copyright">
@@ -275,122 +259,58 @@ if(isset($_POST['submit1'])) {
             <!-- #Footer -->
         </aside>
         <!-- #END# Left Sidebar -->
-        <!-- Right Sidebar -->
-        <aside id="rightsidebar" class="right-sidebar">
-            <ul class="nav nav-tabs tab-nav-right" role="tablist">
-                <li role="presentation" class="active"><a href="#skins" data-toggle="tab">SKINS</a></li>
-                <li role="presentation"><a href="#settings" data-toggle="tab">SETTINGS</a></li>
-            </ul>
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade in active in active" id="skins">
-                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 256px;">
-
-                        <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 6px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px; height: 72.8178px;"></div>
-                        <div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="settings">
-                    <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 256px;">
-                        <div class="demo-settings" style="overflow: hidden; width: auto; height: 256px;">
-                            <p>GENERAL SETTINGS</p>
-                            <ul class="setting-list">
-                                <li>
-                                    <span>Report Panel Usage</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Email Redirect</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox"><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <p>SYSTEM SETTINGS</p>
-                            <ul class="setting-list">
-                                <li>
-                                    <span>Notifications</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Auto Updates</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                            </ul>
-                            <p>ACCOUNT SETTINGS</p>
-                            <ul class="setting-list">
-                                <li>
-                                    <span>Offline</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox"><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span>Location Permission</span>
-                                    <div class="switch">
-                                        <label><input type="checkbox" checked=""><span class="lever"></span></label>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.5); width: 6px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 0px; z-index: 99; right: 1px;"></div>
-                        <div class="slimScrollRail" style="width: 6px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
-                    </div>
-                </div>
-            </div>
-        </aside>
-        <!-- #END# Right Sidebar -->
+        
     </section>
     <section class="content">
-    <form action="index_editar_empresa.php?id=<?php echo $_SESSION['contact']?>" method="post">
-        <div class="princicontent">
-            <div class="col-lg-4 flexstart"> <i class="material-icons">ic_keyboard_backspace</i></a>
-            </div>
-            <div class="col-lg-4 flexcenter">Editar perfíl</div>
-            <div class="col-lg-4 flexend">
-                <div id="id_saveperfil">
-                <input type="submit" name="submit1" value="Actualizar" />
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <div class="col-lg-2 misdatos">Mis datos</div>
-            </div>
-            <div class="tablaperfil">
-                <div class="col-lg-2">
-                </div>
-                <div class="col-lg-10">
-                    <div class="flexcolumn">
-                        <div class="row">
-                            <div class="col-lg-5">Nombre Fiscal
-                                <input type="text" class="form-control" name="idnombrefiscal" id="idnombrefiscal" placeholder="<?php echo  $row[0]; ?>">
+        <form action="index_editar_empresa.php?id=<?php echo $id ?>" method="post" name="form">
+                                
+                    
+                        <div class="header">
+                                <h2>
+                                    Editar Empresa
+                                </h2>
+                                
                             </div>
-                            <div class="col-lg-1">*</div>
-
-                            <div class="col-lg-5">Nombre Comercial
-                            <input type="text" class="form-control" id="idnombrecomer" name="idnombrecomer" placeholder="<?php echo  $row[1]; ?>">
-
-                            </div>
-                            <div class="col-lg-1">*</div>
-
-                        </div>
+                   
                        
+                        <div class="body">
+                                <form>
+                                    <label>Nombre Fiscal</label>
+                                    <br>
+                                    <div class="form-group">
+                                        <div class="form-line">
+                                            <input type="text" name="nombreFiscal" class="form-control" placeholder="Introduce nombre fiscal">
+                                        </div><br> <label>Nombre Comercial</label>
+                                    <br>
+                                        <div class="form-line">
+                                            <input type="text" name="nombreComercial" class="form-control" placeholder="Introduce nombre comercial">
+                                        </div>
+                                    </div>
+                                    
+                                                                       <br>
+                                    <button type="submit" name="enviar2" class="btn  m-t-15 waves-effect bg-red">MODIFICAR</button>
+                                </form>
+                            </div>
+                      
+               
 
-                    </div>
-                </div>
-            </div>
-            
+            </form>
+
+
         </div>
-        </form>
+
     </section>
 
 
     <!-- Jquery Core Js -->
+    <script async="" src="https://www.google-analytics.com/analytics.js"></script>
     <script src="plugins/jquery/jquery.min.js"></script>
+    
+    
+    <!-- My Script -->
+    <script type="text/javascript" src="myscript.js"></script>
+    <script src="js/JSquerylista/querylistaContactos.js"></script>
+
 
     <!-- Bootstrap Core Js -->
     <script src="plugins/bootstrap/js/bootstrap.js"></script>
@@ -403,10 +323,7 @@ if(isset($_POST['submit1'])) {
 
     <!-- Waves Effect Plugin Js -->
     <script src="plugins/node-waves/waves.js"></script>
-    <!--
-    <script src="js/querylista.js"></script>
-    <script src="js/queryejemplo.js"></script>
--->
+
     <!-- Autosize Plugin Js -->
     <script src="plugins/autosize/autosize.js"></script>
 
@@ -422,8 +339,7 @@ if(isset($_POST['submit1'])) {
 
     <!-- Demo Js -->
     <script src="js/demo.js"></script>
-   <!--  <script src="js/editarContact.js"></script> -->
-
+   <!-- <script src="js/editarContact.js"></script> -->
 </body>
 
 </html>

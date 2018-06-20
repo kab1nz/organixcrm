@@ -101,6 +101,7 @@ readfile($ruta);
                 <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
                 <a href="javascript:void(0);" class="bars" style="display: none;"></a>
                 <a class="navbar-brand" href="index_backend.php">Organix Crm</a>
+                <?php echo 'numero bd-->'.$_SESSION['bd'] ?>
             </div>
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-left" style="    margin-left: 143px;">
@@ -158,10 +159,10 @@ readfile($ruta);
             <!-- User Info -->
             <div class="user-info">
                 <div class="image">
-                    <img src="<?php echo $rowf[0] ?>" width="48" height="48" alt="User">
+                    <img src="<?php echo $_SESSION['foto'] ?>" width="48" height="48" alt="User">
                 </div>
                 <div class="info-container">
-                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION["email"]; ?></div>
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><?php echo $_SESSION['nombreusuario']; ?></div>
                     <div class="email"><?php echo $_SESSION["email"]; ?></div>
                     <div class="btn-group user-helper-dropdown">
                         <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="float:right;">keyboard_arrow_down</i>
@@ -202,7 +203,7 @@ readfile($ruta);
                                     <a href="index_categorias.php" class=" waves-effect waves-block">Categorias</a>
                                 </li>
                                 <li>
-                                    <a href="form_documento.php" class=" waves-effect waves-block">Documentos</a>
+                                    <a href="index_documentos.php" class=" waves-effect waves-block">Documentos</a>
                                 </li>
                             </ul>
                         </li>

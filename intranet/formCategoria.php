@@ -4,23 +4,16 @@ if(!isset( $_SESSION['idcli'])){
     header("Location: http://localhost/organixcrm/index.php");
 }
 $usu=$_SESSION["usuario"];
-
 require_once("../bd/conexion.php");
 $bd= new mysqli("localhost","root","root",$_SESSION['idcli']);
-
-
 if(isset($_REQUEST['nombreCategoria'])){
     
 //Recogida Datos
 $nombre=$_REQUEST['nombreCategoria'];
-
     
    
-
-
        
 }
-
 if(isset($_POST['guardarCategoria'])){
     $proyecto = $_REQUEST['idproye'];
     $guidpro = "select GUID from proyectos where NOMBRE='$proyecto'";
@@ -33,11 +26,8 @@ if(isset($_POST['guardarCategoria'])){
     $guidresult1=mysqli_fetch_row($resultado1);
     if($categoria)
     $insertarPRO="call INSERT_CATEGORIAS('$nombre','$guidresult[0]','$guidresult1[0]');";
-
     $resultado=mysqli_query($bd, $insertarPRO);
-
 }
-
 ?>
     <!DOCTYPE html>
     <html>

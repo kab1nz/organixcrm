@@ -13,3 +13,6 @@ $("#volverpro").click(function() {
 $("#volvercat").click(function() {
     window.location = 'http://localhost/organixcrm/backend/index_categorias.php';
 });
+$("#volverdoc").click(function() {
+    window.location = 'http://localhost/organixcrm/backend/index_documentos.php';
+});

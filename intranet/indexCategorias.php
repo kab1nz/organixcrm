@@ -93,9 +93,7 @@ $idproyecto=$_GET['idproyecto'];
                         <img src="img/boss.png" width="48" height="48" alt="User">
                     </div>
                     <div class="info-container">
-                        <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <?php echo $_SESSION["emailcliente"]?>
-                        </div>
+                        
                         <div class="email">
                         <?php echo $_SESSION["emailcliente"]?>
                         </div>

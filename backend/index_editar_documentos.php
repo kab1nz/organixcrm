@@ -75,12 +75,18 @@ if(isset($_POST['enviar'])){
             <div class="row">
                 <form action="index_editar_documentos.php?iddoc=<?php echo $_GET['iddoc']; ?>" method="post" name="form" enctype="multipart/form-data">
 
-                    <div class="col-md-11 mgtopgrande">Editar Proyecto</div>
-                    <div class="col-md-1"></div>
+                   <div class="header">
+                                <h2>
+                                    Editar Documentos
+                                </h2>
+                                
+                            </div>
                     <div class="col-md-8 mgtoppeque">
                         <div class="form-group">
                             <div class="form-line">
-                                <input class="form-control" type="text" name="ndoc" placeholder="">
+                            <label>Nombre Documento</label>
+                                    <br>
+                                <input class="form-control" type="text" name="ndoc" placeholder="Nombre documento">
                             </div>
                         </div>
                         <div class="form-group">
@@ -94,7 +100,7 @@ if(isset($_POST['enviar'])){
 
                         <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" name="enviar">Guardar</button>
                         <br>
-                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" id="volver" name="volver">Volver</button>
+                        <button class="btn btn-block btn-lg bg-red waves-effect cblanco" type="submit" id="volverdoc" name="volverdoc">Volver</button>
                     </div>
             </div>
             </form>
